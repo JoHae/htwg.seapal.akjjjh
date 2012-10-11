@@ -1,0 +1,16 @@
+fieldset {
+	border: none;
+	display: inline;
+}
+
+label {
+	width: 80px;
+	display: inline-block;
+}
+
+#form {
+	border: solid black 1px;
+	margin: 20px;
+	padding: 20px;
+	display: inline-block;
+}
