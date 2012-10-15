@@ -1,16 +1,81 @@
+body {
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+}
+
+#nav {
+	background: #111;
+	color: white;
+	height: 30px;
+	text-align: center;
+	padding: 5px 0 15px 0;
+}
+
+#nav .left {
+	float: left;
+	margin: 9px 10px;
+}
+
+#nav .right {
+	float: right;
+	margin: 9px 10px;
+}
+
+h1 {
+	display: inline;	
+}
+
+#main {
+	margin: 10px 0 0 0;
+}
+
+#table {
+	border: 1px black solid;
+	margin: 10px 0;
+}
+
+table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+thead {
+	text-align: left;
+	background: #aaa;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
 fieldset {
 	border: none;
 	display: inline;
 }
 
-label {
-	width: 80px;
+#fs1 label {
+	width: 95px;
+	margin: 5px;
+	display: inline-block;
+}
+
+#fs2 label {
+	width: 95px;
+	margin: 5px;
+	display: inline-block;
+}
+
+#fs3 label {
+	width: 140px;
+	margin: 5px;
 	display: inline-block;
 }
 
 #form {
 	border: solid black 1px;
-	margin: 20px;
 	padding: 20px;
-	display: inline-block;
+	background: #eee;
 }
