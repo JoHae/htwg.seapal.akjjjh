@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="css/styles.css" type="text/css" />
+	</head>
+	<body>
+		<div id="wrapper">
+			<div id="nav">
+				<input class="left" type="button" value="Zurück" onclick="history.back()" />
+				<h1>Trip Info</h1>
+				<input class="right" type="button" value="Karte" onclick="" />
+			</div>
+			<div id="main">
+				<div id="trip_form">
+					<form action="" method="get">
+						<fieldset>
+							<label for="triptitle">Trip-Titel</label>
+							<input type="text" name="triptitle" />
+							<br />
+							<label for="from">Von</label>
+							<input type="text" name="from" />
+							<br />
+							<label for="to">Nach</label>
+							<input type="text" name="to" />
+							<br />
+							<label for="skipper">Skipper</label>
+							<input type="text" name="skipper" /></fieldset><fieldset>
+							<label for="crew">Crew</label>
+							<input type="text" name="crew" /></fieldset><fieldset>
+							<label for="start">Start</label>
+							<input type="text" name="start" />
+							<br />
+							<label for="end">Ende</label>
+							<input type="text" name="end" />
+							<br />
+							<label for="duration">Dauer</label>
+							<input type="text" name="duration" /></fieldset><fieldset>
+							<label for="motor">Motor (min)</label>
+							<input type="text" name="motor" />
+							<br />
+							<label for="tank filled">Tank gefüllt</label>
+							<input type="range" min="0" max="1" name="tank filled" />
+						</fieldset>
+					</form>
+				</div>
+				<div id="table">
+					<table>
+						<thead>
+							<th>Bootsname</th>
+							<th>Bootstyp</th>
+							<th>Konstruktor</th>
+							<th>Länge</th>
+							<th>Inhaber</th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Xpresso</td>
+								<td>X-99</td>
+								<td>X-Yachts</td>
+								<td>10</td>
+								<td>HTWG Konstanz</td>
+								<td><a class="pfeil" href="#main" ><img src="img/pfeil.gif" /></a></td>
+							</tr>
+							<tr>
+								<td>Schiff 1</td>
+								<td>Typ 1</td>
+								<td>Konstruktor 1</td>
+								<td>15</td>
+								<td>Inhaber 1</td>
+								<td><a class="pfeil" href="#main" ><img src="img/pfeil.gif" /></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<input class="left" type="button" value="Löschen" />
+				<input class="left" type="button" value="Scheichern" />
+				<input class="left" type="button" value="Neuester" />
+				<input class="right" type="button" value="Nächster" />
+				<input class="right" type="button" value="Vorheriger" />
+			</div>
+		</div>
+	</body>
+</html>

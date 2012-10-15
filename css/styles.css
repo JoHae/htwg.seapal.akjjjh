@@ -79,3 +79,7 @@ fieldset {
 	padding: 20px;
 	background: #eee;
 }
+
+#trip_form {
+	height: 200px;
+}
