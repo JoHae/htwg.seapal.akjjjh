@@ -56,22 +56,25 @@ fieldset {
 	display: inline;
 }
 
-#fs1 label {
-	width: 95px;
+fieldset label {
 	margin: 5px;
 	display: inline-block;
 }
 
-#fs2 label {
-	width: 95px;
-	margin: 5px;
-	display: inline-block;
+.title {
+	display: block;
 }
 
-#fs3 label {
+.fs80 label {
+	width: 80px;
+}
+
+.fs95 label {
+	width: 95px;
+}
+
+.fs140 label {
 	width: 140px;
-	margin: 5px;
-	display: inline-block;
 }
 
 #form {
