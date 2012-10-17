@@ -87,13 +87,6 @@ fieldset label {
 	height: 200px;
 }
 
-span.postion label {
-	position: absolute;
-	top: -20em;
-	left: -200em;	
-}
-
-span.postion input {
-	width: 3em;
-	text-align: right;
+input[type=number] {
+	width: 40px;
 }

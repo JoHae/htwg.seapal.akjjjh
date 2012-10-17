@@ -3,12 +3,11 @@
 	<head>
 		<link rel="stylesheet" href="css/styles.css" type="text/css" />
 	</head>
-
 	<body>
 		<div id="wrapper">
 			<div id="nav">
-				<input class="left" type="button" value="Zurï¿½ck" onclick="history.back()" />
-				<h1>Trip Info</h1>
+				<input class="left" type="button" value="Zurück" onclick="history.back()" />
+				<h1>Wegpunkt</h1>
 				<input class="right" type="button" value="Karte" onclick="" />
 			</div>
 			<div id="main">
@@ -19,44 +18,43 @@
 							<input type="text" name="waypoint_name" size="50px" />
 						</fieldset>
 						<fieldset>
-							<span class="postion"> Position <label for="degree_north">Grad</label>
-								<input type="number" id="degree_north" name="degree_north" />
-								&deg; <label for="minutes_north">Minuten</label>
-								<input type="number" id="minutes_north" name="minutes_north" />
-								&rsquo; <label for="seconds_north">Sekunden</label>
-								<input type="number" id="seconds_north" name="seconds_north" \>
-								&rdquo;N <label for="degree_east">Grad</label>
-								<input type="number" id="degree_east" name="degree_east" />
-								&deg; <label for="minutes_east">Minuten</label>
-								<input type="number" id="minutes_east" name="minutes_east" />
-								&rsquo; <label for="seconds_east">Sekunden</label>
-								<input type="number" id="seconds_east" name="seconds_east" \>
-								&rdquo;E </span>
-							<label for="cog">COG</label>
-							<input type="text" name="cog" />
-							&deg;
-							<label for="sog">SOG</label>
-							<input type="text" name="sog" />
-							kn
-							at ...
-						</fieldset>
-						<br />
-						<fieldset>
+							<label for="degree_north">Position</label>
+							<input type="number" name="degree_north" />
+							°
+							<input type="number" name="minutes_north" />
+							'
+							<input type="number" name="seconds_north" />
+							" N &nbsp;&nbsp;&nbsp;
+							<input type="number" name="degree_east" />
+							°
+							<input type="number" name="minutes_east" />
+							'
+							<input type="number" name="seconds_east" />
+							" E
+							<br />
+							<br />
 							<label for="btm">BTM</label>
-							<input type="text" name="btm" />
-							&deg;
-							<label for="dtm">DTM</label>
-							<input type="text" name="dtm" />
+							<input type="text" name="btm" size="5px" />
+							° &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
+							<input type="text" name="dtm" size="5px" />
 							nm
-							<label for="destination">Fahrt nacht</label>
-							<select>
+						</fieldset>
+						<fieldset>
+							<label for="cog">COG</label>
+							<input type="text" name="cog" size="5px" />
+							° &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="sog">SOG</label>
+							<input type="text" name="sog" size="5px" />
+							kn	at ...
+							<br />
+							<br />
+							<label for="destination">Fahrt nach</label>
+							<select name="destination">
 								<option>Fahrt nach ? Was ist das ?</option>
 							</select>
 						</fieldset>
-						<br />
 						<fieldset>
-							<label for="manoever">Man&ouml;ver</label>
-							<select>
+							<label for="manoever">Manöver</label>
+							<select name="manoever">
 								<option>-</option>
 								<option>Tack</option>
 								<option>Jibe</option>
@@ -67,9 +65,9 @@
 								<option>Ref</option>
 								<option>Anker Up</option>
 								<option>Anker Down</option>
-							</select>
+							</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label for="vorsegel">Vorsegel</label>
-							<select>
+							<select name="vorsegel">
 								<option>-</option>
 								<option>Genua1</option>
 								<option>Genua2</option>
@@ -78,9 +76,9 @@
 								<option>Storm Fock</option>
 								<option>Blister</option>
 								<option>Spinaker</option>
-							</select>
-							<label for="grosssegel">Gro&szlig;egel</label>
-							<select>
+							</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label for="grosssegel">Großsegel</label>
+							<select name="grosssegel">
 								<option>-</option>
 								<option>Tack</option>
 								<option>Jibe</option>
