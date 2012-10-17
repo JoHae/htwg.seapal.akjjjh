@@ -86,3 +86,14 @@ fieldset label {
 #trip_form {
 	height: 200px;
 }
+
+fieldset.postion label {
+	position: absolute;
+	top: -20em;
+	left: -200em;	
+}
+
+fieldset.postion input {
+	width: 3em;
+	text-align: right;
+}

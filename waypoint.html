@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="css/styles.css" type="text/css" />
+	</head>
+
+	<body>
+		<div id="wrapper">
+			<div id="nav">
+				<input class="left" type="button" value="Zur�ck" onclick="history.back()" />
+				<h1>Trip Info</h1>
+				<input class="right" type="button" value="Karte" onclick="" />
+			</div>
+			<div id="main">
+				<div id="trip_form">
+					<form action="" method="get">
+						<fieldset class="title">
+							<label for="waypoint_name">Name</label>
+							<input type="text" name="waypoint_name" size="50px" />
+						</fieldset>
+						<fieldset class="postion">
+							Position
+							<label for="degree_north">Grad</label>
+							<input type="number" id="degree_north" name="degree_north" />
+							&deg; <label for="minutes_north">Minuten</label>
+							<input type="number" id="minutes_north" name="minutes_north" />
+							&rsquo; <label for="seconds_north">Sekunden</label>
+							<input type="number" id="seconds_north" name="seconds_north" \>
+							&rdquo;N
+							<label for="degree_east">Grad</label>
+							<input type="number" id="degree_east" name="degree_east" />
+							&deg; <label for="minutes_east">Minuten</label>
+							<input type="number" id="minutes_east" name="minutes_east" />
+							&rsquo; <label for="seconds_east">Sekunden</label>
+							<input type="number" id="seconds_east" name="seconds_east" \>
+							&rdquo;E
+						</fieldset>
+						<fieldset>
+							<label for="cog">COG</label>
+							<input type="text" name="cog" />
+							&deg;
+						</fieldset>
+						<fieldset>
+							<label for="sog">SOG</label>
+							<input type="text" name="sog" />
+							kn
+						</fieldset>
+						at ...
+						<br />
+						<fieldset>
+							<label for="btm">BTM</label>
+							<input type="text" name="btm" />
+							&deg;
+						</fieldset>
+						<fieldset>
+							<label for="dtm">DTM</label>
+							<input type="text" name="dtm" />
+							nm
+						</fieldset>
+						<fieldset>
+							<label for="destination">Fahrt nacht</label>
+							<select>
+								<option>Fahrt nach ? Was ist das ?</option>
+							</select>
+						</fieldset>
+						<br />
+						<fieldset>
+							<label for="manoever">Man&ouml;ver</label>
+							<select>
+								<option>-</option>
+								<option>Tack</option>
+								<option>Jibe</option>
+								<option>Lay to</option>
+								<option>Set Sails</option>
+								<option>Change Sails</option>
+								<option>Sails Down</option>
+								<option>Ref</option>
+								<option>Anker Up</option>
+								<option>Anker Down</option>
+							</select>
+						</fieldset>
+						<fieldset>
+							<label for="destination">Vorsegel</label>
+							<select>
+								<option>-</option>
+								<option>Tack</option>
+								<option>Jibe</option>
+								<option>Lay to</option>
+								<option>Set Sails</option>
+								<option>Change Sails</option>
+								<option>Sails Down</option>
+								<option>Ref</option>
+								<option>Anker Up</option>
+								<option>Anker Down</option>
+							</select>
+						</fieldset>
+						<fieldset>
+							<label for="destination">Gro&szlig;egel</label>
+							<select>
+								<option>-</option>
+								<option>Tack</option>
+								<option>Jibe</option>
+								<option>Lay to</option>
+								<option>Set Sails</option>
+								<option>Change Sails</option>
+								<option>Sails Down</option>
+								<option>Ref</option>
+								<option>Anker Up</option>
+								<option>Anker Down</option>
+							</select>
+						</fieldset>
+					</form>
+				</div>
+				<div id="table">
+					<table>
+						<thead>
+							<th>Bootsname</th>
+							<th>Bootstyp</th>
+							<th>Konstruktor</th>
+							<th>L�nge</th>
+							<th>Inhaber</th>
+							<th></th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Xpresso</td>
+								<td>X-99</td>
+								<td>X-Yachts</td>
+								<td>10</td>
+								<td>HTWG Konstanz</td>
+								<td><a class="pfeil" href="#main" ><img src="img/pfeil.gif" /></a></td>
+							</tr>
+							<tr>
+								<td>Schiff 1</td>
+								<td>Typ 1</td>
+								<td>Konstruktor 1</td>
+								<td>15</td>
+								<td>Inhaber 1</td>
+								<td><a class="pfeil" href="#main" ><img src="img/pfeil.gif" /></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<input class="left" type="button" value="L�schen" />
+				<input class="left" type="button" value="Scheichern" />
+				<input class="left" type="button" value="Neuester" />
+				<input class="right" type="button" value="N�chster" />
+				<input class="right" type="button" value="Vorheriger" />
+			</div>
+		</div>
+	</body>
+</html>
