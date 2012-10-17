@@ -1,5 +1,6 @@
 body {
 	font-family: Arial, Helvetica, Verdana, sans-serif;
+	padding-bottom: 100px;
 }
 
 #nav {
@@ -22,6 +23,11 @@ body {
 
 h1 {
 	display: inline;	
+}
+
+h2 {
+	background: #aaa;
+	margin: 0;
 }
 
 #main {
@@ -89,4 +95,45 @@ fieldset label {
 
 input[type=number] {
 	width: 40px;
+}
+
+#notes {
+	display: inline-block;
+	width: 29.45%;
+	height: 350px;
+	border: #000000 1px solid;
+	text-align: center;
+}
+
+#maps {
+	display: inline-block;
+	width: 40%;
+	height: 350px;
+	border: #000000 1px solid;
+}
+
+#pics {
+	display: inline-block;
+	width: 29.45%;
+	height: 350px;
+	border: #000000 1px solid;
+	text-align: center;
+}
+
+#pics img {
+	height: 320px;
+}
+
+#maps img {
+	height: 350px;
+	width: 100%;
+}
+
+#middle textarea {
+	width: 98.5%;
+	height: 314px;
+}
+
+#middle h2 {
+	text-align: center;
 }
