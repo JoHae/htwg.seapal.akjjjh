@@ -2,7 +2,7 @@
 
 <body data-twttr-rendered="true">
 	
-	<?php include("content_header.html");?>
+	<?php include("content_header.php");?>
 	
 	<div id="wrapper">
 		<div id="page" class="container">
@@ -248,8 +248,8 @@
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
 	</script>
-	
-	<?php inlcude("footer.html"); ?>
+	<p>Hit Counter: <?php include("hit_counter.php") ?></p>
+	<?php include("footer.html"); ?>
 	
 </body>
 </html>
