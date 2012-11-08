@@ -1,6 +1,6 @@
 <div id="main">
 	<div id="form">
-		<form action="" method="get">
+		<form action="insert_logbook.php" method="post">
 			<fieldset class="fs95">
 				<label for="shipname">Bootsname</label>
 				<input type="text" name="shipname" />
@@ -76,6 +76,8 @@
 				<label for="size_spi">Spi size Spigr��e</label>
 				<input type="text" name="size_spi" />
 			</fieldset>
+			<input type="submit" />
+			<input type="hidden" name="logbookID" value="<?php echo $_GET["logbookID"]; ?>">
 		</form>
 	</div>
 </div>
