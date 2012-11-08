@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)http://www.seapal.de/index.php -->
+<html xmlns="http://www.w3.org/1999/xhtml">
 <?php include("header.html");?>
 
 <body data-twttr-rendered="true">
