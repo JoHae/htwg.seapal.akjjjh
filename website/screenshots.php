@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)http://www.seapal.de/index.php -->
+<html xmlns="http://www.w3.org/1999/xhtml">
 <?php
 include ("header.html");
 ?>
@@ -193,6 +196,9 @@ include ("header.html");
 						</li>
 					</ul>
 				</div>
+				<?php
+				include ("side_bar.html");
+				?>
 			</div>
 			<!-- end #sidebar -->
 			<div style="clear: both;">
@@ -216,6 +222,6 @@ include ("header.html");
 	</script>
 	<?php
 	include ("footer.html");
-?>
+	?>
 </body>
 </html>
