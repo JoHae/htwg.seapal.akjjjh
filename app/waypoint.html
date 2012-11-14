@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="css/styles.css" type="text/css" />
+		<link rel="stylesheet" href="lib/css/styles.css" type="text/css" />
+		<script type="text/javascript" src="lib/js/functions.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -19,18 +20,10 @@
 						</fieldset>
 						<fieldset>
 							<label for="degree_north">Position</label>
-							<input type="number" name="degree_north" />
-							°
-							<input type="number" name="minutes_north" />
-							'
-							<input type="number" name="seconds_north" />
-							" N &nbsp;&nbsp;&nbsp;
-							<input type="number" name="degree_east" />
-							°
-							<input type="number" name="minutes_east" />
-							'
-							<input type="number" name="seconds_east" />
-							" E
+							<input id="position_north" type="text" name="position_north" onblur="checkNorth()" />
+							N &nbsp;&nbsp;&nbsp;
+							<input id="position_east" type="text" name="position_east" onblur="checkEast()" />
+							E
 							<br />
 							<br />
 							<label for="btm">BTM</label>
@@ -100,11 +93,11 @@
 					</div>
 					<div id="maps">
 						<!-- Einbindung von Google Maps -->
-						<img src="img/googlemaps.jpg" />
+						<img src="lib/img/googlemaps.jpg" />
 					</div>
 					<div id="pics">
 						<h2>Photos</h2>
-						<img src="img/nophoto.jpg" />
+						<img src="lib/img/nophoto.jpg" />
 					</div>
 				</div>
 			</div>
