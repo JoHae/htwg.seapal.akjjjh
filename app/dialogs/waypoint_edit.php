@@ -83,7 +83,7 @@
 			</div>
 			<div id="pics">
 				<h2>Photos</h2>
-				<img src="../img/nophoto.jpg" />
+				<img src="lib/img/nophoto.jpg" />
 			</div>
 		</div>
 	</div>

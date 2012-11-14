@@ -1,3 +1,35 @@
+body {
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	padding-bottom: 100px;
+}
+
+#nav {
+	background: #111;
+	color: white;
+	height: 30px;
+	text-align: center;
+	padding: 5px 0 15px 0;
+}
+
+#nav .left {
+	float: left;
+	margin: 9px 10px;
+}
+
+#nav .right {
+	float: right;
+	margin: 9px 10px;
+}
+
+h1 {
+	display: inline;	
+}
+
+h2 {
+	background: #aaa;
+	margin: 0;
+}
+
 #main {
 	margin: 10px 0 0 0;
 }
@@ -7,16 +39,16 @@
 	margin: 10px 0;
 }
 
-A:link[id=logbook] {
+a:link[id=logbook] {
 	color: blue;
 }
-A:visited[id=logbook] {
-	text-decoration: none
+a:visited[id=logbook] {
+	text-decoration: none;
 }
-A:active[id=logbook] {
-	text-decoration: none
+a:active[id=logbook] {
+	text-decoration: none;
 }
-A:hover[id=logbook] {
+a:hover[id=logbook] {
 	text-decoration: underline; color: red;
 }
 
