@@ -21,8 +21,8 @@ if (mysql_query("CREATE DATABASE seapal", $con)) {
 # Table for log_book
 $create_logbook_table = "CREATE TABLE logbook
 (
-shipID       int NOT NULL AUTO_INCREMENT,
-PRIMARY KEY(shipID),
+logbookID    int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (logbookID),
 shipname     varchar(15),
 registnumber varchar(20),
 sailsign     varchar(20),
@@ -52,17 +52,21 @@ size_spi         int
 )";
 
 # Table for Trips
-$create_tripinfo_table = "CREATE TABLE tripinfo
+$create_trip_table = "CREATE TABLE trip
 (
-triptitle varchar(15),
-from_     varchar(20),
-to_       varchar(20),
-skipper   varchar(15),
+tripID    int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (tripID),
+logbookID int,
+FOREIGN KEY (logbookID) REFERENCES logbook(logbookID),
+
+triptitle   varchar(15),
+destination varchar(20),
+startpoint  varchar(20),
+skipper     varchar(15),
 
 crew     blob,
-start    varchar(30),
-end      varchar(15),
-duration varchar(20),
+start    datetime,
+end      datetime,
 
 motor       varchar(15),
 tank_filled bool,
@@ -72,6 +76,11 @@ notes       blob
 # Table for Waypoints
 $create_waypoint_table = "CREATE TABLE waypoint
 (
+waypointID int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (waypointID),
+tripID  int,
+FOREIGN KEY (tripID) REFERENCES trip(tripID),
+
 waypoint_name varchar(15),
 degree_north  int,
 minutes_north int,
@@ -84,13 +93,68 @@ btm varchar(15),
 dtm varchar(15),
 
 cog varchar(15),
-sog varchar(15)
+sog varchar(15),
+maneuverID int,
+headsailID int,
+mainsailID int,
+FOREIGN KEY (maneuverID) REFERENCES maneuvertype(maneuverID),
+FOREIGN KEY (headsailID) REFERENCES headsailtype(headsailID),
+FOREIGN KEY (mainsailID) REFERENCES mainsailtype(mainsailID)
+)";
+
+# Table for maneuver
+$create_maneuver_table = "CREATE TABLE maneuvertype
+(
+maneuverID int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (maneuverID),
+name varchar(20)
+)";
+
+# Table for headsail
+$create_headsail_table = "CREATE TABLE headsailtype
+(
+headsailID int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (headsailID),
+name varchar(20)
+)";
+
+# Table for mainsail
+$create_mainsail_table = "CREATE TABLE mainsailtype
+(
+mainsailID int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (mainsailID),
+name varchar(20)
 )";
 
 # Execute query
 mysql_select_db("seapal", $con);
+
+echo "Creating Table for headsail...</br>";
+if (!mysql_query($create_headsail_table,$con))
+{
+	die('Error: ' . mysql_error());
+}
+
+echo "Creating Table for mainsail...</br>";
+if (!mysql_query($create_mainsail_table,$con))
+{
+	die('Error: ' . mysql_error());
+}
+
+echo "Creating Table for maneuver...</br>";
+if (!mysql_query($create_maneuver_table,$con))
+{
+	die('Error: ' . mysql_error());
+}
+
 echo "Creating Table for logbooks...</br>";
 if (!mysql_query($create_logbook_table,$con))
+{
+	die('Error: ' . mysql_error());
+}
+
+echo "Creating Table for trip...</br>";
+if (!mysql_query($create_trip_table,$con))
 {
 	die('Error: ' . mysql_error());
 }
@@ -100,12 +164,5 @@ if (!mysql_query($create_waypoint_table,$con))
 {
 	die('Error: ' . mysql_error());
 }
-
-echo "Creating Table for tripinfo...</br>";
-if (!mysql_query($create_tripinfo_table,$con))
-{
-	die('Error: ' . mysql_error());
-}
-
 mysql_close($con);
 ?>
