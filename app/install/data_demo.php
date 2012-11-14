@@ -52,7 +52,7 @@ VALUES
 (
 NULL, 'Victoria', '14525447', 'mein_zeichen',
 'Konstanzer_Hafen', 'Yachtclub_Konstanz', 'Icke',
-'Brauchichnet', 'jung', 'geiles_boot', 'icke_auch',
+'Brauchichnet', 'jung', 'segelboot', 'icke_auch',
 '100000', '500', '2', '60', '2.4', 'rigtype_kp', '2015',
 '5000kwExport', '100000', '1', '5', '123', '43', '123'
 )";
