@@ -28,16 +28,16 @@
 							<br />
 							<label for="btm">BTM</label>
 							<input type="text" name="btm" size="5px" />
-							ï¿½ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
 							<input type="text" name="dtm" size="5px" />
-							nm
 						</fieldset>
 						<fieldset>
 							<label for="cog">COG</label>
-							<input type="text" name="cog" size="5px" />
-							ï¿½ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="sog">SOG</label>
-							<input type="text" name="sog" size="5px" />
-							kn	at ...
+							<input id="cog" type="text" name="cog" size="5px" onblur="checkCOG()" />
+							°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label for="sog">SOG</label>
+							<input id="sog" type="text" name="sog" size="5px" onblur="checkSOG()" />
+							kn	at <span id="timestamp">(timestamp)</timestamp></span>
 							<br />
 							<br />
 							<label for="destination">Fahrt nach</label>
@@ -46,7 +46,7 @@
 							</select>
 						</fieldset>
 						<fieldset>
-							<label for="manoever">Manï¿½ver</label>
+							<label for="manoever">Manöver</label>
 							<select name="maneuver">
 								<option>-</option>
 								<option>Tack</option>
@@ -70,7 +70,7 @@
 								<option>Blister</option>
 								<option>Spinaker</option>
 							</select>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="grosssegel">Groï¿½segel</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="grosssegel">Großsegel</label>
 							<select name="grosssegel">
 								<option>-</option>
 								<option>Full</option>
