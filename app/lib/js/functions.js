@@ -13,7 +13,10 @@ function checkNorth() {
 	 * erste Zahl kann noch nicht aus einer einzigen Ziffer bestehen... Warum nicht??
 	 */
 	if (north.match(/^(([\d]|[0-8]?[\d]|90)([°]?|[\s]?|[°][\s])([0-5]?[\d])?([.]?|[\s]?)([0-5]?[\d])[']?)$/)) {
-		alert("ok");
+		north_regex = $[/^(([\d]|[0-8]?[\d]|90)([°]?|[\s]?|[°][\s])([0-5]?[\d])?([.]?|[\s]?)([0-5]?[\d])[']?)$/];
+		alert("ok " + north_regex);
+		document.getElementById("position_north").value = "ok";
+		
 	} else {
 		alert("Bitte gültige North-Position eingeben");
 	}
