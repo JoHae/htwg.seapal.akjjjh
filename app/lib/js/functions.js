@@ -33,3 +33,17 @@ function checkEast() {
 		alert("Bitte gültige East-Position eingeben");
 	}
 }
+
+function checkCOG() {
+	cog = document.getElementById("cog").value;
+	if (!cog.match(/^([0-2]?[\d]{1,2}.[\d]|[3][0-5][\d].[\d])$/)) {
+		alert("Bitte gültigen COG-Wert eingeben! Format: ZZZ.Z von 0.0 bis 359.9");
+	}
+}
+
+function checkSOG() {
+	sog = document.getElementById("sog").value;
+	if (!sog.match(/^([01]?[0-7]?[\d]{1,2}.[\d]|[1][8][0-5][1].[0-8])$/)) {
+		alert("Bitte gültigen SOG-Wert eingeben! Format: ZZZZ.Z von 0.0 bis 1851.8");
+	}
+}

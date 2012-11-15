@@ -33,10 +33,11 @@
 						</fieldset>
 						<fieldset>
 							<label for="cog">COG</label>
-							<input type="text" name="cog" size="5px" />
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="sog">SOG</label>
-							<input type="text" name="sog" size="5px" />
-							kn	at ...
+							<input id="cog" type="text" name="cog" size="5px" onblur="checkCOG()" />
+							°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label for="sog">SOG</label>
+							<input id="sog" type="text" name="sog" size="5px" onblur="checkSOG()" />
+							kn	at <span id="timestamp">(timestamp)</timestamp></span>
 							<br />
 							<br />
 							<label for="destination">Fahrt nach</label>
