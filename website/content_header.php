@@ -36,10 +36,10 @@ return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 				} else {
 				echo "<li><a href=\"contact.php\">Contact</a></li>";
 				}
-				if(curPageName()=="logbook.php") {
-				echo "<li class=\"current_page_item\"><a href=\"logbook.php\">Logbuch</a></li>";
+				if(curPageName()=="logbook_table.php") {
+				echo "<li class=\"current_page_item\"><a href=\"../app/logbook_table.php\">Logbuch</a></li>";
 				} else {
-				echo "<li><a href=\"logbook.php\">Logbuch</a></li>";
+				echo "<li><a href=\"../app/logbook_table.php\">Logbuch</a></li>";
 				}
 				?>
 			</ul>
