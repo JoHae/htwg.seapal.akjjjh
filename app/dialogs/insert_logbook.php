@@ -1,12 +1,7 @@
 <?php
-$con = mysql_connect("localhost", "root");
-if (!$con) {
-	die('Could not connect: ' . mysql_error());
-}
+$con = (include '../database/connect.php');
 
-mysql_select_db("my_db", $con);
-
-# If boatId already exists just update the entry
+# If logbookID already exists just update the entry
 if ($_POST['logbookID']!='NULL') {
 	$sql = "UPDATE `seapal`.`logbook`
 	SET

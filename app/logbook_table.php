@@ -1,30 +1,16 @@
 <script language="javascript">
-    function elementHideShow(elementToHideOrShow) 
-    {
-        var el = document.getElementById(elementToHideOrShow);
-        if (el.style.display == "table-row") {
-            el.style.display = "none";
-        }
-        else 
-        {
-            el.style.display = "table-row";
-        }
-    }         
+	function elementHideShow(elementToHideOrShow) {
+		var el = document.getElementById(elementToHideOrShow);
+		if (el.style.display == "table-row") {
+			el.style.display = "none";
+		} else {
+			el.style.display = "table-row";
+		}
+	}
 </script>
 
 <?php
-$con = mysql_connect("localhost", "root");
-if (!$con) {
-	die('Could not connect: ' . mysql_error());
-}
-
-$db_selected = mysql_select_db("seapal", $con);
-if (!$db_selected) {
-	echo "<div>Cannot access to database seapal.</div>";
-	echo "<div>Please execute 'app/install/install.php' to create seapal database</div>";
-	die('Cannot use seapal database : ' . mysql_error());
-}
-
+$con = (include './database/connect.php');
 $result = mysql_query("SELECT * FROM logbook");
 
 echo "<table border=\"1\">
@@ -48,6 +34,7 @@ while ($row = mysql_fetch_array($result)) {
          	'Popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1030,height=350,left=430,top=23'); return false;\"></td>
         </tr>
         <tr id=\"" . $row['logbookID'] . "\" style=\"display:none\"><td colspan=\"5\">
+        	<a href=\"trip_table.php?logbookID=" . $row['logbookID'] . "\">Show Trips?!</a>
         	Hier eine Beschreibung bzw weitere parameter.......................
         </tr>";
 }
@@ -56,4 +43,3 @@ mysql_close($con);
 ?>
 <input type="button" name="new_logbook" value="Neues Logbuch" onclick="Popup=window.open('../app/dialogs/logbook_edit.php?logbookID=NULL',
 'Popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1030,height=350,left=430,top=23'); return false;">
-

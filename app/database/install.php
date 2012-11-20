@@ -3,7 +3,6 @@ $con = mysql_connect("localhost", "root");
 if (!$con) {
 	die('Could not connect: ' . mysql_error());
 }
-
 # Delete database is it exists
 if (mysql_query("DROP DATABASE IF EXISTS seapal", $con)) {
 	echo "Database dropped</br>";
@@ -70,7 +69,7 @@ end      datetime,
 
 motor       varchar(15),
 tank_filled bool,
-notes       blob
+notes       text
 )";
 
 # Table for Waypoints

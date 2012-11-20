@@ -9,17 +9,12 @@
 		<title>SeaPal</title>
 		<link rel="icon" type="image/png" href="http://www.seapal.de/images/Icon-32.png" />
 		<link href="lib/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
-
 	</head>
 
 	<body>
 		<?php
 		if ($_GET["logbookID"] != 'NULL') {
-			$con = mysql_connect("localhost", "root");
-			if (!$con) {
-				die('Could not connect: ' . mysql_error());
-			}
-			mysql_select_db("seapal", $con);
+			$con = (include '../database/connect.php');
 			$result = mysql_query("SELECT * FROM logbook WHERE logbookID=" . $_GET["logbookID"]);
 			$row = mysql_fetch_array($result);
 			mysql_close($con);
