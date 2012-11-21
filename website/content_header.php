@@ -41,10 +41,10 @@ return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 				} else {
 				echo "<li><a href=\"../app/logbook_table.php\">Logbuch</a></li>";
 				}
-				if(curPageName()=="map.php") {
-				echo "<li class=\"current_page_item\"><a href=\"map.php\">TestMap</a></li>";
+				if(curPageName()=="map.html") {
+				echo "<li class=\"current_page_item\"><a href=\"map.html\">TestMap</a></li>";
 				} else {
-				echo "<li><a href=\"map.php\">TestMap</a></li>";
+				echo "<li><a href=\"map.html\">TestMap</a></li>";
 				}
 				?>
 			</ul>
