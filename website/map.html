@@ -89,15 +89,17 @@
 				}
 
 				var actualCrosshairMarker = null;
+				var actualCrosshairPosition;
 
 				google.maps.event.addListener(map, 'click', function(event) {
+					actualCrosshairPosition = event.latLng;
 					if (actualCrosshairMarker == null) {
 						var markerOptions = {
-							position : event.latLng,
+							position : actualCrosshairPosition,
 							map : map,
 							draggable : true,
 							icon : "images/cross_hair.png",
-							labelContent : getPostionString(event.latLng),
+							labelContent : getPostionString(actualCrosshairPosition),
 							labelAnchor : new google.maps.Point(3, 30),
 							labelClass : "labels", // the CSS class for the label
 							labelStyle : {
@@ -106,19 +108,21 @@
 						}
 						actualCrosshairMarker = new MarkerWithLabel(markerOptions);
 					} else {
-						actualCrosshairMarker.setPosition(event.latLng);
-						actualCrosshairMarker.set("labelContent", getPostionString(event.latLng));
+						actualCrosshairMarker.setPosition(actualCrosshairPosition);
+						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
 					}
 					setNewMarkerMenu(map);
 
 					google.maps.event.addListener(actualCrosshairMarker, 'drag', function() {
 						setNewMarkerMenu(map);
 						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
+						actualCrosshairPosition = actualCrosshairMarker.getPosition();
 					});
 
 					google.maps.event.addListener(actualCrosshairMarker, 'dragend', function() {
 						setNewMarkerMenu(map);
 						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
+						actualCrosshairPosition = actualCrosshairMarker.getPosition();
 					});
 				})
 
@@ -146,19 +150,19 @@
 		<div id="overlay" style="z-index: 1000; position: absolute; display: none; width: 150px; height: 180px; background-color: white; border:1px solid grey;padding:10px;">
 	<ul>
 		<li>
-			<a href="javascript:void(0);" onclick="addstandardMark();">Markierung setzen</a>
+			<a id="addStandardMark" href="javascript:void(0);" onclick="">Markierung setzen</a>
 		</li>
 		<li>
-			<a href="javascript:void(0);" onclick="addRouteMark(2367,146986,2);">Route setzen</a>
+			<a id="addRoute" href="javascript:void(0);" onclick="">Route setzen</a>
 		</li>
 		<li>
-			<a href="javascript:void(0);" onclick="ShowOld(2367,146986,2);">Abstand von hier</a>
+			<a id="addDistanceStart" href="javascript:void(0);" onclick="">Abstand von hier</a>
 		</li>
 		<li>
-			<a href="javascript:void(0);" onclick="ShowOld(2367,146986,2);">Zum Ziel machen</a>
+			<a id="addDestination" href="javascript:void(0);" onclick="">Zum Ziel machen</a>
 		</li>
 		<li>
-			<a href="javascript:void(0);" onclick="ShowOld(2367,146986,2);">Löschen</a>
+			<a id="delete" href="javascript:void(0);" onclick="">Löschen</a>
 		</li>
 	</ul>
 	<a href="#" id="close">close</a>
