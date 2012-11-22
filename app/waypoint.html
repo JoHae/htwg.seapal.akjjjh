@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="lib/css/styles.css" type="text/css" />
 		<script type="text/javascript" src="lib/js/functions.js"></script>
 	</head>
-	<body>
+	<body onload="setTimestamp('timestamp');">
 		<div id="wrapper">
 			<div id="nav">
 				<input class="left" type="button" value="Zurück" onclick="history.back()" />
@@ -20,21 +20,21 @@
 						</fieldset>
 						<fieldset>
 							<label for="degree_north">Position</label>
-							<input id="position" type="text" name="position" onblur="isCoordinatesOk(this, null)" />
+							<input id="position" type="text" name="position" onblur="isCoordinateOk(this, null)" />
 							<br />
 							<br />
 							<label for="btm">BTM</label>
-							<input type="text" name="btm" size="5px" />
+							<input type="text" name="btm" size="5px" onblur="checkBTM(this)" />
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
-							<input type="text" name="dtm" size="5px" />
+							<input type="text" name="dtm" size="5px" onblur="checkDTM(this)" />
 						</fieldset>
 						<fieldset>
 							<label for="cog">COG</label>
-							<input id="cog" type="text" name="cog" size="5px" onblur="checkCOG()" />
+							<input id="cog" type="text" name="cog" size="5px" onblur="checkCOG(this)" />
 							°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label for="sog">SOG</label>
-							<input id="sog" type="text" name="sog" size="5px" onblur="checkSOG()" />
-							kn	at <span id="timestamp">(timestamp)</timestamp></span>
+							<input id="sog" type="text" name="sog" size="5px" onblur="checkSOG(this)" />
+							kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;&nbsp;&nbsp;<span id="timestamp"></span>
 							<br />
 							<br />
 							<label for="destination">Fahrt nach</label>

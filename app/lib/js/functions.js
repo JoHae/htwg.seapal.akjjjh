@@ -1,51 +1,68 @@
-function checkNorth() {
-	north = document.getElementById("position_north").value;
-	/*
-	 * Tests:
-	 * 0°12.23 -> ok
-	 * 90° 59.59 -> ok
-	 * 91° 34.56 -> ungültig
-	 * 103° -> ungültig
-	 *
-	 */
+function isCoordinateOk(inputField, helpSpan) {
+	var tRegEx = /^(\d|([0-8]\d)|90)([°.](([0-5]\d?(.\d\d?)?)|60(.00?)?)['`]?)?\s?[NnSs]\s?(0{0,2}\d\d?|1([0-7]\d)|180)([°.](([0-5]\d?(.\d\d?)?)|60(.00?)?)['`]?)?\s?[EeWw]$/;
+	return editNodeText(tRegEx, inputField, helpSpan, "Enter valid Coordinates. For example: 47°49.89'N 009°00.50'E", formatCoordinates);
+}
 
-	/*
-	 * erste Zahl kann noch nicht aus einer einzigen Ziffer bestehen... Warum nicht??
-	 */
-	if (north.match(/^(([\d]|[0-8]?[\d]|90)([°]?|[\s]?|[°][\s])([0-5]?[\d])?([.]?|[\s]?)([0-5]?[\d])[']?)$/)) {
-		north_regex = $[/^(([\d]|[0-8]?[\d]|90)([°]?|[\s]?|[°][\s])([0-5]?[\d])?([.]?|[\s]?)([0-5]?[\d])[']?)$/];
-		alert("ok " + north_regex);
-		document.getElementById("position_north").value = "ok";
-
+function checkCOG(cog) {
+	var regex = /^([0-2]?[\d]{1,2}.[\d]|[3][0-5][\d].[\d])$/;
+	var cogval = cog.value;
+	if (cogval.match(regex)) {
+		if (cogval.indexOf(".") == 2) {
+			cogval = "0" + cogval;
+		}
+		if (cogval.indexOf(".") == 1) {
+			cogval = "00" + cogval;
+		}
+		cog.value = cogval;
 	} else {
-		alert("Bitte gültige North-Position eingeben");
+		alert("Bitte gültigen Course over Ground-Wert zwischen 000.0 und 359.9 eingeben! Beispiel: 234.2");
 	}
 }
 
-function checkEast() {
-	east = document.getElementById("position_east").value;
-	/*
-	 * erste Zahl kann noch nicht aus einer einzigen Ziffer bestehen... Warum nicht??
-	 */
-	if (east.match(/^(([\d]|[01]?[0-8]?[\d]|180)([°]?|[\s]?|[°][\s])([0-5]?[\d])?([.]?|[\s]?)([0-5]?[\d])[']?)$/)) {
-		alert("ok");
+function checkSOG(sog) {
+	alert("sog");
+	var regex = /^([01]?[0-7]?[\d]{1,2}.[\d]|[1][8][0-5][1].[0-8])$/;
+	var sogval = sog.value;
+	var sognew = "";
+	if (sogval.match(regex)) {
+		// for(int i = 2; i >= 0; i--) {
+		// alert(i);
+		// if(sogval.indexOf(".") == i+1) {
+		// sognew += "0";
+		// }
+		if (sogval.indexOf(".") == 3) {
+			sogval = "0" + sogval;
+		}
+		if (sogval.indexOf(".") == 2) {
+			sogval = "00" + sogval;
+		}
+		if (sogval.indexOf(".") == 1) {
+			sogval = "000" + sogval;
+		}		// }
+		sogval = sognew + sogval;
+		sog.value = sogval;
 	} else {
-		alert("Bitte gültige East-Position eingeben");
+		alert("Bitte gültigen Speed over Ground-Wert zwischen 0.0 und 1851.8 eingeben! Beispiel: 1234.2");
 	}
 }
 
-function checkCOG() {
-	cog = document.getElementById("cog").value;
-	if (!cog.match(/^([0-2]?[\d]{1,2}.[\d]|[3][0-5][\d].[\d])$/)) {
-		alert("Bitte gültigen COG-Wert eingeben! Format: ZZZ.Z von 0.0 bis 359.9");
+function setTimestamp(str) {
+	var time = document.getElementById(str);
+	var date = new Date();
+	var days = date.getDate();
+	var months = date.getMonth()+1;
+	var years = date.getFullYear();
+	var hours = date.getHours();
+	var minutes = date.getMinutes();
+	var seconds = date.getSeconds();
+	if(seconds <= 9) {
+		var formattedTime = days + "." + months + "." + years + ", " + hours + ':' + minutes + ':0' + seconds;
 	}
-}
+	else {
+		var formattedTime = days + "." + months + "." + years + ", " + hours + ':' + minutes + ':' + seconds;		
+	}
 
-function checkSOG() {
-	sog = document.getElementById("sog").value;
-	if (!sog.match(/^([01]?[0-7]?[\d]{1,2}.[\d]|[1][8][0-5][1].[0-8])$/)) {
-		alert("Bitte gültigen SOG-Wert eingeben! Format: ZZZZ.Z von 0.0 bis 1851.8");
-	}
+	time.innerHTML = formattedTime;
 }
 
 /**
@@ -58,15 +75,16 @@ function checkSOG() {
  * Input objekt, with the input text.
  * @param {Object} helpSpan
  * @param {Object} helpMessage
- * @param {Object} formattFunction
+ * @param {Object} formatFunction
  */
-function editNodeText(regex, inputField, helpSpan, helpMessage, formattFunction) {
+function editNodeText(regex, inputField, helpSpan, helpMessage, formatFunction) {
 	var input = inputField.value;
 
 	if (helpSpan != null) {
 		// Remove any warnings that may exist
-		while (helpSpan.firstChild)
-		helpSpan.removeChild(helpSpan.firstChild);
+		while (helpSpan.firstChild) {
+			helpSpan.removeChild(helpSpan.firstChild);
+		}
 	}
 
 	// See if the visitor entered the right information
@@ -80,14 +98,9 @@ function editNodeText(regex, inputField, helpSpan, helpMessage, formattFunction)
 
 	}
 	// If the right information was entered
-	if (formattFunction != null)
-		inputField.value = formattFunction(input);
+	if (formatFunction != null)
+		inputField.value = formatFunction(input);
 	return true;
-}
-
-function isCoordinatesOk(inputField, helpSpan) {
-	var tRegEx = /^(\d|([0-8]\d)|90)([°.](([0-5]\d?(.\d\d?)?)|60(.00?)?)['`]?)?\s?[NS]\s?(0{0,2}\d\d?|1([0-7]\d)|180)([°.](([0-5]\d?(.\d\d?)?)|60(.00?)?)['`]?)?\s?[EW]$/
-	return editNodeText(tRegEx, inputField, helpSpan, "Enter valid Coordinates. For example: 47°49.89'N 009°00.50'E", formattCoordinates);
 }
 
 function removeStringUntilNextNumbers(input) {
@@ -97,7 +110,7 @@ function removeStringUntilNextNumbers(input) {
 }
 
 function isCoordinateFinished(input) {
-	tRegEx = /^\D*[NSEW]/;
+	tRegEx = /^\D*[NnSsEeWw]/;
 	return tRegEx.test(input);
 }
 
@@ -107,7 +120,7 @@ function removeLatitude(input) {
 	return input.substr(tMatch.index + 1);
 }
 
-function formattCoordinate(input) {
+function formatCoordinate(input) {
 	var tMatch;
 	var tRegEx;
 	var tCurrInput = input;
@@ -153,7 +166,7 @@ function formattCoordinate(input) {
 		}
 	}
 
-	tRegEx = /[NSWE]/;
+	tRegEx = /[NnSsWwEe]/;
 	tMatch = tRegEx.exec(input);
 	var tDirection = input.substr(tMatch.index, 1);
 
@@ -166,12 +179,12 @@ function formattCoordinate(input) {
 	return tRetArray;
 }
 
-function formattCoordinates(input) {
-	var tRegEx = /[NS]/;
+function formatCoordinates(input) {
+	var tRegEx = /[NnSs]/;
 	var tMatch = tRegEx.exec(input);
 
-	var tLat = formattCoordinate(input.substr(0, tMatch.index + 1));
-	var tLong = formattCoordinate(input.substr(tMatch.index + 1));
+	var tLat = formatCoordinate(input.substr(0, tMatch.index + 1));
+	var tLong = formatCoordinate(input.substr(tMatch.index + 1));
 
 	var tFormattedString = pad(tLat[0], 2) + "°" + pad(tLat[1], 2) + "." + pad(tLat[2], 2) + "'" + tLat[3] + " ";
 	tFormattedString += pad(tLong[0], 3) + "°" + pad(tLong[1], 2) + "." + pad(tLong[2], 2) + "'" + tLong[3];
