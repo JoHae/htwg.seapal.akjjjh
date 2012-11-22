@@ -1,43 +1,7 @@
 <?php
 $con = (include 'connect.php');
 
-# GENERAL DATA
-$insert_mainsail="INSERT INTO `seapal`.`maneuvertype`
-(
-`maneuverID`, `name`
-)
-VALUES
-(NULL, 'Tack'), (NULL, 'Jibe'), (NULL, 'Lay to'), (NULL, 'Set Sails'), (NULL, 'Change Sails'), (NULL, 'Sails Down'), (NULL, 'Ref'), (NULL, 'Anker Up'), (NULL, 'Anker Down')";
-
-$insert_headsail="INSERT INTO `seapal`.`headsailtype`
-(
-`headsailID`, `name`
-)
-VALUES
-(NULL, 'Genua1'), (NULL, 'Genua2'), (NULL, 'Genua3'), (NULL, 'Fock'), (NULL, 'Storm Fock'), (NULL, 'Blister'), (NULL, 'Spinaker')";
-
-$insert_maneuver="INSERT INTO `seapal`.`mainsailtype` (`mainsailID`, `name`) VALUES (NULL, 'Full'), (NULL, 'Ref1'), (NULL, 'Ref2')";
-
-// mysql_query("DELETE FROM `seapal`.`maneuvertype`",$con);
-// mysql_query("DELETE FROM `seapal`.`headsailtype`",$con);
-// mysql_query("DELETE FROM `seapal`.`mainsailtype`",$con);
-echo "Insert Mainsail...</br>";
-if (!mysql_query($insert_mainsail,$con))
-{
-	die('Error: ' . mysql_error());
-}
-echo "Insert Headsail...</br>";
-if (!mysql_query($insert_headsail,$con))
-{
-	die('Error: ' . mysql_error());
-}
-echo "Insert Maneuver...</br>";
-if (!mysql_query($insert_maneuver,$con))
-{
-	die('Error: ' . mysql_error());
-}
-
-# PERSONAL DATA OF TSCHO
+# PERSONAL DATA OF JH
 $tscho_insert_logbook="INSERT INTO `seapal`.`logbook`
 (
 `logbookID`, `shipname`, `registnumber`, `sailsign`, `homeport`, `yachtclub`, `owner`, `insurance`, `callsign`, `type`,

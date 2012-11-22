@@ -36,7 +36,6 @@ if ($_POST['logbookID']!='NULL') {
 		die('Error: ' . mysql_error());
 	}
 	echo "1 record edited";
-
 } else {
 	$sql = "INSERT INTO `seapal`.`logbook`
 	(

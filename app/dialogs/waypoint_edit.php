@@ -13,9 +13,10 @@
 
 	<body>
 		<?php
-		if ($_GET["logbookID"] != 'NULL') {
-			$con = (include '../database/connect.php');
-			$result = mysql_query("SELECT * FROM logbook WHERE logbookID=" . $_GET["logbookID"]);
+		if ($_GET["waypointID"] != 'NULL') {
+			$con = (
+			include '../database/connect.php');
+			$result = mysql_query("SELECT * FROM waypoint WHERE waypointID=" . $_GET["waypointID"]);
 			$row = mysql_fetch_array($result);
 			mysql_close($con);
 		} else {
@@ -25,39 +26,28 @@
 		<div id="wrapper">
 			<div id="main">
 				<div id="trip_form">
-					<form action="" method="get">
+					<form action="insert_waypoint.php" method="post">
 						<fieldset class="title">
 							<label for="waypoint_name">Name</label>
-							<input type="text" name="waypoint_name" size="50px" />
+							<input type="text" name="waypoint_name" size="50px" value="<?php if($row != "") echo $row["waypoint_name"] ?>" />
 						</fieldset>
 						<fieldset>
 							<label for="degree_north">Position</label>
-							<input type="number" name="degree_north" />
-							ï¿½
-							<input type="number" name="minutes_north" />
-							'
-							<input type="number" name="seconds_north" />
-							" N &nbsp;&nbsp;&nbsp;
-							<input type="number" name="degree_east" />
-							ï¿½
-							<input type="number" name="minutes_east" />
-							'
-							<input type="number" name="seconds_east" />
-							" E
+							<input id="position" type="text" name="position" />
 							<br />
 							<br />
 							<label for="btm">BTM</label>
-							<input type="text" name="btm" size="5px" />
-							ï¿½ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
-							<input type="text" name="dtm" size="5px" />
-							nm
+							<input type="text" name="btm" size="5px" value="<?php if($row != "") echo $row["btm"] ?>" />
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
+							<input type="text" name="dtm" size="5px" value="<?php if($row != "") echo $row["dtm"] ?>" />
 						</fieldset>
 						<fieldset>
 							<label for="cog">COG</label>
-							<input type="text" name="cog" size="5px" />
-							ï¿½ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="sog">SOG</label>
-							<input type="text" name="sog" size="5px" />
-							kn	at ...
+							<input id="cog" type="text" name="cog" size="5px" value="<?php if($row != "") echo $row["cog"] ?>" />
+							°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<label for="sog">SOG</label>
+							<input id="sog" type="text" name="sog" size="5px" value="<?php if($row != "") echo $row["sog"] ?>" />
+							kn	at <span id="timestamp">(timestamp)</timestamp></span>
 							<br />
 							<br />
 							<label for="destination">Fahrt nach</label>
@@ -65,40 +55,6 @@
 								<option>Fahrt nach ? Was ist das ?</option>
 							</select>
 						</fieldset>
-						<fieldset>
-							<label for="manoever">Manï¿½ver</label>
-							<select name="maneuver">
-								<option>-</option>
-								<option>Tack</option>
-								<option>Jibe</option>
-								<option>Lay to</option>
-								<option>Set Sails</option>
-								<option>Change Sails</option>
-								<option>Sails Down</option>
-								<option>Ref</option>
-								<option>Anker Up</option>
-								<option>Anker Down</option>
-							</select>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="vorsegel">Vorsegel</label>
-							<select name="vorsegel">
-								<option>-</option>
-								<option>Genua1</option>
-								<option>Genua2</option>
-								<option>Genua3</option>
-								<option>Fock</option>
-								<option>Storm Fock</option>
-								<option>Blister</option>
-								<option>Spinaker</option>
-							</select>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="grosssegel">Groï¿½segel</label>
-							<select name="grosssegel">
-								<option>-</option>
-								<option>Full</option>
-								<option>Ref1</option>
-								<option>Ref2</option>
-							</select>
-						</fieldset>
-					</form>
 				</div>
 				<div id="middle">
 					<div id="notes">
@@ -110,7 +66,11 @@
 						<img src="lib/img/nophoto.jpg" />
 					</div>
 				</div>
+				<input type="submit" />
+				<input type="hidden" name="waypointID" value="<?php echo $_GET["waypointID"]; ?>">
+				<input type="hidden" name="tripID" value="<?php echo $_GET["tripID"]; ?>">
 			</div>
 		</div>
+		</form>
 	</body>
 </html>
