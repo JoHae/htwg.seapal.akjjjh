@@ -66,18 +66,21 @@
 				map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);
 
 				// -------- CROSS HAIR MARKER --------
+				var actualCrosshairMarker = null;
+				var actualCrosshairPosition;
+
 				function setNewMarkerMenu(map) {
 					var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
 					var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
-					var scale = Math.pow(2, map.getZoom());
+					var scale = Math.pow(2, map.getZoom());
 					var worldPoint = map.getProjection().fromLatLngToPoint(actualCrosshairMarker.getPosition());
 					var point = new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
 
+					jQuery("#overlay").hide();
 					jQuery("#overlay").css({
 						left : (jQuery("#map_canvas").position().left + point.x),
 						top : (jQuery("#map_canvas").position().top + point.y)
 					});
-
 					jQuery("#overlay").show();
 
 					jQuery('#close').click(function(e) {
@@ -88,8 +91,6 @@
 					});
 				}
 
-				var actualCrosshairMarker = null;
-				var actualCrosshairPosition;
 
 				google.maps.event.addListener(map, 'click', function(event) {
 					actualCrosshairPosition = event.latLng;
@@ -107,6 +108,7 @@
 							}
 						}
 						actualCrosshairMarker = new MarkerWithLabel(markerOptions);
+						//zoomScale = Math.pow(2, map.getZoom());
 					} else {
 						actualCrosshairMarker.setPosition(actualCrosshairPosition);
 						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
@@ -127,14 +129,22 @@
 				})
 
 				google.maps.event.addListener(map, 'zoom_changed', function() {
-					setNewMarkerMenu(map);
-				});
+					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
+						//here I have the correct zoom level
+						setNewMarkerMenu(map);
+						google.maps.event.removeListener(zoomChangeBoundsListener);
+					});
 
+				});
 				google.maps.event.addListener(map, 'center_changed', function() {
 					document.getElementById("lat").firstChild.nodeValue = map.getCenter().lat();
 					document.getElementById("long").firstChild.nodeValue = map.getCenter().lng();
 					document.getElementById("coordinations").firstChild.nodeValue = getPostionString(map.getCenter());
-					setNewMarkerMenu(map);
+					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
+						//here I have the correct zoom level
+						setNewMarkerMenu(map);
+						google.maps.event.removeListener(zoomChangeBoundsListener);
+					});
 				});
 			}
 		</script>
@@ -147,28 +157,26 @@
 		</div>
 
 		<!-- 	DYNAMIC MENU SHOWN WHEN CLICKING ON THE MAP	 -->
-		<div id="overlay" style="z-index: 1000; position: absolute; display: none; width: 150px; height: 180px; background-color: white; border:1px solid grey;padding:10px;">
-	<ul>
-		<li>
-			<a id="addStandardMark" href="javascript:void(0);" onclick="">Markierung setzen</a>
-		</li>
-		<li>
-			<a id="addRoute" href="javascript:void(0);" onclick="">Route setzen</a>
-		</li>
-		<li>
-			<a id="addDistanceStart" href="javascript:void(0);" onclick="">Abstand von hier</a>
-		</li>
-		<li>
-			<a id="addDestination" href="javascript:void(0);" onclick="">Zum Ziel machen</a>
-		</li>
-		<li>
-			<a id="delete" href="javascript:void(0);" onclick="">Löschen</a>
-		</li>
-	</ul>
-	<a href="#" id="close">close</a>
-</div>
-
+		<div id="overlay" style="z-index: 1000; position: absolute; display: none; width: 180px; height: 150px; background-color: white; border:1px solid grey;padding:10px;">
+			<ul>
+				<li>
+					<a id="addStandardMark" href="javascript:void(0);" onclick="">Markierung setzen</a>
+				</li>
+				<li>
+					<a id="addRoute" href="javascript:void(0);" onclick="">Route setzen</a>
+				</li>
+				<li>
+					<a id="addDistanceStart" href="javascript:void(0);" onclick="">Abstand von hier</a>
+				</li>
+				<li>
+					<a id="addDestination" href="javascript:void(0);" onclick="">Zum Ziel machen</a>
+				</li>
+				<li>
+					<a id="delete" href="javascript:void(0);" onclick="">Löschen</a>
+				</li>
+			</ul>
+			<a href="#" id="close">close</a>
+		</div>
 		<div id="map_canvas" style="width:100%; height:100%"></div>
-
 	</body>
 </html>
