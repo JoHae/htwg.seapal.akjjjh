@@ -24,7 +24,7 @@
 		?>
 		<div id="main">
 			<div id="form">
-				<form action="insert_trip.php?tripID=<?php echo $_GET["tripID"]; ?>&logbookID=<?php echo $_GET["logbookID"]; ?>" method="post">
+				<form action="insert_trip.php" method="post">
 				<fieldset class="title fs80">
 					<label for="triptitle">Trip-Titel</label>
 					<input type="text" name="triptitle" size="50px" value="<?php if($row != "") echo $row["triptitle"] ?>" />

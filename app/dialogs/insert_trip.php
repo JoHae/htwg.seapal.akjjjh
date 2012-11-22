@@ -2,7 +2,7 @@
 $con = (include '../database/connect.php');
 
 	// notes and photos are missing
-# If logbookID already exists just update the entry
+# If tripID already exists just update the entry
 if ($_POST['tripID']!='NULL') {
 	$sql = "UPDATE `seapal`.`trip`
 	SET
@@ -30,7 +30,7 @@ if ($_POST['tripID']!='NULL') {
 	)
 	VALUES
 	(
-	NULL,'$_GET[logbookID]', '$_POST[triptitle]','$_POST[destination]','$_POST[startpoint]','$_POST[skipper]','$_POST[crew]','$_POST[start]','$_POST[end]','$_POST[motor]','$_POST[tank_filled]')";
+	NULL,'$_POST[logbookID]', '$_POST[triptitle]','$_POST[destination]','$_POST[startpoint]','$_POST[skipper]','$_POST[crew]','$_POST[start]','$_POST[end]','$_POST[motor]','$_POST[tank_filled]')";
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());
 	}
