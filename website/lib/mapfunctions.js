@@ -121,13 +121,13 @@ function addNewStandardMarker() {
 		selectedMarker = marker;
 		setNewStandardMarkerMenu(marker);
 	})
-	
+
 	return marker;
 }
 
 function setNewStandardMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
-	
+
 	jQuery("#standardMenu").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
@@ -150,24 +150,24 @@ function addNewRouteMarker() {
 	var marker = new google.maps.Marker(markerOptions);
 
 	google.maps.event.addListener(marker, 'drag', function() {
-		
+		updateRoutePolylines();
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
-		
+		updateRoutePolylines();
 	});
 
 	google.maps.event.addListener(marker, 'click', function(event) {
 		selectedMarker = marker;
 		setNewRouteMarkerMenu(marker);
 	})
-	
+
 	return marker;
 }
 
 function setNewRouteMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
-	
+
 	jQuery("#routeMenu").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
@@ -178,4 +178,23 @@ function setNewRouteMarkerMenu(marker) {
 		e.preventDefault();
 		jQuery("#routeMenu").hide();
 	});
+}
+
+function updateRoutePolylines() {
+	var routePoints = new Array();
+	for (var i = 0; i < routeMarkerArray.length; i++) {
+		routePoints[i] = routeMarkerArray[i].getPosition();
+	}
+
+	if (route != null) {
+		route.setPath(routePoints);
+	} else {
+		route = new google.maps.Polyline({
+			path : routePoints,
+			strokeColor : "#FF0000",
+			strokeOpacity : 1.0,
+			strokeWeight : 2
+		});
+		route.setMap(map);
+	}
 }

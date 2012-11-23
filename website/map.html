@@ -34,6 +34,7 @@
 			var actualCrosshairPosition;
 			var standardMarkerArray = new Array();
 			var routeMarkerArray = new Array();
+			var route;
 			var actualCrosshairMarker = null;
 			var selectedMarker;
 			function initialize() {
@@ -94,18 +95,19 @@
 					standardMarkerArray[length] = addNewStandardMarker();					actualCrosshairMarker.setMap(null);
 					actualCrosshairMarker = null;
 				});
-				
-				// Set new standard marker
+
+				// Set new route marker
 				$("#addRouteMarker").click(function() {
 					jQuery("#crosshairMenu").hide();
 					var length = routeMarkerArray.length;
 					routeMarkerArray[length] = addNewRouteMarker();
+					updateRoutePolylines();
 					actualCrosshairMarker.setMap(null);
 					actualCrosshairMarker = null;
 				});
 
 				// -------- MENU EVENT HANDLING OF STANDARD MARKER --------
-				// Set new standard marker
+				// Delete selected Standard marker
 				$("#deleteStandardMarker").click(function() {
 					for (var i = 0; i < standardMarkerArray.length; i++) {
 						if (selectedMarker == standardMarkerArray[i]) {
@@ -115,19 +117,41 @@
 					jQuery("#standardMenu").hide();
 					selectedMarker.setMap(null);
 					selectedMarker = null;				});
-				
+
+
 				// -------- MENU EVENT HANDLING OF ROUTE MARKER --------
-				// Set new standard marker
+				// delete selected Route Marker
 				$("#deleteRouteMarker").click(function() {
-					for (var i = 0; i < routeMarkerArray.length; i++) {
+					var length = routeMarkerArray.length;
+	
+					for (var i = 0; i < length; i++) {
 						if (selectedMarker == routeMarkerArray[i]) {
 							routeMarkerArray.splice(i, 1);
 						}
 					}
+					
+					updateRoutePolylines();
 					jQuery("#routeMenu").hide();
 					selectedMarker.setMap(null);
 					selectedMarker = null;
 				});
+				
+				// delete Route completly
+				$("#deleteRoute").click(function() {
+					var length = routeMarkerArray.length;
+					for (var i = 0; i < length; i++) {
+						routeMarkerArray[i].setMap(null);
+					}
+					routeMarkerArray = new Array();
+					route.setMap(null);
+					route = null;
+					updateRoutePolylines();
+					jQuery("#routeMenu").hide();
+					selectedMarker.setMap(null);
+					selectedMarker = null;
+				});
+				
+			// computeDistanceBetween(from:LatLng, to:LatLng, radius?:number) <<<<<< FOR DISTANCE
 			}
 		</script>
 	</head>
@@ -169,7 +193,7 @@
 			</ul>
 			<a href="#" id="closeStandardMenu">close</a>
 		</div>
-		
+
 		<!-- 	MENU FOR ROUTE MARKER	 -->
 		<div id="routeMenu" style="z-index: 1000; position: absolute; display: none; width: 150px; height: 120px; background-color: white; border:1px solid grey;padding:10px;">
 			<ul>
