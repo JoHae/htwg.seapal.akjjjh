@@ -32,8 +32,10 @@
 		<script type="text/javascript">
 			var map;
 			var actualCrosshairPosition;
-			var standardMarkers = new Array();
+			var standardMarkerArray = new Array();
+			var routeMarkerArray = new Array();
 			var actualCrosshairMarker = null;
+			var selectedMarker;
 			function initialize() {
 				var mapTypeIds = ["roadmap", "satellite", "OSM"];
 				var mapOptions = {
@@ -44,70 +46,31 @@
 						mapTypeIds : mapTypeIds
 					}
 				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+				map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
 
 				// -------- Open Sea Map --------
-				map.mapTypes.set("OSM", new google.maps.ImageMapType({
-					getTileUrl : function(coord, zoom) {
-						return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
-					},
-					tileSize : new google.maps.Size(256, 256),
-					name : "OpenStreetMap",
-					maxZoom : 18
-				}));
-				map.overlayMapTypes.push(new google.maps.ImageMapType({
-					getTileUrl : function(coord, zoom) {
-						return "http://tiles.openseamap.org/seamark/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
-					},
-					tileSize : new google.maps.Size(256, 256),
-					name : "OpenSeaMap",
-					maxZoom : 18
-				}));
+				addSeamap();
 
 				// -------- Center Coordinates shown on the Left Top Overlay --------
 				var myControl = document.getElementById('coordsDiv');
 				map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);
 
-				// -------- CROSS HAIR MARKER --------
+				// -------- MAP EVENT HANDLING --------
 				google.maps.event.addListener(map, 'click', function(event) {
 					actualCrosshairPosition = event.latLng;
 					if (actualCrosshairMarker == null) {
-						var markerOptions = {
-							position : actualCrosshairPosition,
-							map : map,
-							draggable : true,
-							icon : "images/cross_hair.png",
-							labelContent : getPostionString(actualCrosshairPosition),
-							labelAnchor : new google.maps.Point(3, 30),
-							labelClass : "labels", // the CSS class for the label
-							labelStyle : {
-								opacity : 0.75
-							}
-						}
-						actualCrosshairMarker = new MarkerWithLabel(markerOptions);
+						addNewCrosshairMarker(map, actualCrosshairPosition);
 					} else {
 						actualCrosshairMarker.setPosition(actualCrosshairPosition);
 						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
 					}
-					setNewMarkerMenu(map);
-
-					google.maps.event.addListener(actualCrosshairMarker, 'drag', function() {
-						setNewMarkerMenu(map);
-						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
-						actualCrosshairPosition = actualCrosshairMarker.getPosition();
-					});
-
-					google.maps.event.addListener(actualCrosshairMarker, 'dragend', function() {
-						setNewMarkerMenu(map);
-						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
-						actualCrosshairPosition = actualCrosshairMarker.getPosition();
-					});
+					setNewCrosshairMarkerMenu();
 				})
 
 				google.maps.event.addListener(map, 'zoom_changed', function() {
 					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
 						//here I have the correct zoom level
-						setNewMarkerMenu(map);
+						setNewCrosshairMarkerMenu();
 						google.maps.event.removeListener(zoomChangeBoundsListener);
 					});
 
@@ -118,19 +81,52 @@
 					document.getElementById("coordinations").firstChild.nodeValue = getPostionString(map.getCenter());
 					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
 						//here I have the correct zoom level
-						setNewMarkerMenu(map);
+						setNewCrosshairMarkerMenu();
 						google.maps.event.removeListener(zoomChangeBoundsListener);
 					});
 				});
 
-				// -------- MENU EVENT HANDLING --------
+				// -------- MENU EVENT HANDLING OF CROSSHAIRMARKER --------
 				// Set new standard marker
-				$("#addStandardMark").click(function() {
-					jQuery("#overlay").hide();
-					addNewStandardMarker(map, actualCrosshairPosition);
-					actualCrosshairPosition = 0;
+				$("#addStandardMarker").click(function() {
+					jQuery("#crosshairMenu").hide();
+					var length = standardMarkerArray.length;
+					standardMarkerArray[length] = addNewStandardMarker();					actualCrosshairMarker.setMap(null);
+					actualCrosshairMarker = null;
+				});
+				
+				// Set new standard marker
+				$("#addRouteMarker").click(function() {
+					jQuery("#crosshairMenu").hide();
+					var length = routeMarkerArray.length;
+					routeMarkerArray[length] = addNewRouteMarker();
 					actualCrosshairMarker.setMap(null);
 					actualCrosshairMarker = null;
+				});
+
+				// -------- MENU EVENT HANDLING OF STANDARD MARKER --------
+				// Set new standard marker
+				$("#deleteStandardMarker").click(function() {
+					for (var i = 0; i < standardMarkerArray.length; i++) {
+						if (selectedMarker == standardMarkerArray[i]) {
+							standardMarkerArray.splice(i, 1);
+						}
+					}
+					jQuery("#standardMenu").hide();
+					selectedMarker.setMap(null);
+					selectedMarker = null;				});
+				
+				// -------- MENU EVENT HANDLING OF ROUTE MARKER --------
+				// Set new standard marker
+				$("#deleteRouteMarker").click(function() {
+					for (var i = 0; i < routeMarkerArray.length; i++) {
+						if (selectedMarker == routeMarkerArray[i]) {
+							routeMarkerArray.splice(i, 1);
+						}
+					}
+					jQuery("#routeMenu").hide();
+					selectedMarker.setMap(null);
+					selectedMarker = null;
 				});
 			}
 		</script>
@@ -142,14 +138,14 @@
 			Lat <span id="lat">42</span> Long <span id="long">9</span>
 		</div>
 
-		<!-- 	DYNAMIC MENU SHOWN WHEN CLICKING ON THE MAP	 -->
-		<div id="overlay" style="z-index: 1000; position: absolute; display: none; width: 180px; height: 150px; background-color: white; border:1px solid grey;padding:10px;">
+		<!-- 	MENU FOR CROSSHAIR MARKER	 -->
+		<div id="crosshairMenu" style="z-index: 1000; position: absolute; display: none; width: 180px; height: 150px; background-color: white; border:1px solid grey;padding:10px;">
 			<ul>
 				<li>
-					<a id="addStandardMark" href="#">Markierung setzen</a>
+					<a id="addStandardMarker" href="#">Markierung setzen</a>
 				</li>
 				<li>
-					<a id="addRoute" href="#">Route setzen</a>
+					<a id="addRouteMarker" href="#">Route setzen</a>
 				</li>
 				<li>
 					<a id="addDistanceStart" href="#">Abstand von hier</a>
@@ -161,8 +157,32 @@
 					<a id="delete" href="#">Löschen</a>
 				</li>
 			</ul>
-			<a href="#" id="close">close</a>
+			<a href="#" id="closeCrosshairMenu">close</a>
 		</div>
-		<div id="map_canvas" style="width:100%; height:100%"></div>
+
+		<!-- 	MENU FOR STANDARD MARKER	 -->
+		<div id="standardMenu" style="z-index: 1000; position: absolute; display: none; width: 150px; height: 100px; background-color: white; border:1px solid grey;padding:10px;">
+			<ul>
+				<li>
+					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
+				</li>
+			</ul>
+			<a href="#" id="closeStandardMenu">close</a>
+		</div>
+		
+		<!-- 	MENU FOR ROUTE MARKER	 -->
+		<div id="routeMenu" style="z-index: 1000; position: absolute; display: none; width: 150px; height: 120px; background-color: white; border:1px solid grey;padding:10px;">
+			<ul>
+				<li>
+					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
+				</li>
+				<li>
+					<a id="deleteRoute" href="#">Route Löschen</a>
+				</li>
+			</ul>
+			<a href="#" id="closeRouteMenu">close</a>
+		</div>
+
+		<div id="mapCanvas" style="width:100%; height:100%"></div>
 	</body>
 </html>
