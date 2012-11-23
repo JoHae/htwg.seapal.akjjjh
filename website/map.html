@@ -30,7 +30,10 @@
 		<script type="text/javascript" src="./lib/markerwithlabel.js"></script>
 		<script type="text/javascript" src="./lib/mapfunctions.js"></script>
 		<script type="text/javascript">
-			var map
+			var map;
+			var actualCrosshairPosition;
+			var standardMarkers = new Array();
+			var actualCrosshairMarker = null;
 			function initialize() {
 				var mapTypeIds = ["roadmap", "satellite", "OSM"];
 				var mapOptions = {
@@ -66,31 +69,6 @@
 				map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);
 
 				// -------- CROSS HAIR MARKER --------
-				var actualCrosshairMarker = null;
-				var actualCrosshairPosition;
-
-				function setNewMarkerMenu(map) {
-					var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
-					var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
-					var scale = Math.pow(2, map.getZoom());					var worldPoint = map.getProjection().fromLatLngToPoint(actualCrosshairMarker.getPosition());
-					var point = new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
-
-					jQuery("#overlay").hide();
-					jQuery("#overlay").css({
-						left : (jQuery("#map_canvas").position().left + point.x),
-						top : (jQuery("#map_canvas").position().top + point.y)
-					});
-					jQuery("#overlay").show();
-
-					jQuery('#close').click(function(e) {
-						e.preventDefault();
-						jQuery("#overlay").hide();
-						actualCrosshairMarker.setVisible(false);
-						actualCrosshairMarker = null;
-					});
-				}
-
-
 				google.maps.event.addListener(map, 'click', function(event) {
 					actualCrosshairPosition = event.latLng;
 					if (actualCrosshairMarker == null) {
@@ -107,7 +85,6 @@
 							}
 						}
 						actualCrosshairMarker = new MarkerWithLabel(markerOptions);
-						//zoomScale = Math.pow(2, map.getZoom());
 					} else {
 						actualCrosshairMarker.setPosition(actualCrosshairPosition);
 						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
@@ -145,18 +122,17 @@
 						google.maps.event.removeListener(zoomChangeBoundsListener);
 					});
 				});
-				
-				
-					// -------- MENU EVENT HANDLING --------
-					// Set new standard marker
-					$(document).ready(function() {
-						$("#addStandardMark").click(function() {
-							actualCrosshairMarker.setmap(null);
-							actualCrosshairMarker = null;
-							jQuery("#overlay").hide();
-						});
-					});
-					}
+
+				// -------- MENU EVENT HANDLING --------
+				// Set new standard marker
+				$("#addStandardMark").click(function() {
+					jQuery("#overlay").hide();
+					addNewStandardMarker(map, actualCrosshairPosition);
+					actualCrosshairPosition = 0;
+					actualCrosshairMarker.setMap(null);
+					actualCrosshairMarker = null;
+				});
+			}
 		</script>
 	</head>
 	<body onload="initialize()">
