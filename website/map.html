@@ -2,33 +2,12 @@
 <html>
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<style type="text/css">
-			html {
-				height: 100%
-			}
-			body {
-				height: 100%;
-				margin: 0;
-				padding: 0
-			}
-			#map_canvas {
-				height: 100%
-			}
-			.labels {
-				color: red;
-				background-color: white;
-				font-family: "Lucida Grande", "Arial", sans-serif;
-				font-size: 10px;
-				font-weight: bold;
-				text-align: center;
-				border: 2px solid black;
-				white-space: nowrap;
-			}
-		</style>
+		<link href="./css/map_styles.css" rel="stylesheet" type="text/css" media="screen" />
 		<script src="./lib/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
 		<script type="text/javascript" src="./lib/markerwithlabel.js"></script>
 		<script type="text/javascript" src="./lib/mapfunctions.js"></script>
+		<script type="text/javascript" src="./lib/jquery.contextmenu.r2.js"></script>
 		<script type="text/javascript">
 			var map;
 			var actualCrosshairPosition;
@@ -55,6 +34,7 @@
 				// -------- Center Coordinates shown on the Left Top Overlay --------
 				var myControl = document.getElementById('coordsDiv');
 				map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);
+				updateCoords();
 
 				// -------- MAP EVENT HANDLING --------
 				google.maps.event.addListener(map, 'click', function(event) {
@@ -69,6 +49,7 @@
 				})
 
 				google.maps.event.addListener(map, 'zoom_changed', function() {
+					updateCoords();
 					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
 						//here I have the correct zoom level
 						setNewCrosshairMarkerMenu();
@@ -77,9 +58,7 @@
 
 				});
 				google.maps.event.addListener(map, 'center_changed', function() {
-					document.getElementById("lat").firstChild.nodeValue = map.getCenter().lat();
-					document.getElementById("long").firstChild.nodeValue = map.getCenter().lng();
-					document.getElementById("coordinations").firstChild.nodeValue = getPostionString(map.getCenter());
+					updateCoords();
 					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
 						//here I have the correct zoom level
 						setNewCrosshairMarkerMenu();
@@ -90,20 +69,16 @@
 				// -------- MENU EVENT HANDLING OF CROSSHAIRMARKER --------
 				// Set new standard marker
 				$("#addStandardMarker").click(function() {
-					jQuery("#crosshairMenu").hide();
 					var length = standardMarkerArray.length;
-					standardMarkerArray[length] = addNewStandardMarker();					actualCrosshairMarker.setMap(null);
-					actualCrosshairMarker = null;
+					standardMarkerArray[length] = addNewStandardMarker();					deleteCrosshairMarker();
 				});
 
 				// Set new route marker
 				$("#addRouteMarker").click(function() {
-					jQuery("#crosshairMenu").hide();
 					var length = routeMarkerArray.length;
 					routeMarkerArray[length] = addNewRouteMarker();
 					updateRoutePolylines();
-					actualCrosshairMarker.setMap(null);
-					actualCrosshairMarker = null;
+					deleteCrosshairMarker();
 				});
 
 				// -------- MENU EVENT HANDLING OF STANDARD MARKER --------
@@ -118,24 +93,23 @@
 					selectedMarker.setMap(null);
 					selectedMarker = null;				});
 
-
 				// -------- MENU EVENT HANDLING OF ROUTE MARKER --------
 				// delete selected Route Marker
 				$("#deleteRouteMarker").click(function() {
 					var length = routeMarkerArray.length;
-	
+
 					for (var i = 0; i < length; i++) {
 						if (selectedMarker == routeMarkerArray[i]) {
 							routeMarkerArray.splice(i, 1);
 						}
 					}
-					
+
 					updateRoutePolylines();
 					jQuery("#routeMenu").hide();
 					selectedMarker.setMap(null);
 					selectedMarker = null;
 				});
-				
+
 				// delete Route completly
 				$("#deleteRoute").click(function() {
 					var length = routeMarkerArray.length;
@@ -150,8 +124,8 @@
 					selectedMarker.setMap(null);
 					selectedMarker = null;
 				});
-				
-			// computeDistanceBetween(from:LatLng, to:LatLng, radius?:number) <<<<<< FOR DISTANCE
+
+				// computeDistanceBetween(from:LatLng, to:LatLng, radius?:number) <<<<<< FOR DISTANCE
 			}
 		</script>
 	</head>
@@ -163,8 +137,8 @@
 		</div>
 
 		<!-- 	MENU FOR CROSSHAIR MARKER	 -->
-		<div id="crosshairMenu" style="z-index: 1000; position: absolute; display: none; width: 180px; height: 150px; background-color: white; border:1px solid grey;padding:10px;">
-			<ul>
+		<div id="crosshairMenu" style="z-index: 1000; position: absolute; display: none;">
+			<ul class="menu">
 				<li>
 					<a id="addStandardMarker" href="#">Markierung setzen</a>
 				</li>
@@ -178,35 +152,37 @@
 					<a id="addDestination" href="#">Zum Ziel machen</a>
 				</li>
 				<li>
-					<a id="delete" href="#">Löschen</a>
+					<a id="closeCrosshairMenu" href="#">Löschen</a>
 				</li>
 			</ul>
-			<a href="#" id="closeCrosshairMenu">close</a>
 		</div>
 
 		<!-- 	MENU FOR STANDARD MARKER	 -->
-		<div id="standardMenu" style="z-index: 1000; position: absolute; display: none; width: 150px; height: 100px; background-color: white; border:1px solid grey;padding:10px;">
-			<ul>
+		<div id="standardMenu" style="z-index: 1000; position: absolute; display: none;">
+			<ul class="menu">
 				<li>
 					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
 				</li>
+				<li>
+					<a id="closeStandardMenu" href="#">Menü schließen</a>
+				</li>
 			</ul>
-			<a href="#" id="closeStandardMenu">close</a>
 		</div>
 
 		<!-- 	MENU FOR ROUTE MARKER	 -->
-		<div id="routeMenu" style="z-index: 1000; position: absolute; display: none; width: 150px; height: 120px; background-color: white; border:1px solid grey;padding:10px;">
-			<ul>
+		<div id="routeMenu" style="z-index: 1000; position: absolute; display: none;">
+			<ul class="menu">
 				<li>
 					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
 				</li>
 				<li>
 					<a id="deleteRoute" href="#">Route Löschen</a>
 				</li>
+				<li>
+					<a id="closeRouteMenu" href="#">Menü schließen</a>
+				</li>
 			</ul>
-			<a href="#" id="closeRouteMenu">close</a>
 		</div>
-
 		<div id="mapCanvas" style="width:100%; height:100%"></div>
 	</body>
 </html>
