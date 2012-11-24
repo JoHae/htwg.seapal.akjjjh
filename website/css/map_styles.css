@@ -20,7 +20,7 @@ body {
 	white-space: nowrap;
 }
 
-/* menu */
+/* menu from: http://www.red-team-design.com/css3-animated-dropdown-menu */
 .menu, .menu ul {
 	margin: 0;
 	padding: 0;
@@ -142,6 +142,7 @@ body {
 	border-radius: 0 0 3px 3px;
 }
 
+/* IE hack - not needed yet
 $(function() {
   if ($.browser.msie && $.browser.version.substr(0,1)<7)
   {
@@ -151,4 +152,5 @@ $(function() {
 		$(this).children('ul').css('visibility','hidden');
 		})
   }
+*/
 });

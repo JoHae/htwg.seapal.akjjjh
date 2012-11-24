@@ -70,6 +70,8 @@ function addNewCrosshairMarker() {
 		}
 	}
 	actualCrosshairMarker = new MarkerWithLabel(markerOptions);
+	jQuery("#standardMenu").hide();
+	jQuery("#routeMenu").hide();
 	google.maps.event.addListener(actualCrosshairMarker, 'drag', function() {
 		setNewCrosshairMarkerMenu(map);
 		actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
@@ -125,15 +127,18 @@ function addNewStandardMarker() {
 	var marker = new MarkerWithLabel(markerOptions);
 
 	google.maps.event.addListener(marker, 'drag', function() {
+		setNewStandardMarkerMenu(marker);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
+		setNewStandardMarkerMenu(marker);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 	});
 
 	google.maps.event.addListener(marker, 'click', function(event) {
 		deleteCrosshairMarker();
+		jQuery("#routeMenu").hide();
 		selectedMarker = marker;
 		setNewStandardMarkerMenu(marker);
 	})
@@ -175,12 +180,14 @@ function addNewRouteMarker() {
 	marker.set("labelClass", "");
 
 	google.maps.event.addListener(marker, 'drag', function() {
+		setNewRouteMarkerMenu(marker);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		marker.set("labelClass", "markerLabels");
 		updateRoutePolylines();
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
+		setNewRouteMarkerMenu(marker);
 		marker.set("labelContent", "");
 		marker.set("labelClass", "");
 		updateRoutePolylines();
@@ -188,6 +195,7 @@ function addNewRouteMarker() {
 
 	google.maps.event.addListener(marker, 'click', function(event) {
 		deleteCrosshairMarker();
+		jQuery("#standardMenu").hide();
 		selectedMarker = marker;
 		setNewRouteMarkerMenu(marker);
 	})

@@ -49,6 +49,8 @@
 				})
 
 				google.maps.event.addListener(map, 'zoom_changed', function() {
+					jQuery("#standardMenu").hide();
+					jQuery("#routeMenu").hide();
 					updateCoords();
 					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
 						//here I have the correct zoom level
@@ -58,6 +60,8 @@
 
 				});
 				google.maps.event.addListener(map, 'center_changed', function() {
+					jQuery("#standardMenu").hide();
+					jQuery("#routeMenu").hide();
 					updateCoords();
 					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
 						//here I have the correct zoom level
