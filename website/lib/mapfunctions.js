@@ -61,9 +61,9 @@ function addNewCrosshairMarker() {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : "images/cross_hair.png",
+		icon : "",
 		labelContent : getPostionString(actualCrosshairPosition),
-		labelAnchor : new google.maps.Point(3, 30),
+		labelAnchor : new google.maps.Point(0, 45),
 		labelClass : "markerLabels", // the CSS class for the label
 		labelStyle : {
 			opacity : 0.75
@@ -99,8 +99,7 @@ function setNewCrosshairMarkerMenu() {
 		jQuery("#crosshairMenu").hide();
 		actualCrosshairMarker.setVisible(false);
 		actualCrosshairMarker = null;
-	});
-	
+	});	
 }
 
 function deleteCrosshairMarker() {
@@ -127,12 +126,12 @@ function addNewStandardMarker() {
 	var marker = new MarkerWithLabel(markerOptions);
 
 	google.maps.event.addListener(marker, 'drag', function() {
-		setNewStandardMarkerMenu(marker);
+		jQuery("#standardMenu").hide();
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
-		setNewStandardMarkerMenu(marker);
+		jQuery("#standardMenu").hide();
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 	});
 
@@ -180,14 +179,14 @@ function addNewRouteMarker() {
 	marker.set("labelClass", "");
 
 	google.maps.event.addListener(marker, 'drag', function() {
-		setNewRouteMarkerMenu(marker);
+		jQuery("#routeMenu").hide();
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		marker.set("labelClass", "markerLabels");
 		updateRoutePolylines();
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
-		setNewRouteMarkerMenu(marker);
+		jQuery("#routeMenu").hide();
 		marker.set("labelContent", "");
 		marker.set("labelClass", "");
 		updateRoutePolylines();
