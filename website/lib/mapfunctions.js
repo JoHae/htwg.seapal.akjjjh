@@ -1,3 +1,9 @@
+function extround(x, n)
+{
+  var a = Math.pow(10, n);
+  return (Math.round(x * a) / a);
+}
+
 function addSeamap() {
 	map.mapTypes.set("OSM", new google.maps.ImageMapType({
 		getTileUrl : function(coord, zoom) {
@@ -47,6 +53,20 @@ function getPostionString(position) {
 	return LatVorkomma + "°" + LatMinutes + "'N " + LongVorkomma + "°" + LongMinutes + "'E";
 }
 
+function getDistanceRoute(marker_end) {
+	if(marker_end === routeMarkerArray[0]) {
+		return 0;
+	}
+	var distance = 0;
+	
+	for (var i = 1; i < routeMarkerArray.length; i++) {
+		distance = distance + google.maps.geometry.spherical.computeDistanceBetween(routeMarkerArray[i-1].getPosition(), routeMarkerArray[i].getPosition());
+		if(marker_end === routeMarkerArray[i]) {
+			return extround((distance/1000), 3);
+		}
+	}	
+}
+
 function getMenuPoint(map, marker) {
 	var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
 	var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
@@ -57,11 +77,20 @@ function getMenuPoint(map, marker) {
 }
 
 function addNewCrosshairMarker() {
+	var image = new google.maps.MarkerImage('./images/crosshair50.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(50, 50),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0, 0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(24, 25));
+	
 	var markerOptions = {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : "",
+		icon : image,
+		raiseOnDrag: false
 	}
 	actualCrosshairMarker = new google.maps.Marker(markerOptions);
 	jQuery("#standardContext").hide();
@@ -81,9 +110,10 @@ function setNewCrosshairMarkerMenu() {
 	var point = getMenuPoint(map, actualCrosshairMarker);
 
 	document.getElementById("crosshairPosition").firstChild.nodeValue = getPostionString(actualCrosshairPosition);
+	document.getElementById("crosshairContext").style.cursor = "default";
 	jQuery("#crosshairContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
-		top : (jQuery("#mapCanvas").position().top + point.y)
+		top : (jQuery("#mapCanvas").position().top + (point.y + 25))
 	});
 	jQuery("#crosshairContext").show();
 
@@ -92,11 +122,11 @@ function setNewCrosshairMarkerMenu() {
 		jQuery("#crosshairContext").hide();
 		actualCrosshairMarker.setVisible(false);
 		actualCrosshairMarker = null;
-	});	
+	});
 }
 
 function deleteCrosshairMarker() {
-	if(actualCrosshairMarker != null) {
+	if (actualCrosshairMarker != null) {
 		jQuery("#crosshairContext").hide();
 		actualCrosshairMarker.setMap(null);
 		actualCrosshairMarker = null;
@@ -108,7 +138,7 @@ function addNewStandardMarker() {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : "",
+		icon : ""
 	}
 	var marker = new google.maps.Marker(markerOptions);
 
@@ -134,6 +164,7 @@ function setNewStandardMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
 
 	document.getElementById("standardPosition").firstChild.nodeValue = getPostionString(marker.getPosition());
+	document.getElementById("standardContext").style.cursor = "default";
 	jQuery("#standardContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
@@ -143,16 +174,24 @@ function setNewStandardMarkerMenu(marker) {
 	jQuery('#closestandardContext').click(function(e) {
 		e.preventDefault();
 		jQuery("#standardContext").hide();
-	});	
+	});
 }
 
 function addNewRouteMarker() {
+	var image = new google.maps.MarkerImage('./images/flag50.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(45, 50),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0, 0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(1, 50));
+
 	anchorPoint = new google.maps.Point(0, 0);
 	var markerOptions = {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : "",
+		icon : image
 	}
 	var marker = new google.maps.Marker(markerOptions);
 	marker.set("labelContent", "");
@@ -182,6 +221,8 @@ function setNewRouteMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
 
 	document.getElementById("routePosition").firstChild.nodeValue = getPostionString(marker.getPosition());
+	document.getElementById("routeDistance").firstChild.nodeValue = getDistanceRoute(marker) + " km";
+	document.getElementById("routeContext").style.cursor = "default";
 	jQuery("#routeContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
