@@ -1,3 +1,9 @@
+function extround(x, n)
+{
+  var a = Math.pow(10, n);
+  return (Math.round(x * a) / a);
+}
+
 function addSeamap() {
 	map.mapTypes.set("OSM", new google.maps.ImageMapType({
 		getTileUrl : function(coord, zoom) {
@@ -47,6 +53,20 @@ function getPostionString(position) {
 	return LatVorkomma + "°" + LatMinutes + "'N " + LongVorkomma + "°" + LongMinutes + "'E";
 }
 
+function getDistanceRoute(marker_end) {
+	if(marker_end === routeMarkerArray[0]) {
+		return 0;
+	}
+	var distance = 0;
+	
+	for (var i = 1; i < routeMarkerArray.length; i++) {
+		distance = distance + google.maps.geometry.spherical.computeDistanceBetween(routeMarkerArray[i-1].getPosition(), routeMarkerArray[i].getPosition());
+		if(marker_end === routeMarkerArray[i]) {
+			return extround((distance/1000), 3);
+		}
+	}	
+}
+
 function getMenuPoint(map, marker) {
 	var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
 	var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
@@ -90,6 +110,7 @@ function setNewCrosshairMarkerMenu() {
 	var point = getMenuPoint(map, actualCrosshairMarker);
 
 	document.getElementById("crosshairPosition").firstChild.nodeValue = getPostionString(actualCrosshairPosition);
+	document.getElementById("crosshairContext").style.cursor = "default";
 	jQuery("#crosshairContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + (point.y + 25))
@@ -143,6 +164,7 @@ function setNewStandardMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
 
 	document.getElementById("standardPosition").firstChild.nodeValue = getPostionString(marker.getPosition());
+	document.getElementById("standardContext").style.cursor = "default";
 	jQuery("#standardContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
@@ -199,6 +221,8 @@ function setNewRouteMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
 
 	document.getElementById("routePosition").firstChild.nodeValue = getPostionString(marker.getPosition());
+	document.getElementById("routeDistance").firstChild.nodeValue = getDistanceRoute(marker) + " km";
+	document.getElementById("routeContext").style.cursor = "default";
 	jQuery("#routeContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
