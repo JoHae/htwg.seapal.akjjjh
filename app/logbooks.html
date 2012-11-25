@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 	<head>
 		<meta charset="utf-8" />
 
@@ -15,24 +15,157 @@
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+		<!-- jQuery and jQuery Ui imports -->
+		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+		<script src="lib/js/jquery-1.8.3.js"></script>
+		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
+
+		<script>
+			$(function() {
+				$("#seapal-list").accordion({
+					collapsible : true
+				});
+
+				// List layout
+				// Hover states on the icons
+				$("#seapal-list .seapal-actions div").hover(function() {
+					$(this).addClass("ui-state-hover");
+				}, function() {
+					$(this).removeClass("ui-state-hover");
+				});
+
+				// list element actions
+				$("#seapal-list .seapal-header .seapal-nr-1 .seapal-actions #seapal-edit").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-readonly").hide();
+					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-edit").show();
+					return false;
+					// prevent toggling collapsion
+				});
+
+				$("#seapal-list .seapal-header .seapal-nr-1 .seapal-actions #seapal-remove").click(function(e) {
+					return false;
+					// prevent toggling collapsion
+				});
+
+				$("#seapal-list .seapal-header .seapal-nr-1 .seapal-actions #seapal-save").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-readonly").show();
+					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-edit").hide();
+					return false;
+					// prevent toggling collapsion
+				});
+
+				$("#seapal-list .seapal-header .seapal-nr-1 .seapal-actions #seapal-cancel").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-readonly").show();
+					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-edit").hide();
+					return false;
+					// prevent toggling collapsion
+				});
+				
+				// hides each edit element in the list (the header and content)
+				$("#seapal-list .seapal-edit").each(function() {
+					$(this).hide();
+				});
+
+				// for each input field in the header of the list
+				$("#seapal-list .seapal-header .seapal-edit input").each(function() {
+					$(this).click(function(e) {
+						return false;
+						// prevent toggling collapsion
+					});
+				});
+
+			});
+		</script>
 	</head>
 
 	<body>
-		<div id="layout_root">
+		<div id="seapal-root">
 			<header>
-				<div><h1>seapal</h1></div>
-				<h2>Logbücher</h2>
+				<div>
+					<h1>seapal</h1>
+				</div>
+				<h2>LogbÃ¼cher</h2>
 			</header>
 			<nav>
-				<div class="nav_location"><span>-></span> <span>logbücher</span></div>
+				<div class="seapal-location">
+					<span>-></span><span class="seapal-space"> </span><span>logbÃ¼cher</span>
+				</div>
 			</nav>
 
-			<div id="layout_content">
+			<div id="seapal-content">
+				<div id="seapal-list">
+					<h3>
+					<div class="seapal-header">
+						<div class="seapal-nr-1">
+							<span class="seapal-ship-icon" > </span>
+							<div class="seapal-readonly">
+								<div class="seapal-shipname">
+									Vergin
+								</div>
+								<div class="seapal-shiptype">
+									X33
+								</div>
+								<div class="seapal-shipowner">
+									HTWG Konstanz
+								</div>
+								<div class="seapal-shipregisternumber">
+									AB1234
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-edit" class="ui-state-default ui-corner-all" title="Bearbeiten">
+										<span class="ui-icon ui-icon-pencil"> </span>
+									</div>
+									<div id="seapal-remove" class="ui-state-default ui-corner-all" title="LÃ¶schen">
+										<span class="ui-icon ui-icon-trash"> </span>
+									</div>
+								</div>
+							</div>
+							<div class="seapal-edit">
+								<div class="seapal-shipname">
+									<input id="seapal-shipname" type="text" value="Vergin" />
+								</div>
+								<div class="seapal-shiptype">
+									<input id="seapal-shiptype" type="text" value="X33" />
+								</div>
+								<div class="seapal-shipowner">
+									<input id="seapal-shipowner" type="text" value="HTWG Konstanz" />
+								</div>
+								<div class="seapal-shipregisternumber">
+									<input id="seapal-shipregisternumber" type="text" value="AB1234" />
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-save" class="ui-state-default ui-corner-all" title="Speichern">
+										<span class="ui-icon ui-icon-check"> </span>
+									</div>
+									<div id="seapal-cancel" class="ui-state-default ui-corner-all" title="Bearbeiten abbrechen">
+										<span class="ui-icon ui-icon-closethick"> </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div></h3>
+					<div>
+						<div class="seapal-content-nr-1">
+							<div class="seapal-readonly">
 
+							</div>
+							<div class="seapal-edit">
+
+							</div>
+							<p>
+								Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+								ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+								amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+								odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+							</p>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<footer>
-				
+
 			</footer>
 		</div>
 	</body>
