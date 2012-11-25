@@ -1,7 +1,11 @@
-function extround(x, n)
-{
-  var a = Math.pow(10, n);
-  return (Math.round(x * a) / a);
+function extround(x, n) {
+	var a = Math.pow(10, n);
+	return (Math.round(x * a) / a);
+}
+
+function meterToNauticalMile(meter) {
+	var oneMeterInNM = 0.000539956803;
+	return (meter * oneMeterInNM);
 }
 
 function addSeamap() {
@@ -54,17 +58,17 @@ function getPostionString(position) {
 }
 
 function getDistanceRoute(marker_end) {
-	if(marker_end === routeMarkerArray[0]) {
+	if (marker_end === routeMarkerArray[0]) {
 		return 0;
 	}
 	var distance = 0;
-	
+
 	for (var i = 1; i < routeMarkerArray.length; i++) {
-		distance = distance + google.maps.geometry.spherical.computeDistanceBetween(routeMarkerArray[i-1].getPosition(), routeMarkerArray[i].getPosition());
-		if(marker_end === routeMarkerArray[i]) {
-			return extround((distance/1000), 3);
+		distance = distance + google.maps.geometry.spherical.computeDistanceBetween(routeMarkerArray[i - 1].getPosition(), routeMarkerArray[i].getPosition());
+		if (marker_end === routeMarkerArray[i]) {
+			return extround(meterToNauticalMile(distance), 3);
 		}
-	}	
+	}
 }
 
 function getMenuPoint(map, marker) {
@@ -84,13 +88,13 @@ function addNewCrosshairMarker() {
 	new google.maps.Point(0, 0),
 	// The anchor for this image is the base of the flagpole at 0,32.
 	new google.maps.Point(24, 25));
-	
+
 	var markerOptions = {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
 		icon : image,
-		raiseOnDrag: false
+		raiseOnDrag : false
 	}
 	actualCrosshairMarker = new google.maps.Marker(markerOptions);
 	jQuery("#standardContext").hide();
@@ -138,15 +142,35 @@ function addNewStandardMarker() {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : ""
+		icon : "",
+		labelContent : "",
+		labelAnchor : new google.maps.Point(0, -10),
+		labelClass : "", // the CSS class for the label
+		labelStyle : {
+			opacity : 0.9
+		}
 	}
-	var marker = new google.maps.Marker(markerOptions);
+	var marker = new MarkerWithLabel(markerOptions);
+
+	google.maps.event.addListener(marker, "mouseover", function(e) {
+		marker.set("labelClass", "markerLabel");
+		marker.set("labelContent", getPostionString(marker.getPosition()));
+	});
+	
+	google.maps.event.addListener(marker, "mouseout", function(e) {
+		marker.set("labelClass", "");
+		marker.set("labelContent", "");
+	});
 
 	google.maps.event.addListener(marker, 'drag', function() {
+		marker.set("labelClass", "markerLabel");
+		marker.set("labelContent", getPostionString(marker.getPosition()));
 		jQuery("#standardContext").hide();
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
+		marker.set("labelClass", "");
+		marker.set("labelContent", "");
 		jQuery("#standardContext").hide();
 	});
 
@@ -221,7 +245,7 @@ function setNewRouteMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
 
 	document.getElementById("routePosition").firstChild.nodeValue = getPostionString(marker.getPosition());
-	document.getElementById("routeDistance").firstChild.nodeValue = getDistanceRoute(marker) + " km";
+	document.getElementById("routeDistance").firstChild.nodeValue = getDistanceRoute(marker) + " sm";
 	document.getElementById("routeContext").style.cursor = "default";
 	jQuery("#routeContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
