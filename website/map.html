@@ -144,18 +144,14 @@
 		<div id="crosshairContext" style="z-index: 1000; position: absolute; display: none;">
 			<ul id="crosshairMenu" class="menu">
 				<li>
-					<div>Position: <span id="crosshairPosition">Error</span></div>
+					<!-- Remove style attribute if there is more than one div within this li tag -->
+					<div style="padding: 12px 30px;">Position: <span id="crosshairPosition">Error</span></div>
+				</li>
 				<li>
 					<a id="addStandardMarker" href="#">Markierung setzen</a>
 				</li>
 				<li>
 					<a id="addRouteMarker" href="#">Route setzen</a>
-				</li>
-				<li>
-					<a id="addDistanceStart" href="#">Abstand von hier</a>
-				</li>
-				<li>
-					<a id="addDestination" href="#">Zum Ziel machen</a>
 				</li>
 				<li>
 					<a id="closecrosshairContext" href="#">Löschen</a>
@@ -167,13 +163,17 @@
 		<div id="standardContext" style="z-index: 1000; position: absolute; display: none;">
 			<ul id="standardMenu" class="menu">
 				<li>
-					<div>Position: <span id="standardPosition">Error</span></div>
-				<li>
+					<!-- Remove style attribute if there is more than one div within this li tag -->
+					<div style="padding: 12px 30px;">Position: <span id="standardPosition">Error</span></div>
+				</li>
 				<li>
 					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
 				</li>
 				<li>
 					<a id="closestandardContext" href="#">Menü schließen</a>
+				</li>
+				<li>
+					<a id="measureDisctance" href="#">Distanzmessung</a>
 				</li>
 			</ul>
 		</div>
@@ -183,10 +183,8 @@
 			<ul id="routeMenu" class="menu">
 				<li>
 					<div>Position: <span id="routePosition">Error</span></div>
-				<li>
-				<li>
 					<div>Distanz vom Start: <span id="routeDistance">Error</span></div>
-				<li>
+				</li>
 				<li>
 					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
 				</li>
