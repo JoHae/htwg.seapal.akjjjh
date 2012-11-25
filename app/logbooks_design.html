@@ -39,6 +39,8 @@
 				$("#seapal-list .seapal-header .seapal-nr-1 .seapal-actions #seapal-edit").click(function(e) {
 					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-readonly").hide();
 					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-edit").show();
+					$("#seapal-list .seapal-content .seapal-nr-1 .seapal-readonly").hide();
+					$("#seapal-list .seapal-content .seapal-nr-1 .seapal-edit").show();
 					return false;
 					// prevent toggling collapsion
 				});
@@ -51,6 +53,8 @@
 				$("#seapal-list .seapal-header .seapal-nr-1 .seapal-actions #seapal-save").click(function(e) {
 					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-readonly").show();
 					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-edit").hide();
+					$("#seapal-list .seapal-content .seapal-nr-1 .seapal-readonly").show();
+					$("#seapal-list .seapal-content .seapal-nr-1 .seapal-edit").hide();
 					return false;
 					// prevent toggling collapsion
 				});
@@ -58,10 +62,12 @@
 				$("#seapal-list .seapal-header .seapal-nr-1 .seapal-actions #seapal-cancel").click(function(e) {
 					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-readonly").show();
 					$("#seapal-list .seapal-header .seapal-nr-1 .seapal-edit").hide();
+					$("#seapal-list .seapal-content .seapal-nr-1 .seapal-readonly").show();
+					$("#seapal-list .seapal-content .seapal-nr-1 .seapal-edit").hide();
 					return false;
 					// prevent toggling collapsion
 				});
-				
+
 				// hides each edit element in the list (the header and content)
 				$("#seapal-list .seapal-edit").each(function() {
 					$(this).hide();
@@ -146,19 +152,20 @@
 						</div>
 					</div></h3>
 					<div>
-						<div class="seapal-content-nr-1">
-							<div class="seapal-readonly">
+						<div class="seapal-content">
+							<div class="seapal-nr-1">
+								<div class="seapal-readonly">
+									<p>
+										Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+										ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+										amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+										odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+									</p>
+								</div>
+								<div class="seapal-edit">
 
+								</div>
 							</div>
-							<div class="seapal-edit">
-
-							</div>
-							<p>
-								Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-								ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-								amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-								odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-							</p>
 						</div>
 					</div>
 				</div>
