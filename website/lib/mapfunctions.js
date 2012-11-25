@@ -57,11 +57,20 @@ function getMenuPoint(map, marker) {
 }
 
 function addNewCrosshairMarker() {
+	var image = new google.maps.MarkerImage('./images/crosshair50.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(50, 50),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0, 0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(24, 25));
+	
 	var markerOptions = {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : "",
+		icon : image,
+		raiseOnDrag: false
 	}
 	actualCrosshairMarker = new google.maps.Marker(markerOptions);
 	jQuery("#standardContext").hide();
@@ -83,7 +92,7 @@ function setNewCrosshairMarkerMenu() {
 	document.getElementById("crosshairPosition").firstChild.nodeValue = getPostionString(actualCrosshairPosition);
 	jQuery("#crosshairContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
-		top : (jQuery("#mapCanvas").position().top + point.y)
+		top : (jQuery("#mapCanvas").position().top + (point.y + 25))
 	});
 	jQuery("#crosshairContext").show();
 
@@ -92,11 +101,11 @@ function setNewCrosshairMarkerMenu() {
 		jQuery("#crosshairContext").hide();
 		actualCrosshairMarker.setVisible(false);
 		actualCrosshairMarker = null;
-	});	
+	});
 }
 
 function deleteCrosshairMarker() {
-	if(actualCrosshairMarker != null) {
+	if (actualCrosshairMarker != null) {
 		jQuery("#crosshairContext").hide();
 		actualCrosshairMarker.setMap(null);
 		actualCrosshairMarker = null;
@@ -108,7 +117,7 @@ function addNewStandardMarker() {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : "",
+		icon : ""
 	}
 	var marker = new google.maps.Marker(markerOptions);
 
@@ -143,16 +152,24 @@ function setNewStandardMarkerMenu(marker) {
 	jQuery('#closestandardContext').click(function(e) {
 		e.preventDefault();
 		jQuery("#standardContext").hide();
-	});	
+	});
 }
 
 function addNewRouteMarker() {
+	var image = new google.maps.MarkerImage('./images/flag50.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(45, 50),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0, 0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(1, 50));
+
 	anchorPoint = new google.maps.Point(0, 0);
 	var markerOptions = {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : "",
+		icon : image
 	}
 	var marker = new google.maps.Marker(markerOptions);
 	marker.set("labelContent", "");
