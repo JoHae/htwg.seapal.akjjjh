@@ -37,7 +37,7 @@ body {
 	background: linear-gradient(#444, #111);
 	box-shadow: 0 -1px 0 rgba(255,255,255,.3);	
 	border-radius: 3px;
-	transition: all .2s ease-in-out;  
+	transition: all .2s ease-in-out;
 }
 
 .menu:before,
@@ -54,11 +54,20 @@ body {
 	zoom:1;
 }
 
-.menu a, .menu span {
+.menu a {
 	float: left;
 	padding: 12px 30px;
 	color: #999;
 	text-transform: uppercase;
+	font: bold 12px Arial, Helvetica;
+	text-decoration: none;
+	text-shadow: 0 1px 0 #000;
+}
+
+.menu div {
+	float: left;
+	padding: 12px 30px;
+	color: #999;
 	font: bold 12px Arial, Helvetica;
 	text-decoration: none;
 	text-shadow: 0 1px 0 #000;
@@ -90,9 +99,9 @@ body {
 	box-shadow: none;    
 }
 
-.menu a, .menu span {    
-	padding: 10px;
+.menu a, .menu div {
 	width: 130px;
+	padding: 10px;
 	_height: 10px; /*IE6 only*/
 	display: block;
 	white-space: nowrap;
@@ -100,17 +109,30 @@ body {
 	text-transform: none;
 }
 
+/* Set width of menu */
+#crosshairMenu a {
+	width: 170px;
+}
+
+#standardMenu a {
+	width: 170px;
+}
+
+#routeMenu a {
+	width: 170px;
+}
+
 .menu a:hover {
 	background-color: #0186ba;
 	background-image: linear-gradient(#04acec, #0186ba);
 }
 
-.menu li:first-child > a, span {
+.menu li:first-child > a {
 	border-radius: 3px 3px 0 0;
 }
 
 /* Arrow over first element */
-.menu li:first-child > a:after, span:after {
+.menu li:first-child > .menu a:after, .menu div:after {
 	content: '';
 	position: absolute;
 	left: 40px;

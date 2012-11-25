@@ -62,25 +62,17 @@ function addNewCrosshairMarker() {
 		map : map,
 		draggable : true,
 		icon : "",
-		labelContent : getPostionString(actualCrosshairPosition),
-		labelAnchor : new google.maps.Point(0, 45),
-		labelClass : "markerLabels", // the CSS class for the label
-		labelStyle : {
-			opacity : 0.75
-		}
 	}
-	actualCrosshairMarker = new MarkerWithLabel(markerOptions);
-	jQuery("#standardMenu").hide();
-	jQuery("#routeMenu").hide();
+	actualCrosshairMarker = new google.maps.Marker(markerOptions);
+	jQuery("#standardContext").hide();
+	jQuery("#routeContext").hide();
 	google.maps.event.addListener(actualCrosshairMarker, 'drag', function() {
 		setNewCrosshairMarkerMenu(map);
-		actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
 		actualCrosshairPosition = actualCrosshairMarker.getPosition();
 	});
 
 	google.maps.event.addListener(actualCrosshairMarker, 'dragend', function() {
 		setNewCrosshairMarkerMenu(map);
-		actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
 		actualCrosshairPosition = actualCrosshairMarker.getPosition();
 	});
 }
@@ -88,15 +80,16 @@ function addNewCrosshairMarker() {
 function setNewCrosshairMarkerMenu() {
 	var point = getMenuPoint(map, actualCrosshairMarker);
 
-	jQuery("#crosshairMenu").css({
+	document.getElementById("crosshairPosition").firstChild.nodeValue = getPostionString(actualCrosshairPosition);
+	jQuery("#crosshairContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
 	});
-	jQuery("#crosshairMenu").show();
+	jQuery("#crosshairContext").show();
 
-	jQuery('#closeCrosshairMenu').click(function(e) {
+	jQuery('#closecrosshairContext').click(function(e) {
 		e.preventDefault();
-		jQuery("#crosshairMenu").hide();
+		jQuery("#crosshairContext").hide();
 		actualCrosshairMarker.setVisible(false);
 		actualCrosshairMarker = null;
 	});	
@@ -104,7 +97,7 @@ function setNewCrosshairMarkerMenu() {
 
 function deleteCrosshairMarker() {
 	if(actualCrosshairMarker != null) {
-		jQuery("#crosshairMenu").hide();
+		jQuery("#crosshairContext").hide();
 		actualCrosshairMarker.setMap(null);
 		actualCrosshairMarker = null;
 	}
@@ -116,28 +109,20 @@ function addNewStandardMarker() {
 		map : map,
 		draggable : true,
 		icon : "",
-		labelContent : getPostionString(actualCrosshairPosition),
-		labelAnchor : new google.maps.Point(0, 0),
-		labelClass : "markerLabels", // the CSS class for the label
-		labelStyle : {
-			opacity : 0.75
-		}
 	}
-	var marker = new MarkerWithLabel(markerOptions);
+	var marker = new google.maps.Marker(markerOptions);
 
 	google.maps.event.addListener(marker, 'drag', function() {
-		jQuery("#standardMenu").hide();
-		marker.set("labelContent", getPostionString(marker.getPosition()));
+		jQuery("#standardContext").hide();
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
-		jQuery("#standardMenu").hide();
-		marker.set("labelContent", getPostionString(marker.getPosition()));
+		jQuery("#standardContext").hide();
 	});
 
 	google.maps.event.addListener(marker, 'click', function(event) {
 		deleteCrosshairMarker();
-		jQuery("#routeMenu").hide();
+		jQuery("#routeContext").hide();
 		selectedMarker = marker;
 		setNewStandardMarkerMenu(marker);
 	})
@@ -148,15 +133,16 @@ function addNewStandardMarker() {
 function setNewStandardMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
 
-	jQuery("#standardMenu").css({
+	document.getElementById("standardPosition").firstChild.nodeValue = getPostionString(marker.getPosition());
+	jQuery("#standardContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
 	});
-	jQuery("#standardMenu").show();
+	jQuery("#standardContext").show();
 
-	jQuery('#closeStandardMenu').click(function(e) {
+	jQuery('#closestandardContext').click(function(e) {
 		e.preventDefault();
-		jQuery("#standardMenu").hide();
+		jQuery("#standardContext").hide();
 	});	
 }
 
@@ -167,34 +153,24 @@ function addNewRouteMarker() {
 		map : map,
 		draggable : true,
 		icon : "",
-		labelContent : "",
-		labelAnchor : anchorPoint,
-		labelClass : "", // the CSS class for the label
-		labelStyle : {
-			opacity : 0.75
-		}
 	}
-	var marker = new MarkerWithLabel(markerOptions);
+	var marker = new google.maps.Marker(markerOptions);
 	marker.set("labelContent", "");
 	marker.set("labelClass", "");
 
 	google.maps.event.addListener(marker, 'drag', function() {
-		jQuery("#routeMenu").hide();
-		marker.set("labelContent", getPostionString(marker.getPosition()));
-		marker.set("labelClass", "markerLabels");
+		jQuery("#routeContext").hide();
 		updateRoutePolylines();
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
-		jQuery("#routeMenu").hide();
-		marker.set("labelContent", "");
-		marker.set("labelClass", "");
+		jQuery("#routeContext").hide();
 		updateRoutePolylines();
 	});
 
 	google.maps.event.addListener(marker, 'click', function(event) {
 		deleteCrosshairMarker();
-		jQuery("#standardMenu").hide();
+		jQuery("#standardContext").hide();
 		selectedMarker = marker;
 		setNewRouteMarkerMenu(marker);
 	})
@@ -205,15 +181,16 @@ function addNewRouteMarker() {
 function setNewRouteMarkerMenu(marker) {
 	var point = getMenuPoint(map, marker);
 
-	jQuery("#routeMenu").css({
+	document.getElementById("routePosition").firstChild.nodeValue = getPostionString(marker.getPosition());
+	jQuery("#routeContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
 	});
-	jQuery("#routeMenu").show();
+	jQuery("#routeContext").show();
 
-	jQuery('#closeRouteMenu').click(function(e) {
+	jQuery('#closerouteContext').click(function(e) {
 		e.preventDefault();
-		jQuery("#routeMenu").hide();
+		jQuery("#routeContext").hide();
 	});
 }
 

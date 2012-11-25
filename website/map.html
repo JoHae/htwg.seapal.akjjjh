@@ -49,8 +49,8 @@
 				})
 
 				google.maps.event.addListener(map, 'zoom_changed', function() {
-					jQuery("#standardMenu").hide();
-					jQuery("#routeMenu").hide();
+					jQuery("#standardContext").hide();
+					jQuery("#routeContext").hide();
 					updateCoords();
 					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
 						//here I have the correct zoom level
@@ -60,8 +60,8 @@
 
 				});
 				google.maps.event.addListener(map, 'center_changed', function() {
-					jQuery("#standardMenu").hide();
-					jQuery("#routeMenu").hide();
+					jQuery("#standardContext").hide();
+					jQuery("#routeContext").hide();
 					updateCoords();
 					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
 						//here I have the correct zoom level
@@ -93,7 +93,7 @@
 							standardMarkerArray.splice(i, 1);
 						}
 					}
-					jQuery("#standardMenu").hide();
+					jQuery("#standardContext").hide();
 					selectedMarker.setMap(null);
 					selectedMarker = null;				});
 
@@ -109,7 +109,7 @@
 					}
 
 					updateRoutePolylines();
-					jQuery("#routeMenu").hide();
+					jQuery("#routeContext").hide();
 					selectedMarker.setMap(null);
 					selectedMarker = null;
 				});
@@ -124,7 +124,7 @@
 					route.setMap(null);
 					route = null;
 					updateRoutePolylines();
-					jQuery("#routeMenu").hide();
+					jQuery("#routeContext").hide();
 					selectedMarker.setMap(null);
 					selectedMarker = null;
 				});
@@ -137,15 +137,14 @@
 		<div id="coordsDiv" style="color: black; position: absolute; text-align: right; font-size: 1.4em; font-weight:bold; margin-right: 25px;">
 			<span id="coordinations">0°00.00'N 0°00.00'E</span>
 			<br />
-			Lat <span id="lat">42</span> Long <span id="long">9</span>
+			Lat <span id="lat">42</span> Long <span id="long">9</span> <br />
 		</div>
 
 		<!-- 	MENU FOR CROSSHAIR MARKER	 -->
-		<div id="crosshairMenu" style="z-index: 1000; position: absolute; display: none;">
-			<ul class="menu">
+		<div id="crosshairContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="crosshairMenu" class="menu">
 				<li>
-					<span id="crosshairPosition">Hier Position ????</span>
-				</li>
+					<div>Position: <span id="crosshairPosition">Error</span></div>
 				<li>
 					<a id="addStandardMarker" href="#">Markierung setzen</a>
 				</li>
@@ -159,26 +158,32 @@
 					<a id="addDestination" href="#">Zum Ziel machen</a>
 				</li>
 				<li>
-					<a id="closeCrosshairMenu" href="#">Löschen</a>
+					<a id="closecrosshairContext" href="#">Löschen</a>
 				</li>
 			</ul>
 		</div>
 
 		<!-- 	MENU FOR STANDARD MARKER	 -->
-		<div id="standardMenu" style="z-index: 1000; position: absolute; display: none;">
-			<ul class="menu">
+		<div id="standardContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="standardMenu" class="menu">
+				<li>
+					<div>Position: <span id="standardPosition">Error</span></div>
+				<li>
 				<li>
 					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
 				</li>
 				<li>
-					<a id="closeStandardMenu" href="#">Menü schließen</a>
+					<a id="closestandardContext" href="#">Menü schließen</a>
 				</li>
 			</ul>
 		</div>
 
 		<!-- 	MENU FOR ROUTE MARKER	 -->
-		<div id="routeMenu" style="z-index: 1000; position: absolute; display: none;">
-			<ul class="menu">
+		<div id="routeContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="routeMenu" class="menu">
+				<li>
+					<div>Position: <span id="routePosition">Error</span></div>
+				<li>
 				<li>
 					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
 				</li>
@@ -186,7 +191,7 @@
 					<a id="deleteRoute" href="#">Route Löschen</a>
 				</li>
 				<li>
-					<a id="closeRouteMenu" href="#">Menü schließen</a>
+					<a id="closerouteContext" href="#">Menü schließen</a>
 				</li>
 			</ul>
 		</div>
