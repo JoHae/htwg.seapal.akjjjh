@@ -1,6 +1,6 @@
 function isCoordinateOk(inputField, helpSpan) {
-	var tRegEx = /^(\d|([0-8]\d)|90)([°\.](([0-5]\d?(\.\d\d?)?)|60(\.00?)?)['`]?)?\s?[NnSs]\s?(0{0,2}\d\d?|1([0-7]\d)|180)([°\.](([0-5]\d?(\.\d\d?)?)|60(\.00?)?)['`]?)?\s?[EeWw]$/;
-	return editNodeText(tRegEx, inputField, helpSpan, "Enter valid Coordinates. For example: 47°49.89'N 009°00.50'E", formatCoordinates);
+	var tRegEx = /^(\d|([0-8]\d)|90)([Â°\.](([0-5]\d?(\.\d\d?)?)|60(\.00?)?)['`]?)?\s?[NnSs]\s?(0{0,2}\d\d?|1([0-7]\d)|180)([Â°\.](([0-5]\d?(\.\d\d?)?)|60(\.00?)?)['`]?)?\s?[EeWw]$/;
+	return editNodeText(tRegEx, inputField, helpSpan, "Enter valid Coordinates. For example: 47Â°49.89'N 009Â°00.50'E", formatCoordinates);
 }
 
 function checkCOG(cog) {
@@ -15,7 +15,7 @@ function checkCOG(cog) {
 		}
 		cog.value = cogval;
 	} else {
-		alert("Bitte gültigen Course over Ground-Wert zwischen 000.0 und 359.9 eingeben! Beispiel: 234.2");
+		alert("Bitte gÃ¼ltigen Course over Ground-Wert zwischen 000.0 und 359.9 eingeben! Beispiel: 234.2");
 	}}
 
 function checkSOG(sog) {
@@ -34,7 +34,7 @@ function checkSOG(sog) {
 		}		sogval = sognew + sogval;
 		sog.value = sogval;
 	} else {
-		alert("Bitte gültigen Speed over Ground-Wert zwischen 0.0 und 1851.8 eingeben! Beispiel: 1234.2");
+		alert("Bitte gÃ¼ltigen Speed over Ground-Wert zwischen 0.0 und 1851.8 eingeben! Beispiel: 1234.2");
 	}
 }
 
@@ -42,16 +42,16 @@ function checkDTM(dtm) {
 	var regex = /^[\d]*\.[\d]{4}$/;
 	var dtmval = dtm.value;
 	if (!dtmval.match(regex)) {
-		alert("Bitte gültigen Digital Terrain Modell-Wert eingeben! Beispiel: 251.4325");
+		alert("Bitte gÃ¼ltigen Digital Terrain Modell-Wert eingeben! Beispiel: 251.4325");
 	}
 }/*
- * es können noch mehrere Zahlen nach dem Punkt angegeben werden! Nur eine soll erlaubt sein!
+ * es kÃ¶nnen noch mehrere Zahlen nach dem Punkt angegeben werden! Nur eine soll erlaubt sein!
  */
 function checkBTM(btm) {
 	var regex = /^([0-3]?[0-5]?[\d]\.[\d])|(360\.0)$/;
 	var btmval = btm.value;
 	if (!btmval.match(regex)) {
-		alert("Bitte gültigen Bangladesh Transverse Mercator-Wert zwischen 0.0 und 360.0 eingeben! Beispiel: 243.6");
+		alert("Bitte gÃ¼ltigen Bangladesh Transverse Mercator-Wert zwischen 0.0 und 360.0 eingeben! Beispiel: 243.6");
 	}
 }
 
@@ -162,7 +162,7 @@ function formatCoordinate(input) {
 		tMinutes = 0;
 		t100DivMinutes = 0;
 	} else {
-		// remove . or °
+		// remove . or Â°
 		tCurrInput = removeStringUntilNextNumbers(tCurrInput);
 		// get next numbers
 		tRegEx = /\D/;
@@ -207,8 +207,8 @@ function formatCoordinates(input) {
 	var tLat = formatCoordinate(input.substr(0, tMatch.index + 1));
 	var tLong = formatCoordinate(input.substr(tMatch.index + 1));
 
-	var tFormattedString = pad(tLat[0], 2) + "°" + pad(tLat[1], 2) + "." + pad(tLat[2], 2) + "'" + tLat[3] + " ";
-	tFormattedString += pad(tLong[0], 3) + "°" + pad(tLong[1], 2) + "." + pad(tLong[2], 2) + "'" + tLong[3];
+	var tFormattedString = pad(tLat[0], 2) + "Â°" + pad(tLat[1], 2) + "." + pad(tLat[2], 2) + "'" + tLat[3] + " ";
+	tFormattedString += pad(tLong[0], 3) + "Â°" + pad(tLong[1], 2) + "." + pad(tLong[2], 2) + "'" + tLong[3];
 
 	return tFormattedString;
 }
