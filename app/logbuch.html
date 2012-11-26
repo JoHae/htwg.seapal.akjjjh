@@ -2,11 +2,12 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="lib/css/styles.css" type="text/css" />
+		<script type="text/javascript" src="lib/js/functions.js"></script>
 	</head>
 	<body>
 		<div id="wrapper">
 			<div id="nav">
-				<input class="left" type="button" value="Zur¸ck" onclick="history.back()" />
+				<input class="left" type="button" value="ZurÔøΩck" onclick="history.back()" />
 				<h1>Logbuch</h1>
 				<input class="right" type="button" value="Karte" onclick="" />
 			</div>
@@ -18,7 +19,7 @@
 							<input type="text" name="shipname" />
 							<br />
 							<label for="registnumber">Registernr.</label>
-							<input type="text" name="registnumber" />
+							<input type="text" name="registnumber" onblur="check(this, '/^[a-zA-Z]{2}\s?[\d]{5}$/', 'Bitte g√ºltige Registernummer eingeben! Beispiel: RT 23456');" />
 							<br />
 							<label for="sailsign">Segelzeichen</label>
 							<input type="text" name="sailsign" />
@@ -45,7 +46,7 @@
 							<label for="constructer">Konstrukteur</label>
 							<input type="text" name="constructer" />
 							<br />
-							<label for="length">L‰nge</label>
+							<label for="length">L√§nge</label>
 							<input type="text" name="length" />
 							<br />
 							<label for="width">Breite</label>
@@ -54,10 +55,10 @@
 							<label for="gauge">Tiefgang</label>
 							<input type="text" name="gauge" />
 							<br />
-							<label for="mastheight">Masthˆhe</label>
+							<label for="mastheight">Masth√∂he</label>
 							<input type="text" name="mastheight" />
 							<br />
-							<label for="expulsion">Verdr‰ngung</label>
+							<label for="expulsion">Verdr√§ngung</label>
 							<input type="text" name="expulsion" />
 							<br />
 							<label for="rigtype">Rig-Art</label>
@@ -70,22 +71,22 @@
 							<label for="engine">Motor</label>
 							<input type="text" name="engine" />
 							<br />
-							<label for="size_fueltank">Tankgrˆﬂe</label>
+							<label for="size_fueltank">Tankgr√∂√üe</label>
 							<input type="text" name="size_fueltank" />
 							<br />
-							<label for="size_watertank">Wassertankgrˆﬂe</label>
+							<label for="size_watertank">Wassertankgr√∂√üe</label>
 							<input type="text" name="size_watertank" />
 							<br />
-							<label for="size_sewagetank">Abwassertankgrˆﬂe</label>
+							<label for="size_sewagetank">Abwassertankgr√∂√üe</label>
 							<input type="text" name="size_sewagetank" />
 							<br />
-							<label for="size_mainsail">Groﬂsegelgrˆﬂe</label>
+							<label for="size_mainsail">Gro√üsegelgr√∂√üe</label>
 							<input type="text" name="size_mainsail" />
 							<br />
-							<label for="size_genua">Genuagrˆﬂe</label>
+							<label for="size_genua">Genuagr√∂√üe</label>
 							<input type="text" name="size_genua" />
 							<br />
-							<label for="size_spi">Spi size Spigrˆﬂe</label>
+							<label for="size_spi">Spi size Spigr√∂√üe</label>
 							<input type="text" name="size_spi" />
 						</fieldset>
 					</form>
@@ -96,7 +97,7 @@
 							<th>Bootsname</th>
 							<th>Bootstyp</th>
 							<th>Konstruktor</th>
-							<th>L‰nge</th>
+							<th>L√§nge</th>
 							<th>Inhaber</th>
 							<th></th>
 						</thead>
@@ -120,10 +121,10 @@
 						</tbody>
 					</table>
 				</div>
-				<input class="left" type="button" value="Lˆschen" />
+				<input class="left" type="button" value="L√∂schen" />
 				<input class="left" type="button" value="Scheichern" />
 				<input class="left" type="button" value="Neuester" />
-				<input class="right" type="button" value="N‰chster" />
+				<input class="right" type="button" value="N√§chster" />
 				<input class="right" type="button" value="Vorheriger" />
 			</div>
 		</div>

@@ -7,7 +7,7 @@
 	<body onload="setTimestamp('timestamp');">
 		<div id="wrapper">
 			<div id="nav">
-				<input class="left" type="button" value="Zurück" onclick="history.back()" />
+				<input class="left" type="button" value="Zurï¿½ck" onclick="history.back()" />
 				<h1>Wegpunkt</h1>
 				<input class="right" type="button" value="Karte" onclick="" />
 			</div>
@@ -25,16 +25,19 @@
 							<br />
 							<label for="btm">BTM</label>
 							<input type="text" name="btm" size="5px" onblur="checkBTM(this)" />
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
+							<!-- , '/^([0-3]?[0-5]?[\d]\.[\d])|(360.0)$/', 'Bitte gÃ¼ltigen Bangladesh Transverse Mercator-Wert zwischen 0.0 und 360.0 eingeben! Beispiel: 243.6' -->
+							Â°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
 							<input type="text" name="dtm" size="5px" onblur="checkDTM(this)" />
+							<!-- , '/^[\d]*\.[\d]{4}$/', 'Bitte gÃ¼ltigen Digital Terrain Modell-Wert eingeben! Beispiel: 251.4325' -->
+							nm
 						</fieldset>
 						<fieldset>
 							<label for="cog">COG</label>
 							<input id="cog" type="text" name="cog" size="5px" onblur="checkCOG(this)" />
-							°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							Â°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label for="sog">SOG</label>
 							<input id="sog" type="text" name="sog" size="5px" onblur="checkSOG(this)" />
-							kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;&nbsp;&nbsp;<span id="timestamp"></span>
+							kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;&nbsp;&nbsp;<span id="timestamp"> </span>
 							<br />
 							<br />
 							<label for="destination">Fahrt nach</label>
@@ -43,7 +46,7 @@
 							</select>
 						</fieldset>
 						<fieldset>
-							<label for="manoever">Manöver</label>
+							<label for="manoever">ManÃ¶ver</label>
 							<select name="maneuver">
 								<option>-</option>
 								<option>Tack</option>
@@ -67,7 +70,7 @@
 								<option>Blister</option>
 								<option>Spinaker</option>
 							</select>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="grosssegel">Großsegel</label>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="grosssegel">GroÃŸsegel</label>
 							<select name="grosssegel">
 								<option>-</option>
 								<option>Full</option>
@@ -80,7 +83,7 @@
 				<div id="middle">
 					<div id="notes">
 						<h2>Notes</h2>
-						<textarea name="notes" rows="20" cols="45"></textarea>
+						<textarea name="notes" rows="20" cols="45"> </textarea>
 					</div>
 					<div id="maps">
 						<!-- Einbindung von Google Maps -->
