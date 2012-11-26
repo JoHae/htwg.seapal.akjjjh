@@ -1,10 +1,10 @@
 function isCoordinateOk(inputField, helpSpan) {
-	var tRegEx = /^(\d|([0-8]\d)|90)([°.](([0-5]\d?(.\d\d?)?)|60(.00?)?)['`]?)?\s?[NnSs]\s?(0{0,2}\d\d?|1([0-7]\d)|180)([°.](([0-5]\d?(.\d\d?)?)|60(.00?)?)['`]?)?\s?[EeWw]$/;
+	var tRegEx = /^(\d|([0-8]\d)|90)([°\.](([0-5]\d?(\.\d\d?)?)|60(\.00?)?)['`]?)?\s?[NnSs]\s?(0{0,2}\d\d?|1([0-7]\d)|180)([°\.](([0-5]\d?(\.\d\d?)?)|60(\.00?)?)['`]?)?\s?[EeWw]$/;
 	return editNodeText(tRegEx, inputField, helpSpan, "Enter valid Coordinates. For example: 47°49.89'N 009°00.50'E", formatCoordinates);
 }
 
 function checkCOG(cog) {
-	var regex = /^([0-2]?[\d]{1,2}.[\d]|[3][0-5][\d].[\d])$/;
+	var regex = /^([0-2]?[\d]{1,2}\.[\d]|[3][0-5][\d]\.[\d])$/;
 	var cogval = cog.value;
 	if (cogval.match(regex)) {
 		if (cogval.indexOf(".") == 2) {
@@ -16,20 +16,13 @@ function checkCOG(cog) {
 		cog.value = cogval;
 	} else {
 		alert("Bitte gültigen Course over Ground-Wert zwischen 000.0 und 359.9 eingeben! Beispiel: 234.2");
-	}
-}
+	}}
 
 function checkSOG(sog) {
-	alert("sog");
-	var regex = /^([01]?[0-7]?[\d]{1,2}.[\d]|[1][8][0-5][1].[0-8])$/;
+	var regex = /^([01]?[0-7]?[\d]{1,2}\.[\d]|[1][8][0-5][1]\.[0-8])$/;
 	var sogval = sog.value;
 	var sognew = "";
 	if (sogval.match(regex)) {
-		// for(int i = 2; i >= 0; i--) {
-		// alert(i);
-		// if(sogval.indexOf(".") == i+1) {
-		// sognew += "0";
-		// }
 		if (sogval.indexOf(".") == 3) {
 			sogval = "0" + sogval;
 		}
@@ -38,11 +31,27 @@ function checkSOG(sog) {
 		}
 		if (sogval.indexOf(".") == 1) {
 			sogval = "000" + sogval;
-		}		// }
-		sogval = sognew + sogval;
+		}		sogval = sognew + sogval;
 		sog.value = sogval;
 	} else {
 		alert("Bitte gültigen Speed over Ground-Wert zwischen 0.0 und 1851.8 eingeben! Beispiel: 1234.2");
+	}
+}
+
+function checkDTM(dtm) {
+	var regex = /^[\d]*\.[\d]{4}$/;
+	var dtmval = dtm.value;
+	if (!dtmval.match(regex)) {
+		alert("Bitte gültigen Digital Terrain Modell-Wert eingeben! Beispiel: 251.4325");
+	}
+}/*
+ * es können noch mehrere Zahlen nach dem Punkt angegeben werden! Nur eine soll erlaubt sein!
+ */
+function checkBTM(btm) {
+	var regex = /^([0-3]?[0-5]?[\d]\.[\d])|(360\.0)$/;
+	var btmval = btm.value;
+	if (!btmval.match(regex)) {
+		alert("Bitte gültigen Bangladesh Transverse Mercator-Wert zwischen 0.0 und 360.0 eingeben! Beispiel: 243.6");
 	}
 }
 
@@ -55,14 +64,26 @@ function setTimestamp(str) {
 	var hours = date.getHours();
 	var minutes = date.getMinutes();
 	var seconds = date.getSeconds();
-	if(seconds <= 9) {
-		var formattedTime = days + "." + months + "." + years + ", " + hours + ':' + minutes + ':0' + seconds;
+	var formattedTime = "";
+	
+	if(seconds <= 9) {		formattedTime = days + "." + months + "." + years + ", " + hours + ':' + minutes + ':0' + seconds;	};	if(minutes <= 9) {
+		formattedTime = days + "." + months + "." + years + ", " + hours + ':0' + minutes + ':' + seconds;
+	};
+	if(hours <= 9) {
+		formattedTime = days + "." + months + "." + years + ", 0" + hours + ':' + minutes + ':' + seconds;
+	};
+	if(months <= 9) {
+		formattedTime = days + ".0" + months + "." + years + ", " + hours + ':' + minutes + ':' + seconds;
+	};
+	if(days <= 9) {
+		formattedTime = "0" + days + "." + months + "." + years + ", " + hours + ':' + minutes + ':' + seconds;
+	};
+	if(formattedTime != "") {
+		time.innerHTML = formattedTime;
 	}
 	else {
-		var formattedTime = days + "." + months + "." + years + ", " + hours + ':' + minutes + ':' + seconds;		
+		time.innerHTML = days + "." + months + "." + years + ", " + hours + ':' + minutes + ':' + seconds;		
 	}
-
-	time.innerHTML = formattedTime;
 }
 
 /**
