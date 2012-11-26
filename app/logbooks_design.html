@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>logbooks</title>
+		<meta name="description" content="" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+		<!-- jQuery and jQuery Ui imports -->
+		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+		<script src="lib/js/jquery-1.8.3.js"></script>
+		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
+
+		<script>
+			$(function() {
+				$("#seapal-list").accordion({
+					collapsible : true
+				});
+
+				// List layout
+				// Hover states on the icons
+				$("#seapal-list .seapal-actions div").hover(function() {
+					$(this).addClass("ui-state-hover");
+				}, function() {
+					$(this).removeClass("ui-state-hover");
+				});
+
+				// list element actions
+				// the new item element
+				$("#seapal-list-item-new-edit").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-new .seapal-readonly").hide();
+					$("#seapal-list .seapal-header .seapal-nr-new .seapal-edit").show();
+					$("#seapal-list .seapal-content .seapal-nr-new .seapal-readonly").hide();
+					$("#seapal-list .seapal-content .seapal-nr-new .seapal-edit").show();
+					return false;
+					// prevent toggling collapsion
+				});
+
+
+				$("#seapal-list-item-new-save").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-new .seapal-readonly").show();
+					$("#seapal-list .seapal-header .seapal-nr-new .seapal-edit").hide();
+					$("#seapal-list .seapal-content .seapal-nr-new .seapal-readonly").show();
+					$("#seapal-list .seapal-content .seapal-nr-new .seapal-edit").hide();
+					return false;
+					// prevent toggling collapsion
+				});
+
+				$("#seapal-list-item-new-cancel").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-new .seapal-readonly").show();
+					$("#seapal-list .seapal-header .seapal-nr-new .seapal-edit").hide();
+					$("#seapal-list .seapal-content .seapal-nr-new .seapal-readonly").show();
+					$("#seapal-list .seapal-content .seapal-nr-new .seapal-edit").hide();
+					return false;
+					// prevent toggling collapsion
+				});
+				
+				
+				// first element
+				addFunctionsToListitem(1);
+
+				// hides each edit element in the list (the header and content)
+				$("#seapal-list .seapal-edit").each(function() {
+					$(this).hide();
+				});
+
+				// for each input field in the header of the list
+				$("#seapal-list .seapal-header .seapal-edit input").each(function() {
+					$(this).click(function(e) {
+						return false;
+						// prevent toggling collapsion
+					});
+				});
+
+			});
+			
+			function addFunctionsToListitem(index) {
+				$("#seapal-list-item-" + index + "-edit").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").hide();
+					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-edit").show();
+					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-readonly").hide();
+					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-edit").show();
+					return false;
+					// prevent toggling collapsion
+				});
+
+				$("#seapal-list-item-" + index + "-remove").click(function(e) {
+					return false;
+					// prevent toggling collapsion
+				});
+
+				$("#seapal-list-item-" + index + "-save").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").show();
+					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-edit").hide();
+					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-readonly").show();
+					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-edit").hide();
+					return false;
+					// prevent toggling collapsion
+				});
+
+				$("#seapal-list-item-" + index + "-cancel").click(function(e) {
+					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").show();
+					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-edit").hide();
+					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-readonly").show();
+					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-edit").hide();
+					return false;
+					// prevent toggling collapsion
+				});
+				
+			}
+		</script>
+	</head>
+
+	<body>
+		<div id="seapal-root">
+			<header>
+				<div>
+					<span class="seapal-logo"> </span>
+					<h1>seapal</h1>
+				</div>
+				<h2>Logbücher</h2>
+			</header>
+			
+			<nav>
+				<div class="seapal-location">
+					<span>-></span><span class="seapal-space"> </span><span>logbücher</span>
+				</div>
+			</nav>
+
+			<div id="seapal-content">
+				<div class="seapal-list-header">
+					<div class="seapal-shipname">
+						Name
+					</div>
+					<div class="seapal-shiptype">
+						Typ
+					</div>
+					<div class="seapal-shipowner">
+						Eigner
+					</div>
+					<div class="seapal-shipregisternumber">
+						Rigisternr.
+					</div>
+				</div>
+				<div id="seapal-list">
+					<h3>
+					<div class="seapal-header">
+						<div class="seapal-nr-new">
+							<span class="seapal-ship-icon" > </span>
+							<div class="seapal-readonly">
+								<div class="seapal-new-item">
+									Neues Logbuch
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-list-item-new-edit" class="ui-state-default ui-corner-all" title="Hinzufügen">
+										<span class="ui-icon ui-icon-plus"> </span>
+									</div>
+								</div>
+							</div>
+							<div class="seapal-edit">
+								<div class="seapal-shipname">
+									<input id="seapal-list-item-new-shipname" type="text" value="Vergin" />
+								</div>
+								<div class="seapal-shiptype">
+									<input id="seapal-list-item-new-shiptype" type="text" value="X33" />
+								</div>
+								<div class="seapal-shipowner">
+									<input id="seapal-list-item-new-shipowner" type="text" value="HTWG Konstanz" />
+								</div>
+								<div class="seapal-shipregisternumber">
+									<input id="seapal-list-item-new-shipregisternumber" type="text" value="AB1234" />
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-list-item-new-save" class="ui-state-default ui-corner-all" title="Speichern">
+										<span class="ui-icon ui-icon-check"> </span>
+									</div>
+									<div id="seapal-list-item-new-cancel" class="ui-state-default ui-corner-all" title="Bearbeiten abbrechen">
+										<span class="ui-icon ui-icon-closethick"> </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div></h3>
+					<div>
+						
+					</div>
+					
+					
+					<h3>
+					<div class="seapal-header">
+						<div class="seapal-nr-1">
+							<span class="seapal-ship-icon" > </span>
+							<div class="seapal-readonly">
+								<div class="seapal-shipname">
+									Vergin
+								</div>
+								<div class="seapal-shiptype">
+									X33
+								</div>
+								<div class="seapal-shipowner">
+									HTWG Konstanz
+								</div>
+								<div class="seapal-shipregisternumber">
+									AB1234
+								</div>
+								<div class="seapal-list-item-1-actions">
+									<div id="seapal-list-item-1-edit" class="ui-state-default ui-corner-all" title="Bearbeiten">
+										<span class="ui-icon ui-icon-pencil"> </span>
+									</div>
+									<div id="seapal-list-item-1-remove" class="ui-state-default ui-corner-all" title="Löschen">
+										<span class="ui-icon ui-icon-trash"> </span>
+									</div>
+								</div>
+							</div>
+							<div class="seapal-edit">
+								<div class="seapal-shipname">
+									<input id="seapal-list-item-1-shipname" type="text" value="Vergin" />
+								</div>
+								<div class="seapal-shiptype">
+									<input id="seapal-list-item-1-shiptype" type="text" value="X33" />
+								</div>
+								<div class="seapal-shipowner">
+									<input id="seapal-list-item-1-shipowner" type="text" value="HTWG Konstanz" />
+								</div>
+								<div class="seapal-shipregisternumber">
+									<input id="seapal-list-item-1-shipregisternumber" type="text" value="AB1234" />
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-list-item-1-save" class="ui-state-default ui-corner-all" title="Speichern">
+										<span class="ui-icon ui-icon-check"> </span>
+									</div>
+									<div id="seapal-list-item-1-cancel" class="ui-state-default ui-corner-all" title="Bearbeiten abbrechen">
+										<span class="ui-icon ui-icon-closethick"> </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div></h3>
+					<div>
+						<div class="seapal-content">
+							<div class="seapal-nr-1">
+								<div class="seapal-readonly">
+									<p>
+										Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+										ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+										amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+										odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+									</p>
+								</div>
+								<div class="seapal-edit">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<footer>
+
+			</footer>
+		</div>
+	</body>
+</html>

@@ -2,35 +2,20 @@
 <html>
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<style type="text/css">
-			html {
-				height: 100%
-			}
-			body {
-				height: 100%;
-				margin: 0;
-				padding: 0
-			}
-			#map_canvas {
-				height: 100%
-			}
-			.labels {
-				color: red;
-				background-color: white;
-				font-family: "Lucida Grande", "Arial", sans-serif;
-				font-size: 10px;
-				font-weight: bold;
-				text-align: center;
-				border: 2px solid black;
-				white-space: nowrap;
-			}
-		</style>
+		<link href="./css/map_styles.css" rel="stylesheet" type="text/css" media="screen" />
 		<script src="./lib/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
 		<script type="text/javascript" src="./lib/markerwithlabel.js"></script>
 		<script type="text/javascript" src="./lib/mapfunctions.js"></script>
+		<script type="text/javascript" src="./lib/jquery.contextmenu.r2.js"></script>
 		<script type="text/javascript">
-			var map
+			var map;
+			var actualCrosshairPosition;
+			var standardMarkerArray = new Array();
+			var routeMarkerArray = new Array();
+			var route;
+			var actualCrosshairMarker = null;
+			var selectedMarker;
 			function initialize() {
 				var mapTypeIds = ["roadmap", "satellite", "OSM"];
 				var mapOptions = {
@@ -41,101 +26,110 @@
 						mapTypeIds : mapTypeIds
 					}
 				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+				map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
 
 				// -------- Open Sea Map --------
-				map.mapTypes.set("OSM", new google.maps.ImageMapType({
-					getTileUrl : function(coord, zoom) {
-						return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
-					},
-					tileSize : new google.maps.Size(256, 256),
-					name : "OpenStreetMap",
-					maxZoom : 18
-				}));
-				map.overlayMapTypes.push(new google.maps.ImageMapType({
-					getTileUrl : function(coord, zoom) {
-						return "http://tiles.openseamap.org/seamark/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
-					},
-					tileSize : new google.maps.Size(256, 256),
-					name : "OpenSeaMap",
-					maxZoom : 18
-				}));
+				addSeamap();
 
 				// -------- Center Coordinates shown on the Left Top Overlay --------
 				var myControl = document.getElementById('coordsDiv');
 				map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);
+				updateCoords();
 
-				// -------- CROSS HAIR MARKER --------
-				function setNewMarkerMenu(map) {
-					var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
-					var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
-					var scale = Math.pow(2, map.getZoom());
-					var worldPoint = map.getProjection().fromLatLngToPoint(actualCrosshairMarker.getPosition());
-					var point = new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
-
-					jQuery("#overlay").css({
-						left : (jQuery("#map_canvas").position().left + point.x),
-						top : (jQuery("#map_canvas").position().top + point.y)
-					});
-
-					jQuery("#overlay").show();
-
-					jQuery('#close').click(function(e) {
-						e.preventDefault();
-						jQuery("#overlay").hide();
-						actualCrosshairMarker.setVisible(false);
-						actualCrosshairMarker = null;
-					});
-				}
-
-				var actualCrosshairMarker = null;
-				var actualCrosshairPosition;
-
+				// -------- MAP EVENT HANDLING --------
 				google.maps.event.addListener(map, 'click', function(event) {
 					actualCrosshairPosition = event.latLng;
 					if (actualCrosshairMarker == null) {
-						var markerOptions = {
-							position : actualCrosshairPosition,
-							map : map,
-							draggable : true,
-							icon : "images/cross_hair.png",
-							labelContent : getPostionString(actualCrosshairPosition),
-							labelAnchor : new google.maps.Point(3, 30),
-							labelClass : "labels", // the CSS class for the label
-							labelStyle : {
-								opacity : 0.75
-							}
-						}
-						actualCrosshairMarker = new MarkerWithLabel(markerOptions);
+						addNewCrosshairMarker(map, actualCrosshairPosition);
 					} else {
 						actualCrosshairMarker.setPosition(actualCrosshairPosition);
 						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
 					}
-					setNewMarkerMenu(map);
-
-					google.maps.event.addListener(actualCrosshairMarker, 'drag', function() {
-						setNewMarkerMenu(map);
-						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
-						actualCrosshairPosition = actualCrosshairMarker.getPosition();
-					});
-
-					google.maps.event.addListener(actualCrosshairMarker, 'dragend', function() {
-						setNewMarkerMenu(map);
-						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairMarker.getPosition()));
-						actualCrosshairPosition = actualCrosshairMarker.getPosition();
-					});
+					setNewCrosshairMarkerMenu();
 				})
 
 				google.maps.event.addListener(map, 'zoom_changed', function() {
-					setNewMarkerMenu(map);
+					jQuery("#standardContext").hide();
+					jQuery("#routeContext").hide();
+					updateCoords();
+					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
+						//here I have the correct zoom level
+						setNewCrosshairMarkerMenu();
+						google.maps.event.removeListener(zoomChangeBoundsListener);
+					});
+
+				});
+				google.maps.event.addListener(map, 'center_changed', function() {
+					jQuery("#standardContext").hide();
+					jQuery("#routeContext").hide();
+					updateCoords();
+					zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
+						//here I have the correct zoom level
+						setNewCrosshairMarkerMenu();
+						google.maps.event.removeListener(zoomChangeBoundsListener);
+					});
 				});
 
-				google.maps.event.addListener(map, 'center_changed', function() {
-					document.getElementById("lat").firstChild.nodeValue = map.getCenter().lat();
-					document.getElementById("long").firstChild.nodeValue = map.getCenter().lng();
-					document.getElementById("coordinations").firstChild.nodeValue = getPostionString(map.getCenter());
-					setNewMarkerMenu(map);
+				// -------- MENU EVENT HANDLING OF CROSSHAIRMARKER --------
+				// Set new standard marker
+				$("#addStandardMarker").click(function() {
+					var length = standardMarkerArray.length;
+					standardMarkerArray[length] = addNewStandardMarker();					deleteCrosshairMarker();
 				});
+
+				// Set new route marker
+				$("#addRouteMarker").click(function() {
+					var length = routeMarkerArray.length;
+					routeMarkerArray[length] = addNewRouteMarker();
+					updateRoutePolylines();
+					deleteCrosshairMarker();
+				});
+
+				// -------- MENU EVENT HANDLING OF STANDARD MARKER --------
+				// Delete selected Standard marker
+				$("#deleteStandardMarker").click(function() {
+					for (var i = 0; i < standardMarkerArray.length; i++) {
+						if (selectedMarker == standardMarkerArray[i]) {
+							standardMarkerArray.splice(i, 1);
+						}
+					}
+					jQuery("#standardContext").hide();
+					selectedMarker.setMap(null);
+					selectedMarker = null;				});
+
+				// -------- MENU EVENT HANDLING OF ROUTE MARKER --------
+				// delete selected Route Marker
+				$("#deleteRouteMarker").click(function() {
+					var length = routeMarkerArray.length;
+
+					for (var i = 0; i < length; i++) {
+						if (selectedMarker == routeMarkerArray[i]) {
+							routeMarkerArray.splice(i, 1);
+						}
+					}
+
+					updateRoutePolylines();
+					jQuery("#routeContext").hide();
+					selectedMarker.setMap(null);
+					selectedMarker = null;
+				});
+
+				// delete Route completly
+				$("#deleteRoute").click(function() {
+					var length = routeMarkerArray.length;
+					for (var i = 0; i < length; i++) {
+						routeMarkerArray[i].setMap(null);
+					}
+					routeMarkerArray = new Array();
+					route.setMap(null);
+					route = null;
+					updateRoutePolylines();
+					jQuery("#routeContext").hide();
+					selectedMarker.setMap(null);
+					selectedMarker = null;
+				});
+
+				// computeDistanceBetween(from:LatLng, to:LatLng, radius?:number) <<<<<< FOR DISTANCE
 			}
 		</script>
 	</head>
@@ -143,32 +137,65 @@
 		<div id="coordsDiv" style="color: black; position: absolute; text-align: right; font-size: 1.4em; font-weight:bold; margin-right: 25px;">
 			<span id="coordinations">0°00.00'N 0°00.00'E</span>
 			<br />
-			Lat <span id="lat">42</span> Long <span id="long">9</span>
+			Lat <span id="lat">42</span> Long <span id="long">9</span> <br />
 		</div>
 
-		<!-- 	DYNAMIC MENU SHOWN WHEN CLICKING ON THE MAP	 -->
-		<div id="overlay" style="z-index: 1000; position: absolute; display: none; width: 150px; height: 180px; background-color: white; border:1px solid grey;padding:10px;">
-	<ul>
-		<li>
-			<a id="addStandardMark" href="javascript:void(0);" onclick="">Markierung setzen</a>
-		</li>
-		<li>
-			<a id="addRoute" href="javascript:void(0);" onclick="">Route setzen</a>
-		</li>
-		<li>
-			<a id="addDistanceStart" href="javascript:void(0);" onclick="">Abstand von hier</a>
-		</li>
-		<li>
-			<a id="addDestination" href="javascript:void(0);" onclick="">Zum Ziel machen</a>
-		</li>
-		<li>
-			<a id="delete" href="javascript:void(0);" onclick="">Löschen</a>
-		</li>
-	</ul>
-	<a href="#" id="close">close</a>
-</div>
+		<!-- 	MENU FOR CROSSHAIR MARKER	 -->
+		<div id="crosshairContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="crosshairMenu" class="menu">
+				<li>
+					<!-- Remove style attribute if there is more than one div within this li tag -->
+					<div style="padding: 12px 30px;">Position: <span id="crosshairPosition">Error</span></div>
+				</li>
+				<li>
+					<a id="addStandardMarker" href="#">Markierung setzen</a>
+				</li>
+				<li>
+					<a id="addRouteMarker" href="#">Route setzen</a>
+				</li>
+				<li>
+					<a id="closecrosshairContext" href="#">Löschen</a>
+				</li>
+			</ul>
+		</div>
 
-		<div id="map_canvas" style="width:100%; height:100%"></div>
+		<!-- 	MENU FOR STANDARD MARKER	 -->
+		<div id="standardContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="standardMenu" class="menu">
+				<li>
+					<!-- Remove style attribute if there is more than one div within this li tag -->
+					<div style="padding: 12px 30px;">Position: <span id="standardPosition">Error</span></div>
+				</li>
+				<li>
+					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
+				</li>
+				<li>
+					<a id="closestandardContext" href="#">Menü schließen</a>
+				</li>
+				<li>
+					<a id="measureDisctance" href="#">Distanzmessung</a>
+				</li>
+			</ul>
+		</div>
 
+		<!-- 	MENU FOR ROUTE MARKER	 -->
+		<div id="routeContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="routeMenu" class="menu">
+				<li>
+					<div>Position: <span id="routePosition">Error</span></div>
+					<div>Distanz vom Start: <span id="routeDistance">Error</span></div>
+				</li>
+				<li>
+					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
+				</li>
+				<li>
+					<a id="deleteRoute" href="#">Route Löschen</a>
+				</li>
+				<li>
+					<a id="closerouteContext" href="#">Menü schließen</a>
+				</li>
+			</ul>
+		</div>
+		<div id="mapCanvas" style="width:100%; height:100%"></div>
 	</body>
 </html>
