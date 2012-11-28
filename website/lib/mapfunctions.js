@@ -311,3 +311,88 @@ function updateRoutePolylines() {
 		route.setMap(map);
 	}
 }
+
+function addNewDistanceMarker() {
+	var mouseOver = false;
+	var image = new google.maps.MarkerImage('./images/flag_yellow_50.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(45, 50),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0, 0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(1, 50));
+
+	anchorPoint = new google.maps.Point(0, 0);
+	
+	var markerOptions = {
+		position : actualCrosshairPosition,
+		map : map,
+		draggable : true,
+		icon : image,
+		labelContent : "",
+		labelAnchor : new google.maps.Point(0, -10),
+		labelClass : "", // the CSS class for the label
+		labelStyle : {
+			opacity : 0.9
+		}
+	}
+	var marker = new MarkerWithLabel(markerOptions);
+	
+	google.maps.event.addListener(marker, "mouseover", function(e) {
+		marker.set("labelClass", "markerLabel");
+		marker.set("labelContent", getPostionString(marker.getPosition()));
+		mouseOver = true;
+	});
+
+	google.maps.event.addListener(marker, "mouseout", function(e) {
+		marker.set("labelClass", "");
+		marker.set("labelContent", "");
+		mouseOver = false;
+	});
+
+	google.maps.event.addListener(marker, 'drag', function() {
+		marker.set("labelClass", "markerLabel");
+		marker.set("labelContent", getPostionString(marker.getPosition()));
+		updateDistancePolylines();
+	});
+
+	google.maps.event.addListener(marker, 'dragend', function() {
+		if (mouseOver) {
+			marker.set("labelClass", "markerLabel");
+			marker.set("labelContent", getPostionString(marker.getPosition()));
+		} else {
+			marker.set("labelClass", "");
+			marker.set("labelContent", "");
+		}
+		updateDistancePolylines();
+	});
+
+	google.maps.event.addListener(marker, 'click', function(event) {
+		deleteCrosshairMarker();
+		jQuery("#standardContext").hide();
+		jQuery("#routeContext").hide();
+		selectedMarker = marker;
+		//setNewDistanceMarkerMenu(marker);
+	})
+
+	return marker;
+}
+
+function updateDistancePolylines() {
+	var routePoints = new Array();
+	for (var i = 0; i < distanceMarkerArray.length; i++) {
+		routePoints[i] = distanceMarkerArray[i].getPosition();
+	}
+
+	if (distanceRoute != null) {
+		distanceRoute.setPath(routePoints);
+	} else {
+		distanceRoute = new google.maps.Polyline({
+			path : routePoints,
+			strokeColor : "#FFFF00",
+			strokeOpacity : 1.0,
+			strokeWeight : 2
+		});
+		distanceRoute.setMap(map);
+	}
+}
