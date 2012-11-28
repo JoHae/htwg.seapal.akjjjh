@@ -138,6 +138,7 @@ function deleteCrosshairMarker() {
 }
 
 function addNewStandardMarker() {
+	var mouseOver = false;
 	var markerOptions = {
 		position : actualCrosshairPosition,
 		map : map,
@@ -155,11 +156,13 @@ function addNewStandardMarker() {
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
 		marker.set("labelContent", getPostionString(marker.getPosition()));
+		mouseOver = true;
 	});
-	
+
 	google.maps.event.addListener(marker, "mouseout", function(e) {
 		marker.set("labelClass", "");
 		marker.set("labelContent", "");
+		mouseOver = false;
 	});
 
 	google.maps.event.addListener(marker, 'drag', function() {
@@ -169,9 +172,14 @@ function addNewStandardMarker() {
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
-		marker.set("labelClass", "");
-		marker.set("labelContent", "");
 		jQuery("#standardContext").hide();
+		if (mouseOver) {
+			marker.set("labelClass", "markerLabel");
+			marker.set("labelContent", getPostionString(marker.getPosition()));
+		} else {
+			marker.set("labelClass", "");
+			marker.set("labelContent", "");
+		}
 	});
 
 	google.maps.event.addListener(marker, 'click', function(event) {
@@ -202,6 +210,7 @@ function setNewStandardMarkerMenu(marker) {
 }
 
 function addNewRouteMarker() {
+	var mouseOver = false;
 	var image = new google.maps.MarkerImage('./images/flag50.png',
 	// This marker is 20 pixels wide by 32 pixels tall.
 	new google.maps.Size(45, 50),
@@ -215,18 +224,43 @@ function addNewRouteMarker() {
 		position : actualCrosshairPosition,
 		map : map,
 		draggable : true,
-		icon : image
+		icon : image,
+		labelContent : "",
+		labelAnchor : new google.maps.Point(0, -10),
+		labelClass : "", // the CSS class for the label
+		labelStyle : {
+			opacity : 0.9
+		}
 	}
-	var marker = new google.maps.Marker(markerOptions);
-	marker.set("labelContent", "");
-	marker.set("labelClass", "");
+	var marker = new MarkerWithLabel(markerOptions);
+
+	google.maps.event.addListener(marker, "mouseover", function(e) {
+		marker.set("labelClass", "markerLabel");
+		marker.set("labelContent", getPostionString(marker.getPosition()));
+		mouseOver = true;
+	});
+
+	google.maps.event.addListener(marker, "mouseout", function(e) {
+		marker.set("labelClass", "");
+		marker.set("labelContent", "");
+		mouseOver = false;
+	});
 
 	google.maps.event.addListener(marker, 'drag', function() {
+		marker.set("labelClass", "markerLabel");
+		marker.set("labelContent", getPostionString(marker.getPosition()));
 		jQuery("#routeContext").hide();
 		updateRoutePolylines();
 	});
 
 	google.maps.event.addListener(marker, 'dragend', function() {
+		if (mouseOver) {
+			marker.set("labelClass", "markerLabel");
+			marker.set("labelContent", getPostionString(marker.getPosition()));
+		} else {
+			marker.set("labelClass", "");
+			marker.set("labelContent", "");
+		}
 		jQuery("#routeContext").hide();
 		updateRoutePolylines();
 	});

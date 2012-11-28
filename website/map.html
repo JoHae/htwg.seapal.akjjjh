@@ -13,6 +13,8 @@
 			var actualCrosshairPosition;
 			var standardMarkerArray = new Array();
 			var routeMarkerArray = new Array();
+			var distanceMarkerArray = new Array();
+			var distanceMode = false;
 			var route;
 			var actualCrosshairMarker = null;
 			var selectedMarker;
@@ -79,6 +81,21 @@
 
 				// Set new route marker
 				$("#addRouteMarker").click(function() {
+					var length = routeMarkerArray.length;
+					routeMarkerArray[length] = addNewRouteMarker();
+					updateRoutePolylines();
+					deleteCrosshairMarker();
+				});
+				
+				// Set new route marker
+				$("#distanceMode").click(function() {
+					distanceMode = !distanceMode;
+					if (distanceMode) {
+						map.setOptions({draggableCursor:'crosshair'});
+					} else {
+						map.setOptions({draggableCursor:''});
+					}
+					
 					var length = routeMarkerArray.length;
 					routeMarkerArray[length] = addNewRouteMarker();
 					updateRoutePolylines();
@@ -156,6 +173,9 @@
 				<li>
 					<a id="closecrosshairContext" href="#">Löschen</a>
 				</li>
+				<li>
+					<a id="distanceMode" href="#">Distanzmessung</a>
+				</li>
 			</ul>
 		</div>
 
@@ -171,9 +191,6 @@
 				</li>
 				<li>
 					<a id="closestandardContext" href="#">Menü schließen</a>
-				</li>
-				<li>
-					<a id="measureDisctance" href="#">Distanzmessung</a>
 				</li>
 			</ul>
 		</div>
