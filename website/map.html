@@ -14,6 +14,9 @@
 			var standardMarkerArray = new Array();
 			var routeMarkerArray = new Array();
 			var route;
+			var distanceMarkerArray = new Array();
+			var distanceMode = false;
+			var distanceRoute;
 			var actualCrosshairMarker = null;
 			var selectedMarker;
 			function initialize() {
@@ -39,13 +42,20 @@
 				// -------- MAP EVENT HANDLING --------
 				google.maps.event.addListener(map, 'click', function(event) {
 					actualCrosshairPosition = event.latLng;
-					if (actualCrosshairMarker == null) {
-						addNewCrosshairMarker(map, actualCrosshairPosition);
+
+					if (distanceMode) {
+						var length = distanceMarkerArray.length;
+						distanceMarkerArray[length] = addNewDistanceMarker();
+						updateDistancePolylines();
 					} else {
-						actualCrosshairMarker.setPosition(actualCrosshairPosition);
-						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
+						if (actualCrosshairMarker == null) {
+							addNewCrosshairMarker(map, actualCrosshairPosition);
+						} else {
+							actualCrosshairMarker.setPosition(actualCrosshairPosition);
+							actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
+						}
+						setNewCrosshairMarkerMenu();
 					}
-					setNewCrosshairMarkerMenu();
 				})
 
 				google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -83,6 +93,25 @@
 					routeMarkerArray[length] = addNewRouteMarker();
 					updateRoutePolylines();
 					deleteCrosshairMarker();
+				});
+
+				// Set new distance marker and start distance Mode
+				$("#startDistanceMode").click(function() {
+					deleteCrosshairMarker();
+					distanceMode = !distanceMode;
+					if (distanceMode) {
+						map.setOptions({
+							draggableCursor : 'crosshair'
+						});
+					} else {
+						map.setOptions({
+							draggableCursor : ''
+						});
+					}
+
+					var length = distanceMarkerArray.length;
+					distanceMarkerArray[length] = addNewDistanceMarker();
+					updateDistancePolylines();
 				});
 
 				// -------- MENU EVENT HANDLING OF STANDARD MARKER --------
@@ -137,7 +166,8 @@
 		<div id="coordsDiv" style="color: black; position: absolute; text-align: right; font-size: 1.4em; font-weight:bold; margin-right: 25px;">
 			<span id="coordinations">0°00.00'N 0°00.00'E</span>
 			<br />
-			Lat <span id="lat">42</span> Long <span id="long">9</span> <br />
+			Lat <span id="lat">42</span> Long <span id="long">9</span>
+			<br />
 		</div>
 
 		<!-- 	MENU FOR CROSSHAIR MARKER	 -->
@@ -145,13 +175,18 @@
 			<ul id="crosshairMenu" class="menu">
 				<li>
 					<!-- Remove style attribute if there is more than one div within this li tag -->
-					<div style="padding: 12px 30px;">Position: <span id="crosshairPosition">Error</span></div>
+					<div style="padding: 12px 30px;">
+						Position: <span id="crosshairPosition">Error</span>
+					</div>
 				</li>
 				<li>
 					<a id="addStandardMarker" href="#">Markierung setzen</a>
 				</li>
 				<li>
 					<a id="addRouteMarker" href="#">Route setzen</a>
+				</li>
+				<li>
+					<a id="startDistanceMode" href="#">Distanzmessung starten</a>
 				</li>
 				<li>
 					<a id="closecrosshairContext" href="#">Löschen</a>
@@ -164,16 +199,15 @@
 			<ul id="standardMenu" class="menu">
 				<li>
 					<!-- Remove style attribute if there is more than one div within this li tag -->
-					<div style="padding: 12px 30px;">Position: <span id="standardPosition">Error</span></div>
+					<div style="padding: 12px 30px;">
+						Position: <span id="standardPosition">Error</span>
+					</div>
 				</li>
 				<li>
 					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
 				</li>
 				<li>
 					<a id="closestandardContext" href="#">Menü schließen</a>
-				</li>
-				<li>
-					<a id="measureDisctance" href="#">Distanzmessung</a>
 				</li>
 			</ul>
 		</div>
@@ -182,8 +216,12 @@
 		<div id="routeContext" style="z-index: 1000; position: absolute; display: none;">
 			<ul id="routeMenu" class="menu">
 				<li>
-					<div>Position: <span id="routePosition">Error</span></div>
-					<div>Distanz vom Start: <span id="routeDistance">Error</span></div>
+					<div>
+						Position: <span id="routePosition">Error</span>
+					</div>
+					<div>
+						Distanz vom Start: <span id="routeDistance">Error</span>
+					</div>
 				</li>
 				<li>
 					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
