@@ -46,7 +46,6 @@
 					// prevent toggling collapsion
 				});
 
-
 				$("#seapal-list-item-new-save").click(function(e) {
 					$("#seapal-list .seapal-header .seapal-nr-new .seapal-readonly").show();
 					$("#seapal-list .seapal-header .seapal-nr-new .seapal-edit").hide();
@@ -64,8 +63,7 @@
 					return false;
 					// prevent toggling collapsion
 				});
-				
-				
+
 				// first element
 				addFunctionsToListitem(1);
 
@@ -83,7 +81,7 @@
 				});
 
 			});
-			
+
 			function addFunctionsToListitem(index) {
 				$("#seapal-list-item-" + index + "-edit").click(function(e) {
 					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").hide();
@@ -116,7 +114,7 @@
 					return false;
 					// prevent toggling collapsion
 				});
-				
+
 			}
 		</script>
 	</head>
@@ -130,7 +128,7 @@
 				</div>
 				<h2>Logbücher</h2>
 			</header>
-			
+
 			<nav>
 				<div class="seapal-location">
 					<span>-></span><span class="seapal-space"> </span><span>logbücher</span>
@@ -192,10 +190,9 @@
 						</div>
 					</div></h3>
 					<div>
-						
+
 					</div>
-					
-					
+
 					<h3>
 					<div class="seapal-header">
 						<div class="seapal-nr-1">
@@ -250,15 +247,77 @@
 						<div class="seapal-content">
 							<div class="seapal-nr-1">
 								<div class="seapal-readonly">
-									<p>
-										Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-										ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-										amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-										odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-									</p>
+
 								</div>
 								<div class="seapal-edit">
+									<fieldset class="fs95">
 
+										<label for="sailsign">Segelzeichen</label>
+										<input type="text" name="sailsign" value="ll"/>
+										<br />
+										<label for="homeport">Heimathafen</label>
+										<input type="text" name="homeport" value="kk"/>
+										<br />
+										<label for="yachtclub">Yachtclub</label>
+										<input type="text" name="yachtclub" value="uuu"/>
+										<br />
+										<label for="insurance">Versicherung</label>
+										<input type="text" name="insurance" value="ll"/>
+										<br />
+										<label for="callsign">Rufzeichen</label>
+										<input type="text" name="callsign" value="pp"/>
+										<br />
+										<label for="constructer">Konstrukteur</label>
+										<input type="text" name="constructer" value="ooo"/>
+									</fieldset>
+									<fieldset class="fs95">
+
+										<label for="length">Länge</label>
+										<input type="text" name="length" value="ppp"/>
+										<br />
+										<label for="width">Breite</label>
+										<input type="text" name="width" value="uuu"/>
+										<br />
+										<label for="gauge">Tiefgang</label>
+										<input type="text" name="gauge" value="ooo"/>
+										<br />
+										<label for="mastheight">Masthöhe</label>
+										<input type="text" name="mastheight" value="ppp"/>
+										<br />
+										<label for="expulsion">Verdrängung</label>
+										<input type="text" name="expulsion" value="ttt"/>
+
+									</fieldset>
+									<fieldset class="fs140">
+										<label for="rigtype">Rig-Art</label>
+										<input type="text" name="rigtype" value="pppp"/>
+										<br />
+										<label for="constructionyear">Baujahr</label>
+										<input type="text" name="constructionyear" value="ooo"/>
+										<br />
+										<label for="engine">Motor</label>
+										<input type="text" name="engine" value="iii"/>
+										<br />
+										<label for="size_fueltank">Tankgröße</label>
+										<input type="text" name="size_fueltank" value="uu"/>
+										<br />
+										<label for="size_watertank">Wassertankgröße</label>
+										<input type="text" name="size_watertank" value="hallo"/>
+										<br />
+										<label for="size_sewagetank">Abwassertankgröße</label>
+										<input type="text" name="size_sewagetank" value="uuu"/>
+										<br />
+										<label for="size_mainsail">Großsegelgröße</label>
+										<input type="text" name="size_mainsail" value="ffff"/>
+										<br />
+										<label for="size_genua">Genuagröße</label>
+										<input type="text" name="size_genua" value="asd"/>
+										<br />
+										<label for="size_spi">Spi size Spigröße</label>
+										<input type="text" name="size_spi" value="asd"/>
+									</fieldset>
+									<input type="submit" />
+									<input type="hidden" name="logbookID" value="1">
 								</div>
 							</div>
 						</div>
