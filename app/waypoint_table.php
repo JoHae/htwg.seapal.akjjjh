@@ -1,4 +1,4 @@
-þÿ<script language="javascript">
+<script language="javascript">
 	function elementHideShow(elementToHideOrShow) {
 		var el = document.getElementById(elementToHideOrShow);
 		if (el.style.display == "table-row") {
