@@ -22,10 +22,15 @@ $(function() {
 var Server;
 
 function updatePosition(position) {
+	// position is "(lat, lng)"
+	var latlngStr = position.substring(1, position.length-1);
+	latlngStr = latlngStr.split(",", 2);
+	var lat = parseFloat(latlngStr[0]);
+	var lng = parseFloat(latlngStr[1]);
+	var new_position = new google.maps.LatLng(lat, lng);
 	var length = routeMarkerArray.length;
-	routeMarkerArray[length] = addNewRouteMarker(position);
+	routeMarkerArray[length] = addNewRouteMarker(new_position);
 	updateRoutePolylines();
-	deleteCrosshairMarker();
 }
 
 function sendPosition(position) {

@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="./lib/markerwithlabel.js"></script>
 		<script type="text/javascript" src="./lib/mapfunctions.js"></script>
 		<script type="text/javascript" src="./lib/jquery.contextmenu.r2.js"></script>
+		<script type="text/javascript" src="./mapserver/fancywebsocket.js"></script>
 		<script type="text/javascript" src="./mapserver/ship_position.js"></script>
 		<script type="text/javascript">
 			var map;
@@ -122,8 +123,8 @@
 					window.setInterval((function() {
 						lat = lat + 0.001;
 						lng = lng + 0.001;
-						b = new google.maps.LatLng(lat, lng)
-						sendPosition(b)
+						b = new google.maps.LatLng(lat, lng);
+						sendPosition(b);
 					})
 					,1000);
 				});
