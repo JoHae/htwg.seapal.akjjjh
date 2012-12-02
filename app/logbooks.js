@@ -3,5 +3,8 @@
  */
 
 
+var jsonVar = {
+	
+};
 
 function createLogbookElement
