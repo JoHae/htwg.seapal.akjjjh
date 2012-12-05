@@ -58,12 +58,12 @@ function getPostionString(position) {
 }
 
 function getDistanceRoute(marker_end) {
-	if (marker_end === routeMarkerArray[0]) {
+	if(marker_end === routeMarkerArray[0]) {
 		return 0;
 	}
 	var distance = 0;
 
-	for (var i = 1; i < routeMarkerArray.length; i++) {
+	for(var i = 1; i < routeMarkerArray.length; i++) {
 		distance = distance + google.maps.geometry.spherical.computeDistanceBetween(routeMarkerArray[i - 1].getPosition(), routeMarkerArray[i].getPosition());
 		if (marker_end === routeMarkerArray[i]) {
 			return extround(meterToNauticalMile(distance), 3);
@@ -113,6 +113,7 @@ function addNewCrosshairMarker() {
 function setNewCrosshairMarkerMenu() {
 	var point = getMenuPoint(map, actualCrosshairMarker);
 
+	setDistanceMenu();
 	document.getElementById("crosshairPosition").firstChild.nodeValue = getPostionString(actualCrosshairPosition);
 	document.getElementById("crosshairContext").style.cursor = "default";
 	jQuery("#crosshairContext").css({
@@ -130,7 +131,7 @@ function setNewCrosshairMarkerMenu() {
 }
 
 function deleteCrosshairMarker() {
-	if (actualCrosshairMarker != null) {
+	if(actualCrosshairMarker != null) {
 		jQuery("#crosshairContext").hide();
 		actualCrosshairMarker.setMap(null);
 		actualCrosshairMarker = null;
@@ -138,7 +139,6 @@ function deleteCrosshairMarker() {
 }
 
 function addNewStandardMarker() {
-	var mouseOver = false;
 	var markerOptions = {
 		position : actualCrosshairPosition,
 		map : map,
@@ -152,7 +152,8 @@ function addNewStandardMarker() {
 		}
 	}
 	var marker = new MarkerWithLabel(markerOptions);
-
+	var mouseOver = false;
+		
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
 		marker.set("labelContent", getPostionString(marker.getPosition()));
@@ -173,7 +174,7 @@ function addNewStandardMarker() {
 
 	google.maps.event.addListener(marker, 'dragend', function() {
 		jQuery("#standardContext").hide();
-		if (mouseOver) {
+		if(mouseOver) {
 			marker.set("labelClass", "markerLabel");
 			marker.set("labelContent", getPostionString(marker.getPosition()));
 		} else {
@@ -209,8 +210,7 @@ function setNewStandardMarkerMenu(marker) {
 	});
 }
 
-function addNewRouteMarker() {
-	var mouseOver = false;
+function addNewRouteMarker(position) {
 	var image = new google.maps.MarkerImage('./images/flag50.png',
 	// This marker is 20 pixels wide by 32 pixels tall.
 	new google.maps.Size(45, 50),
@@ -220,8 +220,13 @@ function addNewRouteMarker() {
 	new google.maps.Point(1, 50));
 
 	anchorPoint = new google.maps.Point(0, 0);
+
+	if(position == null) {
+		position = actualCrosshairPosition;
+	}
+
 	var markerOptions = {
-		position : actualCrosshairPosition,
+		position : position,
 		map : map,
 		draggable : true,
 		icon : image,
@@ -233,7 +238,8 @@ function addNewRouteMarker() {
 		}
 	}
 	var marker = new MarkerWithLabel(markerOptions);
-
+	var mouseOver = false;
+	
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
 		marker.set("labelContent", getPostionString(marker.getPosition()));
@@ -313,7 +319,6 @@ function updateRoutePolylines() {
 }
 
 function addNewDistanceMarker() {
-	var mouseOver = false;
 	var image = new google.maps.MarkerImage('./images/flag_yellow_50.png',
 	// This marker is 20 pixels wide by 32 pixels tall.
 	new google.maps.Size(45, 50),
@@ -337,6 +342,7 @@ function addNewDistanceMarker() {
 		}
 	}
 	var marker = new MarkerWithLabel(markerOptions);
+	var mouseOver = false;
 	
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
@@ -394,5 +400,32 @@ function updateDistancePolylines() {
 			strokeWeight : 2
 		});
 		distanceRoute.setMap(map);
+	}
+}
+
+function deleteDistanceMarker() {
+	for (var i = 0; i < distanceMarkerArray.length; i++) {
+		distanceMarkerArray[i].setMap(null);
+	}
+	distanceMarkerArray = new Array();
+	updateDistancePolylines();
+}
+
+function endDistanceMode() {
+	map.setOptions({draggableCursor : ''});
+}
+
+function setDistanceMenu() {
+	jQuery(".startDistanceModeEntry").hide();
+	jQuery(".destDistanceModeEntry").hide();
+	jQuery(".endDistanceModeEntry").hide();
+		
+	if(distanceMarkerArray.length == 0) {
+		jQuery(".startDistanceModeEntry").show();
+	} else if(distanceMarkerArray.length == 1) {
+		jQuery(".destDistanceModeEntry").show();
+		jQuery(".endDistanceModeEntry").show();
+	} else {
+		jQuery(".endDistanceModeEntry").show();
 	}
 }

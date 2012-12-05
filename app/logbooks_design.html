@@ -21,104 +21,7 @@
 		<script src="lib/js/jquery-1.8.3.js"></script>
 		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
 
-		<script>
-			$(function() {
-				$("#seapal-list").accordion({
-					collapsible : true
-				});
-
-				// List layout
-				// Hover states on the icons
-				$("#seapal-list .seapal-actions div").hover(function() {
-					$(this).addClass("ui-state-hover");
-				}, function() {
-					$(this).removeClass("ui-state-hover");
-				});
-
-				// list element actions
-				// the new item element
-				$("#seapal-list-item-new-edit").click(function(e) {
-					$("#seapal-list .seapal-header .seapal-nr-new .seapal-readonly").hide();
-					$("#seapal-list .seapal-header .seapal-nr-new .seapal-edit").show();
-					$("#seapal-list .seapal-content .seapal-nr-new .seapal-readonly").hide();
-					$("#seapal-list .seapal-content .seapal-nr-new .seapal-edit").show();
-					return false;
-					// prevent toggling collapsion
-				});
-
-
-				$("#seapal-list-item-new-save").click(function(e) {
-					$("#seapal-list .seapal-header .seapal-nr-new .seapal-readonly").show();
-					$("#seapal-list .seapal-header .seapal-nr-new .seapal-edit").hide();
-					$("#seapal-list .seapal-content .seapal-nr-new .seapal-readonly").show();
-					$("#seapal-list .seapal-content .seapal-nr-new .seapal-edit").hide();
-					return false;
-					// prevent toggling collapsion
-				});
-
-				$("#seapal-list-item-new-cancel").click(function(e) {
-					$("#seapal-list .seapal-header .seapal-nr-new .seapal-readonly").show();
-					$("#seapal-list .seapal-header .seapal-nr-new .seapal-edit").hide();
-					$("#seapal-list .seapal-content .seapal-nr-new .seapal-readonly").show();
-					$("#seapal-list .seapal-content .seapal-nr-new .seapal-edit").hide();
-					return false;
-					// prevent toggling collapsion
-				});
-				
-				
-				// first element
-				addFunctionsToListitem(1);
-
-				// hides each edit element in the list (the header and content)
-				$("#seapal-list .seapal-edit").each(function() {
-					$(this).hide();
-				});
-
-				// for each input field in the header of the list
-				$("#seapal-list .seapal-header .seapal-edit input").each(function() {
-					$(this).click(function(e) {
-						return false;
-						// prevent toggling collapsion
-					});
-				});
-
-			});
-			
-			function addFunctionsToListitem(index) {
-				$("#seapal-list-item-" + index + "-edit").click(function(e) {
-					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").hide();
-					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-edit").show();
-					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-readonly").hide();
-					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-edit").show();
-					return false;
-					// prevent toggling collapsion
-				});
-
-				$("#seapal-list-item-" + index + "-remove").click(function(e) {
-					return false;
-					// prevent toggling collapsion
-				});
-
-				$("#seapal-list-item-" + index + "-save").click(function(e) {
-					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").show();
-					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-edit").hide();
-					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-readonly").show();
-					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-edit").hide();
-					return false;
-					// prevent toggling collapsion
-				});
-
-				$("#seapal-list-item-" + index + "-cancel").click(function(e) {
-					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").show();
-					$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-edit").hide();
-					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-readonly").show();
-					$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-edit").hide();
-					return false;
-					// prevent toggling collapsion
-				});
-				
-			}
-		</script>
+		<script src="lib/js/logbooks.js"></script>
 	</head>
 
 	<body>
@@ -130,7 +33,7 @@
 				</div>
 				<h2>Logbücher</h2>
 			</header>
-			
+
 			<nav>
 				<div class="seapal-location">
 					<span>-></span><span class="seapal-space"> </span><span>logbücher</span>
@@ -153,18 +56,13 @@
 					</div>
 				</div>
 				<div id="seapal-list">
-					<h3>
+					
 					<div class="seapal-header">
 						<div class="seapal-nr-new">
 							<span class="seapal-ship-icon" > </span>
 							<div class="seapal-readonly">
 								<div class="seapal-new-item">
-									Neues Logbuch
-								</div>
-								<div class="seapal-actions">
-									<div id="seapal-list-item-new-edit" class="ui-state-default ui-corner-all" title="Hinzufügen">
-										<span class="ui-icon ui-icon-plus"> </span>
-									</div>
+									<span class="ui-icon ui-icon-plus"> </span>Neues Logbuch
 								</div>
 							</div>
 							<div class="seapal-edit">
@@ -190,13 +88,12 @@
 								</div>
 							</div>
 						</div>
-					</div></h3>
-					<div>
-						
 					</div>
-					
-					
-					<h3>
+					<div>
+
+					</div>
+
+				
 					<div class="seapal-header">
 						<div class="seapal-nr-1">
 							<span class="seapal-ship-icon" > </span>
@@ -245,20 +142,147 @@
 								</div>
 							</div>
 						</div>
-					</div></h3>
+					</div>
 					<div>
 						<div class="seapal-content">
 							<div class="seapal-nr-1">
 								<div class="seapal-readonly">
-									<p>
-										Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-										ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-										amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-										odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-									</p>
+									<div class="seapal-general">
+
+										<span class="seapal-description"> Segelzeichen: </span>
+										<span class="seapal-field">11</span>
+										<br/>
+										<span class="seapal-description"> Heimathafen: </span>
+										<span class="seapal-field">kk</span>
+										<br/>
+										<span class="seapal-description"> Yachtclub: </span>
+										<span class="seapal-field">uuu</span>
+										<br/>
+										<span class="seapal-description"> Versicherung: </span>
+										<span class="seapal-field">11</span>
+										<br/>
+										<span class="seapal-description"> Rufzeichen: </span>
+										<span class="seapal-field">pp</span>
+										<br/>
+										<span class="seapal-description"> Konstrukteur: </span>
+										<span class="seapal-field">ooo</span>
+
+									</div>
+									<div class="seapal-sizes">
+
+										<span class="seapal-description"> Länge: </span>
+										<span class="seapal-field">ppp</span>
+										<br/>
+										<span class="seapal-description"> Breite: </span>
+										<span class="seapal-field">uuu</span>
+										<br/>
+										<span class="seapal-description"> Tiefgang: </span>
+										<span class="seapal-field">ooo</span>
+										<br/>
+										<span class="seapal-description"> Masthöhe: </span>
+										<span class="seapal-field">ppp</span>
+										<br/>
+										<span class="seapal-description"> Verdrängung: </span>
+										<span class="seapal-field">ttt</span>
+
+									</div>
+									<div class="seapal-equipment">
+
+										<span class="seapal-description">Rig-Art:</span>
+										<span class="seapal-field">ttt</span>
+										<br/>
+										<span class="seapal-description">Baujahr: </span>
+										<span class="seapal-field">ttt</span>
+										<br/>
+										<span class="seapal-description"> Motor: </span>
+										<span class="seapal-field">ttt</span>
+										<br/>
+										<span class="seapal-description"> Tankgröße: </span>
+										<span class="seapal-field">ttt</span>
+										<br/>
+										<span class="seapal-description"> Wassertankgröße: </span>
+										<span class="seapal-field">ttt</span>
+										<br/>
+										<span class="seapal-description"> Abwassertankgröße: </span>
+										<span class="seapal-field">ttt</span>
+										<br/>
+										<span class="seapal-description"> Großsegelgröße: </span>
+										<span class="seapal-field">ttt</span>
+										<br/>
+										<span class="seapal-description"> Genuagröße: </span>
+										<span class="seapal-field">ttt</span>
+										<br/>
+										<span class="seapal-description"> Spigröße: </span>
+										<span class="seapal-field">ttt</span>
+									</div>
 								</div>
 								<div class="seapal-edit">
+									<div class="seapal-general">
 
+										<label for="sailsign">Segelzeichen</label>
+										<input type="text" name="sailsign" value="ll"/>
+										<br />
+										<label for="homeport">Heimathafen</label>
+										<input type="text" name="homeport" value="kk"/>
+										<br />
+										<label for="yachtclub">Yachtclub</label>
+										<input type="text" name="yachtclub" value="uuu"/>
+										<br />
+										<label for="insurance">Versicherung</label>
+										<input type="text" name="insurance" value="ll"/>
+										<br />
+										<label for="callsign">Rufzeichen</label>
+										<input type="text" name="callsign" value="pp"/>
+										<br />
+										<label for="constructer">Konstrukteur</label>
+										<input type="text" name="constructer" value="ooo"/>
+									</div>
+									<div class="seapal-sizes">
+										<label for="length">Länge</label>
+										<input type="text" name="length" value="ppp"/>
+										<br />
+										<label for="width">Breite</label>
+										<input type="text" name="width" value="uuu"/>
+										<br />
+										<label for="gauge">Tiefgang</label>
+										<input type="text" name="gauge" value="ooo"/>
+										<br />
+										<label for="mastheight">Masthöhe</label>
+										<input type="text" name="mastheight" value="ppp"/>
+										<br />
+										<label for="expulsion">Verdrängung</label>
+										<input type="text" name="expulsion" value="ttt"/>
+
+									</div>
+									<div class="seapal-equipment">
+										<label for="rigtype">Rig-Art</label>
+										<input type="text" name="rigtype" value="pppp"/>
+										<br />
+										<label for="constructionyear">Baujahr</label>
+										<input type="text" name="constructionyear" value="ooo"/>
+										<br />
+										<label for="engine">Motor</label>
+										<input type="text" name="engine" value="iii"/>
+										<br />
+										<label for="size_fueltank">Tankgröße</label>
+										<input type="text" name="size_fueltank" value="uu"/>
+										<br />
+										<label for="size_watertank">Wassertankgröße</label>
+										<input type="text" name="size_watertank" value="hallo"/>
+										<br />
+										<label for="size_sewagetank">Abwassertankgröße</label>
+										<input type="text" name="size_sewagetank" value="uuu"/>
+										<br />
+										<label for="size_mainsail">Großsegelgröße</label>
+										<input type="text" name="size_mainsail" value="ffff"/>
+										<br />
+										<label for="size_genua">Genuagröße</label>
+										<input type="text" name="size_genua" value="asd"/>
+										<br />
+										<label for="size_spi">Spigröße</label>
+										<input type="text" name="size_spi" value="asd"/>
+									</div>
+									<input type="hidden" name="logbookID" value="1">
 								</div>
 							</div>
 						</div>
