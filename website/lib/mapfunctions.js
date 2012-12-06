@@ -54,16 +54,16 @@ function getPostionString(position) {
 	var LongVorkomma = ddLongVals[0];
 	var LongMinutes = (Math.round(((ddLong - ddLongVals[0]) * 60 * 100)) / 100) * signLong;
 
-	return LatVorkomma + "°" + LatMinutes + "'N " + LongVorkomma + "°" + LongMinutes + "'E";
+	return LatVorkomma + "ï¿½" + LatMinutes + "'N " + LongVorkomma + "ï¿½" + LongMinutes + "'E";
 }
 
 function getDistanceRoute(marker_end) {
-	if(marker_end === routeMarkerArray[0]) {
+	if (marker_end === routeMarkerArray[0]) {
 		return 0;
 	}
 	var distance = 0;
 
-	for(var i = 1; i < routeMarkerArray.length; i++) {
+	for (var i = 1; i < routeMarkerArray.length; i++) {
 		distance = distance + google.maps.geometry.spherical.computeDistanceBetween(routeMarkerArray[i - 1].getPosition(), routeMarkerArray[i].getPosition());
 		if (marker_end === routeMarkerArray[i]) {
 			return extround(meterToNauticalMile(distance), 3);
@@ -131,7 +131,7 @@ function setNewCrosshairMarkerMenu() {
 }
 
 function deleteCrosshairMarker() {
-	if(actualCrosshairMarker != null) {
+	if (actualCrosshairMarker != null) {
 		jQuery("#crosshairContext").hide();
 		actualCrosshairMarker.setMap(null);
 		actualCrosshairMarker = null;
@@ -153,7 +153,7 @@ function addNewStandardMarker() {
 	}
 	var marker = new MarkerWithLabel(markerOptions);
 	var mouseOver = false;
-		
+
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
 		marker.set("labelContent", getPostionString(marker.getPosition()));
@@ -174,7 +174,7 @@ function addNewStandardMarker() {
 
 	google.maps.event.addListener(marker, 'dragend', function() {
 		jQuery("#standardContext").hide();
-		if(mouseOver) {
+		if (mouseOver) {
 			marker.set("labelClass", "markerLabel");
 			marker.set("labelContent", getPostionString(marker.getPosition()));
 		} else {
@@ -221,7 +221,7 @@ function addNewRouteMarker(position) {
 
 	anchorPoint = new google.maps.Point(0, 0);
 
-	if(position == null) {
+	if (position == null) {
 		position = actualCrosshairPosition;
 	}
 
@@ -239,7 +239,7 @@ function addNewRouteMarker(position) {
 	}
 	var marker = new MarkerWithLabel(markerOptions);
 	var mouseOver = false;
-	
+
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
 		marker.set("labelContent", getPostionString(marker.getPosition()));
@@ -328,7 +328,7 @@ function addNewDistanceMarker() {
 	new google.maps.Point(1, 50));
 
 	anchorPoint = new google.maps.Point(0, 0);
-	
+
 	var markerOptions = {
 		position : actualCrosshairPosition,
 		map : map,
@@ -343,7 +343,7 @@ function addNewDistanceMarker() {
 	}
 	var marker = new MarkerWithLabel(markerOptions);
 	var mouseOver = false;
-	
+
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
 		marker.set("labelContent", getPostionString(marker.getPosition()));
@@ -412,20 +412,76 @@ function deleteDistanceMarker() {
 }
 
 function endDistanceMode() {
-	map.setOptions({draggableCursor : ''});
+	map.setOptions({
+		draggableCursor : ''
+	});
 }
 
 function setDistanceMenu() {
 	jQuery(".startDistanceModeEntry").hide();
 	jQuery(".destDistanceModeEntry").hide();
 	jQuery(".endDistanceModeEntry").hide();
-		
-	if(distanceMarkerArray.length == 0) {
+
+	if (distanceMarkerArray.length == 0) {
 		jQuery(".startDistanceModeEntry").show();
-	} else if(distanceMarkerArray.length == 1) {
+	} else if (distanceMarkerArray.length == 1) {
 		jQuery(".destDistanceModeEntry").show();
 		jQuery(".endDistanceModeEntry").show();
 	} else {
 		jQuery(".endDistanceModeEntry").show();
 	}
+}
+
+function addNewShipPositionMarker(position) {
+	if (position == null) {
+		alert("No position while trying to add new Ship Marker.");
+	}
+
+	if (shipMarker == null) {
+		var markerOptions = {
+			position : position,
+			map : map,
+			draggable : false,
+			icon : "./images/sailing_ship_48x48.jpg",
+			labelContent : "",
+			labelAnchor : new google.maps.Point(0, -10),
+			labelClass : "", // the CSS class for the label
+			labelStyle : {
+				opacity : 0.9
+			}
+		}
+		var shipMarker = new MarkerWithLabel(markerOptions);
+	} else {
+		shipMarker.setPosition(position);
+	}
+	shipPositionArray[length] = position;
+	updateShipPositionPolylines();
+
+	google.maps.event.addListener(marker, "mouseover", function(e) {
+		marker.set("labelClass", "markerLabel");
+		marker.set("labelContent", getPostionString(shipMarker.getPosition()));
+	});
+
+	google.maps.event.addListener(marker, "mouseout", function(e) {
+		marker.set("labelClass", "");
+		marker.set("labelContent", "");
+	});
+
+	google.maps.event.addListener(marker, 'click', function(event) {
+		
+	})
+}
+
+function updateShipPositionPolylines() {
+	if (shipRoute != null) {
+		shipRoute.setPath(shipPositionArray);
+	} else {
+		shipRoute = new google.maps.Polyline({
+			path : shipPositionArray,
+			strokeColor : "#FFFF00",
+			strokeOpacity : 1.0,
+			strokeWeight : 2
+		});
+		shipRoute.setMap(map);
+	}	
 }

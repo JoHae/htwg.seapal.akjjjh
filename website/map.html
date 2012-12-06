@@ -18,6 +18,9 @@
 			var route;
 			var distanceMarkerArray = new Array();
 			var distanceRoute;
+			var shipPositionArray = new Array();
+			var shipMarker = null;
+			var shipRoute;
 			var actualCrosshairMarker = null;
 			var selectedMarker;
 			function initialize() {
@@ -203,7 +206,7 @@
 					<a id="endDistanceModeCross" href="#">Distanzmessung Beenden</a>
 				</li>
 				<li>
-					<a id="closecrosshairContext" href="#">Löschen</a>
+					<a id="closecrosshairContext" href="#">L&oumlschen</a>
 				</li>
 				<li>
 					<a id="positionTest" href="#">Positionstest starten</a>
@@ -221,10 +224,10 @@
 					</div>
 				</li>
 				<li>
-					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
+					<a id="deleteStandardMarker" href="#">Markierung L&oumlschen</a>
 				</li>
 				<li>
-					<a id="closestandardContext" href="#">Menü schließen</a>
+					<a id="closestandardContext" href="#">Men&uuml schlie&szligen</a>
 				</li>
 			</ul>
 		</div>
@@ -241,13 +244,13 @@
 					</div>
 				</li>
 				<li>
-					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
+					<a id="deleteRouteMarker" href="#">Markierung L&oumlschen</a>
 				</li>
 				<li>
-					<a id="deleteRoute" href="#">Route Löschen</a>
+					<a id="deleteRoute" href="#">Route L&oumlschen</a>
 				</li>
 				<li>
-					<a id="closerouteContext" href="#">Menü schlie�en</a>
+					<a id="closerouteContext" href="#">Men&uuml schlie&szligen</a>
 				</li>
 			</ul>
 		</div>
