@@ -54,7 +54,7 @@ function getPostionString(position) {
 	var LongVorkomma = ddLongVals[0];
 	var LongMinutes = (Math.round(((ddLong - ddLongVals[0]) * 60 * 100)) / 100) * signLong;
 
-	return LatVorkomma + "�" + LatMinutes + "'N " + LongVorkomma + "�" + LongMinutes + "'E";
+	return LatVorkomma + "°" + LatMinutes + "'N " + LongVorkomma + "°" + LongMinutes + "'E";
 }
 
 function getDistanceRoute(marker_end) {
@@ -114,6 +114,7 @@ function setNewCrosshairMarkerMenu() {
 	var point = getMenuPoint(map, actualCrosshairMarker);
 
 	setDistanceMenu();
+	setPositionTestMenu();
 	document.getElementById("crosshairPosition").firstChild.nodeValue = getPostionString(actualCrosshairPosition);
 	document.getElementById("crosshairContext").style.cursor = "default";
 	jQuery("#crosshairContext").css({
@@ -437,12 +438,14 @@ function addNewShipPositionMarker(position) {
 		alert("No position while trying to add new Ship Marker.");
 	}
 
-	if (shipMarker == null) {
+	if (shipMarker != null) {
+		shipMarker.setPosition(position);
+	} else {
 		var markerOptions = {
 			position : position,
 			map : map,
 			draggable : false,
-			icon : "./images/sailing_ship_48x48.jpg",
+			icon : "./images/Sailing_Ship_48.png",
 			labelContent : "",
 			labelAnchor : new google.maps.Point(0, -10),
 			labelClass : "", // the CSS class for the label
@@ -450,26 +453,20 @@ function addNewShipPositionMarker(position) {
 				opacity : 0.9
 			}
 		}
-		var shipMarker = new MarkerWithLabel(markerOptions);
-	} else {
-		shipMarker.setPosition(position);
+		shipMarker = new MarkerWithLabel(markerOptions);
+
+		google.maps.event.addListener(shipMarker, "mouseover", function(e) {
+			shipMarker.set("labelClass", "markerLabel");
+			shipMarker.set("labelContent", getPostionString(shipMarker.getPosition()));
+		});
+
+		google.maps.event.addListener(shipMarker, "mouseout", function(e) {
+			shipMarker.set("labelClass", "");
+			shipMarker.set("labelContent", "");
+		});
 	}
-	shipPositionArray[length] = position;
+	shipPositionArray[shipPositionArray.length] = position;
 	updateShipPositionPolylines();
-
-	google.maps.event.addListener(marker, "mouseover", function(e) {
-		marker.set("labelClass", "markerLabel");
-		marker.set("labelContent", getPostionString(shipMarker.getPosition()));
-	});
-
-	google.maps.event.addListener(marker, "mouseout", function(e) {
-		marker.set("labelClass", "");
-		marker.set("labelContent", "");
-	});
-
-	google.maps.event.addListener(marker, 'click', function(event) {
-		
-	})
 }
 
 function updateShipPositionPolylines() {
@@ -478,10 +475,22 @@ function updateShipPositionPolylines() {
 	} else {
 		shipRoute = new google.maps.Polyline({
 			path : shipPositionArray,
-			strokeColor : "#FFFF00",
+			strokeColor : "#008000",
 			strokeOpacity : 1.0,
 			strokeWeight : 2
 		});
-		shipRoute.setMap(map);
-	}	
+	}
+	shipRoute.setMap(map);
+}
+
+function setPositionTestMenu() {
+	jQuery(".startPositionTestEntry").hide();
+	jQuery(".endPositionTestEntry").hide();
+
+	if (shipMarker == null) {
+		jQuery(".startPositionTestEntry").show();
+	} else {
+		jQuery(".endPositionTestEntry").show();
+	}
+	
 }
