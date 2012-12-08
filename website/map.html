@@ -2,12 +2,12 @@
 <html>
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta charset="UTF-8">
 		<link href="./css/map_styles.css" rel="stylesheet" type="text/css" media="screen" />
 		<script src="./lib/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
 		<script type="text/javascript" src="./lib/markerwithlabel.js"></script>
-		<script type="text/javascript" src="./lib/mapfunctions.js"></script>
-		<script type="text/javascript" src="./lib/jquery.contextmenu.r2.js"></script>
+		<script type="text/javascript" src="./lib/mapfunctions.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./mapserver/fancywebsocket.js"></script>
 		<script type="text/javascript" src="./mapserver/ship_position.js"></script>
 		<script type="text/javascript">
@@ -18,6 +18,9 @@
 			var route;
 			var distanceMarkerArray = new Array();
 			var distanceRoute;
+			var shipPositionArray = new Array();
+			var shipMarker = null;
+			var shipRoute;
 			var actualCrosshairMarker = null;
 			var selectedMarker;
 			function initialize() {
@@ -115,18 +118,35 @@
 					endDistanceMode();
 				});
 
-				$("#positionTest").click(function() {
+				var interval;
+				$("#startPositionTest").click(function() {
 					deleteCrosshairMarker();
-					var lat = map.getCenter().lat();
-					var lng = map.getCenter().lng();
-					var b;
-					window.setInterval((function() {
-						lat = lat + 0.001;
-						lng = lng + 0.001;
-						b = new google.maps.LatLng(lat, lng);
-						sendPosition(b);
+					sendPosition(actualCrosshairPosition);
+					interval = window.setInterval((function() {
+						var lat = map.getCenter().lat();
+						var lng = map.getCenter().lng();
+						var randomnumber = Math.floor(Math.random()*11);
+						
+						if(randomnumber >= 2) {
+							lat += Math.random()*0.01;
+							lng += Math.random()*0.01;
+						} else {
+							lat -= Math.random()*0.01;
+							lng -= Math.random()*0.01;
+						}
+						sendPosition(new google.maps.LatLng(lat, lng));
 					})
-					,1000);
+					,2000);
+				});
+				
+				$("#endPositionTest").click(function() {
+					deleteCrosshairMarker();
+					window.clearInterval(interval);
+					shipMarker.setMap(null);
+					shipRoute.setMap(null);
+					shipMarker = null;
+					shipRoute = null;
+					shipPositionArray = new Array();
 				});
 
 				// --------------------------------------------------------
@@ -172,7 +192,7 @@
 	</head>
 	<body onload="initialize()">
 		<div id="coordsDiv" style="color: black; position: absolute; text-align: right; font-size: 1.4em; font-weight:bold; margin-right: 25px;">
-			<span id="coordinations">0�00.00'N 0�00.00'E</span>
+			<span id="coordinations">0&deg;00.00'N 0&deg;00.00'E</span>
 			<br />
 			Lat <span id="lat">42</span> Long <span id="long">9</span>
 			<br />
@@ -203,10 +223,13 @@
 					<a id="endDistanceModeCross" href="#">Distanzmessung Beenden</a>
 				</li>
 				<li>
-					<a id="closecrosshairContext" href="#">Löschen</a>
+					<a id="closecrosshairContext" href="#">L&ouml;schen</a>
 				</li>
-				<li>
-					<a id="positionTest" href="#">Positionstest starten</a>
+				<li class="startPositionTestEntry">
+					<a id="startPositionTest" href="#">Positionstest starten</a>
+				</li>
+				<li class="endPositionTestEntry">
+					<a id="endPositionTest" href="#">Positionstest beenden</a>
 				</li>
 			</ul>
 		</div>
@@ -221,10 +244,10 @@
 					</div>
 				</li>
 				<li>
-					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
+					<a id="deleteStandardMarker" href="#">Markierung L&ouml;schen</a>
 				</li>
 				<li>
-					<a id="closestandardContext" href="#">Menü schließen</a>
+					<a id="closestandardContext" href="#">Men&uuml; schlie&szlig;en</a>
 				</li>
 			</ul>
 		</div>
@@ -241,13 +264,13 @@
 					</div>
 				</li>
 				<li>
-					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
+					<a id="deleteRouteMarker" href="#">Markierung L&ouml;schen</a>
 				</li>
 				<li>
-					<a id="deleteRoute" href="#">Route Löschen</a>
+					<a id="deleteRoute" href="#">Route L&ouml;schen</a>
 				</li>
 				<li>
-					<a id="closerouteContext" href="#">Menü schlie�en</a>
+					<a id="closerouteContext" href="#">Men&uuml; schlie&szlig;en</a>
 				</li>
 			</ul>
 		</div>
