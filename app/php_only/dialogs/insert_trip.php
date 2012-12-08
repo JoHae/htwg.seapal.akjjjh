@@ -1,5 +1,5 @@
 <?php
-$con = (include '../database/connect.php');
+$con = (include '../../database/connect.php');
 
 	// notes and photos are missing
 # If tripID already exists just update the entry

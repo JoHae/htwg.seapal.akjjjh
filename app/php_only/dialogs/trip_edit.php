@@ -8,13 +8,13 @@
 
 		<title>SeaPal</title>
 		<link rel="icon" type="image/png" href="http://www.seapal.de/images/Icon-32.png" />
-		<link href="lib/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="../lib/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 	</head>
 
 	<body>
 		<?php
 		if ($_GET["tripID"] != 'NULL') {
-			$con = (include '../database/connect.php');
+			$con = (include '../../database/connect.php');
 			$result = mysql_query("SELECT * FROM trip WHERE tripID=" . $_GET["tripID"]);
 			$row = mysql_fetch_array($result);
 			mysql_close($con);
