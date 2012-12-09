@@ -4,11 +4,34 @@
 
 var seapalListItemEditing = false;
 var seapalListItemEditingRequestId = -1;
+var seapalListData = null;
 
 $(function() {
+	$(document).ajaxStart($("#seapal-list").blockUI).ajaxStop($("#seapal-list").unblockUI);
+	loadLogbooks();
+});
 
-	createLogbookElements();
+function loadLogbooks() {
+	$.getJSON('server/php/logbooks_get.php', function(data) {
+		seapalListData = data;
+		logbooksLoaded();
+	});
+}
 
+function logbooksLoaded() {
+	// clear list
+	$("#seapal-list").html("");
+
+	// add items to list
+	$("#seapal-list").append(createLogbookHtmlElementNew());
+	addFunctionsToListItemAdd();
+
+	for (var i = 0; i < seapalListData.length; i++) {
+		$("#seapal-list").append(createLogbookHtmlElement(seapalListData[i], seapalListData[i].logbookId));
+		addFunctionsToListitem(seapalListData[i].logbookId);
+	};
+
+	// reset layout
 	$("#seapal-list").accordion({
 		collapsible : true,
 		active : false,
@@ -45,10 +68,10 @@ $(function() {
 			}
 		});
 	});
-	
+
 	// enable tooltips
 	$(document).tooltip();
-});
+}
 
 function onBeforePanelActivate(event, ui) {
 	var closing = $(this).find('.ui-state-active').length;
@@ -67,49 +90,49 @@ function onBeforePanelActivate(event, ui) {
 	return true;
 }
 
-function itemEdit(index) {
+function itemEdit(itemId) {
 	if (seapalListItemEditing) {
 		return;
 	}
-	$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").hide();
-	$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-edit").show();
-	$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-readonly").hide();
-	$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-edit").show();
+	$("#seapal-list .seapal-header .seapal-nr-" + itemId + " .seapal-readonly").hide();
+	$("#seapal-list .seapal-header .seapal-nr-" + itemId + " .seapal-edit").show();
+	$("#seapal-list .seapal-content .seapal-nr-" + itemId + " .seapal-readonly").hide();
+	$("#seapal-list .seapal-content .seapal-nr-" + itemId + " .seapal-edit").show();
 	seapalListItemEditing = true;
 }
 
-function itemEditCancel(index) {
+function itemEditCancel(itemId) {
 	seapalListItemEditing = false;
-	$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-readonly").show();
-	$("#seapal-list .seapal-header .seapal-nr-" + index + " .seapal-edit").hide();
-	$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-readonly").show();
-	$("#seapal-list .seapal-content .seapal-nr-" + index + " .seapal-edit").hide();
+	$("#seapal-list .seapal-header .seapal-nr-" + itemId + " .seapal-readonly").show();
+	$("#seapal-list .seapal-header .seapal-nr-" + itemId + " .seapal-edit").hide();
+	$("#seapal-list .seapal-content .seapal-nr-" + itemId + " .seapal-readonly").show();
+	$("#seapal-list .seapal-content .seapal-nr-" + itemId + " .seapal-edit").hide();
 }
 
-function itemEditReset(index) {
-	setLogbookHtmlElementEditData(getLogbookHtmlElementReadonlyData(index), index);
+function itemEditReset(itemId) {
+	setLogbookHtmlElementEditData(getLogbookHtmlElementReadonlyData(itemId), itemId);
 }
 
-function addFunctionsToListitem(index) {
-	$("#seapal-list-item-" + index + "-edit").click(function(e) {
-		seapalListItemEditingRequestId = index;
+function addFunctionsToListitem(itemId) {
+	$("#seapal-list-item-" + itemId + "-edit").click(function(e) {
+		seapalListItemEditingRequestId = itemId;
 		return true;
 	});
 
-	$("#seapal-list-item-" + index + "-remove").click(function(e) {
+	$("#seapal-list-item-" + itemId + "-remove").click(function(e) {
 		return false;
 		// prevent toggling collapsion
 	});
 
-	$("#seapal-list-item-" + index + "-save").click(function(e) {
-		processUserDataManipulation(index);
+	$("#seapal-list-item-" + itemId + "-save").click(function(e) {
+		processUserDataManipulation(itemId);
 		return false;
 		// prevent toggling collapsion
 	});
 
-	$("#seapal-list-item-" + index + "-cancel").click(function(e) {
-		itemEditCancel(index);
-		itemEditReset(index);
+	$("#seapal-list-item-" + itemId + "-cancel").click(function(e) {
+		itemEditCancel(itemId);
+		itemEditReset(itemId);
 		return false;
 		// prevent toggling collapsion
 	});
@@ -132,11 +155,24 @@ function addFunctionsToListItemAdd() {
 	});
 }
 
-function processUserDataManipulation(index) {
-	var tNewData = getLogbookHtmlElementEditData(index);
-
-	$('#seapal-list').block({
-		message : $('#seapal-busy-overlay')
+function processUserDataManipulation(itemId) {
+	var tNewData = getLogbookHtmlElementEditData(itemId);
+	if (itemId == "new") {
+		tNewData['logbookId'] = "NULL";
+	}
+	
+	$.ajax({
+		url : "server/php/logbook_edit.php",
+		type : "POST",
+		dataType : "json",
+		contentType : "application/json",
+		data : tNewData,
+		success : function() {
+			alert("success :-)");
+		},
+		error : function() {
+			alert("fail :-(");
+		}
 	});
 }
 
@@ -207,85 +243,167 @@ function getEmpyData() {
 
 function getInfoData() {
 	return {
-		"shipname" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Name" },
-		"shiptype" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Typ" },
-		"shipowner" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Eigner" },
-		"shipregisternumber" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Registernr." },
-		"sailsign" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Segelzeichen" },
-		"homeport" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Heimathafen" },
-		"engine" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Motor" },
-		"yachtclub" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Yachtclub" },
-		"insurance" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Versicherung" },
-		"callsign" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Rufzeichen" },
-		"constructer" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Kunstrukteur" },
-		"length" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Länge" },
-		"width" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Breite" },
-		"gauge" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Tiefgang" },
-		"mastheight" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Masthöhe" },
-		"expulsion" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Verdrängung" },
-		"rigtype" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Rigart" },
-		"constructionyear" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Konstruktionsjahr" },
-		"size_fueltank" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Tankgröße" },
-		"size_watertank" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Wassertankgröße" },
-		"size_sewagetank" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Abwassertankgröße" },
-		"size_mainsail" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Großsegelgröße" },
-		"size_genua" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Genuagröße" },
-		"size_spi" : { "checkfunction" : null, "infotext" : "", "labeltext" : "Spigröße" }
+		"shipname" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Name"
+		},
+		"shiptype" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Typ"
+		},
+		"shipowner" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Eigner"
+		},
+		"shipregisternumber" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Registernr."
+		},
+		"sailsign" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Segelzeichen"
+		},
+		"homeport" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Heimathafen"
+		},
+		"engine" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Motor"
+		},
+		"yachtclub" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Yachtclub"
+		},
+		"insurance" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Versicherung"
+		},
+		"callsign" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Rufzeichen"
+		},
+		"constructer" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Kunstrukteur"
+		},
+		"length" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Länge"
+		},
+		"width" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Breite"
+		},
+		"gauge" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Tiefgang"
+		},
+		"mastheight" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Masthöhe"
+		},
+		"expulsion" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Verdrängung"
+		},
+		"rigtype" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Rigart"
+		},
+		"constructionyear" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Konstruktionsjahr"
+		},
+		"size_fueltank" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Tankgröße"
+		},
+		"size_watertank" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Wassertankgröße"
+		},
+		"size_sewagetank" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Abwassertankgröße"
+		},
+		"size_mainsail" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Großsegelgröße"
+		},
+		"size_genua" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Genuagröße"
+		},
+		"size_spi" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Spigröße"
+		}
 	};
 }
 
-function createLogbookElements() {
-	var tHtml;
-
-	$("#seapal-list").append(createLogbookHtmlElementNew());
-	addFunctionsToListItemAdd();
-
-	$("#seapal-list").append(createLogbookHtmlElement(getTestData(), 0));
-	addFunctionsToListitem(0);
-
-	$("#seapal-list").append(createLogbookHtmlElement(getTestData(), 1));
-	addFunctionsToListitem(1);
-}
-
 /* data format:
- *
- *
- */
+*
+*
+*/
 
 // operation functions
 
-function setLogbookHtmlElementEditData(data, itemNumber) {
-	for (key in data) {
-		var tEl = $("#seapal-list-item-" + itemNumber + "-input-" + key);
+function setLogbookHtmlElementEditData(data, itemId) {
+	for (var key in data) {
+		var tEl = $("#seapal-list-item-" + itemId + "-input-" + key);
 		tEl.val(data[key]);
 	}
 }
 
-function setLogbookHtmlElementReadonlyData(data, itemNumber) {
-	for (key in data) {
-		var tEl = $("#seapal-list-item-" + itemNumber + "-readonly-" + key);
+function setLogbookHtmlElementReadonlyData(data, itemId) {
+	for (var key in data) {
+		var tEl = $("#seapal-list-item-" + itemId + "-readonly-" + key);
 		tEl.text(data[key]);
 	}
 }
 
-function getLogbookHtmlElementEditData(itemNumber) {
+function getLogbookHtmlElementEditData(itemId) {
 	var data = getEmpyData();
-	for (key in data) {
-		var tEl = $("#seapal-list-item-" + itemNumber + "-input-" + key);
+	for (var key in data) {
+		var tEl = $("#seapal-list-item-" + itemId + "-input-" + key);
 		data[key] = tEl.val();
 	}
 	return data;
 }
 
-function getLogbookHtmlElementReadonlyData(itemNumber) {
+function getLogbookHtmlElementReadonlyData(itemId) {
 	var data = getEmpyData();
-	for (key in data) {
-		var tEl = $("#seapal-list-item-" + itemNumber + "-readonly-" + key);
+	for (var key in data) {
+		var tEl = $("#seapal-list-item-" + itemId + "-readonly-" + key);
 		data[key] = tEl.text();
 	}
 	return data;
 }
-
 
 // creation functions
 
@@ -354,7 +472,6 @@ function createLogbookHtmlElement(data) {
 	return tNewHtmlString;
 }
 
-
 // common generations functions
 
 function createInputFieldName(data, fieldname) {
@@ -364,7 +481,6 @@ function createInputFieldName(data, fieldname) {
 function createReadonlyFieldName(data, fieldname) {
 	return 'seapal-list-item-' + data["logbookId"] + '-readonly-' + fieldname;
 }
-
 
 // header generation functions
 
@@ -427,7 +543,6 @@ function createLogbookHtmlElementHeaderEdit(data, infoData) {
 	return tNewHtmlString;
 }
 
-
 // content generation functions
 
 function createLogbookHtmlElementContentReadonlyField(data, infoData, fieldname) {
@@ -477,7 +592,7 @@ function createLogbookHtmlElementContentFields(data, infoData, contentFieldFunct
 	tNewHtmlString += contentFieldFunction(data, infoData, "size_genua") + '<br />';
 	tNewHtmlString += contentFieldFunction(data, infoData, "size_spi");
 	tNewHtmlString += '</div>';
-	
+
 	return tNewHtmlString;
 }
 
