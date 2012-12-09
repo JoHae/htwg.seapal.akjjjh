@@ -2,20 +2,19 @@
 $con = (include '../../database/connect.php');
 
 
-
 # If logbookID already exists just update the entry
-if ($_POST['logbookID']!='NULL') {
+if ($_POST['logbookId']!='NULL') {
 	$sql = "UPDATE `seapal`.`logbook`
 	SET
 	shipname='$_POST[shipname]',
-	registnumber='$_POST[registnumber]',
+	registnumber='$_POST[shipregisternumber]',
 	sailsign='$_POST[sailsign]',
 	homeport='$_POST[homeport]',
 	yachtclub='$_POST[yachtclub]',
-	owner='$_POST[owner]',
+	owner='$_POST[shipowner]',
 	insurance='$_POST[insurance]',
 	callsign='$_POST[callsign]',
-	type='$_POST[type]',
+	type='$_POST[shiptype]',
 	constructer='$_POST[constructer]',
 	length='$_POST[length]',
 	width='$_POST[width]',
@@ -32,7 +31,7 @@ if ($_POST['logbookID']!='NULL') {
 	size_genua='$_POST[size_genua]',
 	size_spi='$_POST[size_spi]'
 	WHERE
-	logbookID='$_POST[logbookID]'
+	logbookID='$_POST[logbookId]'
 	";
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());
@@ -47,7 +46,7 @@ if ($_POST['logbookID']!='NULL') {
 	)
 	VALUES
 	(
-	NULL,'$_POST[shipname]','$_POST[registnumber]','$_POST[sailsign]','$_POST[homeport]','$_POST[yachtclub]','$_POST[owner]','$_POST[insurance]','$_POST[callsign]','$_POST[type]',
+	NULL,'$_POST[shipname]','$_POST[shipregisternumber]','$_POST[sailsign]','$_POST[homeport]','$_POST[yachtclub]','$_POST[shipowner]','$_POST[insurance]','$_POST[callsign]','$_POST[shiptype]',
 	'$_POST[constructer]','$_POST[length]','$_POST[width]','$_POST[gauge]','$_POST[mastheight]','$_POST[expulsion]','$_POST[rigtype]','$_POST[constructionyear]','$_POST[engine]','$_POST[size_fueltank]',
 	'$_POST[size_watertank]','$_POST[size_sewagetank]','$_POST[size_mainsail]','$_POST[size_genua]','$_POST[size_spi]')";
 	if (!mysql_query($sql, $con)) {
@@ -56,4 +55,7 @@ if ($_POST['logbookID']!='NULL') {
 	
 }
 mysql_close($con);
+
+include 'logbooks_get.php';
+
 ?>

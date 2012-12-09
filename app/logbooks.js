@@ -7,7 +7,15 @@ var seapalListItemEditingRequestId = -1;
 var seapalListData = null;
 
 $(function() {
-	$(document).ajaxStart($("#seapal-list").blockUI).ajaxStop($("#seapal-list").unblockUI);
+	$(document).ajaxStart(function() {
+		$("#seapal-list").block({
+			message : $('#seapal-busy-overlay')
+		});
+	});
+	$(document).ajaxStop(function() {
+		$("#seapal-list").unblock();
+	});
+	
 	loadLogbooks();
 });
 
@@ -21,6 +29,11 @@ function loadLogbooks() {
 function logbooksLoaded() {
 	// clear list
 	$("#seapal-list").html("");
+
+	// for updating destro accordion first
+	if ($('#seapal-list').data('accordion')) {
+		$("#seapal-list").accordion('destroy');
+	}
 
 	// add items to list
 	$("#seapal-list").append(createLogbookHtmlElementNew());
@@ -160,18 +173,20 @@ function processUserDataManipulation(itemId) {
 	if (itemId == "new") {
 		tNewData['logbookId'] = "NULL";
 	}
-	
+
 	$.ajax({
 		url : "server/php/logbook_edit.php",
 		type : "POST",
 		dataType : "json",
-		contentType : "application/json",
+		cache : false,
 		data : tNewData,
-		success : function() {
-			alert("success :-)");
+		success : function(data, textStatus, jqXHR) {
+			// updating list
+			seapalListData = data;
+			logbooksLoaded();
 		},
-		error : function() {
-			alert("fail :-(");
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("fail :-(\n" + textStatus + " " + errorThrown);
 		}
 	});
 }
