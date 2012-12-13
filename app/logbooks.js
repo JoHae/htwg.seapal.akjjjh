@@ -15,7 +15,9 @@ $(function() {
 	$(document).ajaxStop(function() {
 		$("#seapal-list").unblock();
 	});
+
 	
+
 	loadLogbooks();
 });
 
@@ -27,16 +29,22 @@ function loadLogbooks() {
 }
 
 function logbooksLoaded() {
-	// clear list
-	$("#seapal-list").html("");
 
 	// for updating destro accordion first
 	if ($('#seapal-list').data('accordion')) {
 		$("#seapal-list").accordion('destroy');
 	}
 
+	// reset variables
+	seapalListItemEditing = false;
+	seapalListItemEditingRequestId = -1;
+
+	// clear list
+	$("#seapal-list").html("");
+
 	// add items to list
-	$("#seapal-list").append(createLogbookHtmlElementNew());
+	var tHtml = createLogbookHtmlElementNew();
+	$("#seapal-list").append(tHtml);
 	addFunctionsToListItemAdd();
 
 	for (var i = 0; i < seapalListData.length; i++) {
@@ -126,6 +134,22 @@ function itemEditReset(itemId) {
 	setLogbookHtmlElementEditData(getLogbookHtmlElementReadonlyData(itemId), itemId);
 }
 
+function removeListItem(itemId) {
+	$("#seapal-remove-dialog-confirm").dialog({
+		resizable : false,
+		height : 140,
+		modal : true,
+		buttons : {
+			"Löschen" : function() {
+				$(this).dialog("close");
+			},
+			"Abbrechen" : function() {
+				$(this).dialog("close");
+			}
+		}
+	});
+}
+
 function addFunctionsToListitem(itemId) {
 	$("#seapal-list-item-" + itemId + "-edit").click(function(e) {
 		seapalListItemEditingRequestId = itemId;
@@ -133,6 +157,7 @@ function addFunctionsToListitem(itemId) {
 	});
 
 	$("#seapal-list-item-" + itemId + "-remove").click(function(e) {
+		removeListItem(itemId);
 		return false;
 		// prevent toggling collapsion
 	});
