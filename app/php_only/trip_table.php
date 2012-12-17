@@ -10,7 +10,7 @@
 </script>
 
 <?php
-$con = (include './database/connect.php');
+$con = (include '../database/connect.php');
 $result = mysql_query("SELECT * FROM trip WHERE logbookID=" . $_GET["logbookID"]);
 
 echo "<table border=\"1\">
@@ -30,7 +30,7 @@ while ($row = mysql_fetch_array($result)) {
          <td>" . $row['destination'] . "</td>
          <td>" . $row['startpoint'] . "</td>
          <td>" . $row['start'] . "</td>
-         <td><input type=\"button\" name=\"edit_" . $row['tripID'] . "\" value=\"Editieren\" onclick=\"Popup=window.open('../app/dialogs/trip_edit.php?tripID=" . $row['tripID'] . "&logbookID="
+         <td><input type=\"button\" name=\"edit_" . $row['tripID'] . "\" value=\"Editieren\" onclick=\"Popup=window.open('dialogs/trip_edit.php?tripID=" . $row['tripID'] . "&logbookID="
          	.$_GET["logbookID"] . "',
          	'Popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1030,height=350,left=430,top=23'); return false;\"></td>
         </tr>
@@ -41,6 +41,6 @@ while ($row = mysql_fetch_array($result)) {
 }
 echo "</table>";
 mysql_close($con);
-echo "<input type=\"button\" name=\"new_trip\" value=\"Neuer Trip\" onclick=\"Popup=window.open('../app/dialogs/trip_edit.php?logbookID=" . $_GET['logbookID'] . "&tripID=NULL',
+echo "<input type=\"button\" name=\"new_trip\" value=\"Neuer Trip\" onclick=\"Popup=window.open('dialogs/trip_edit.php?logbookID=" . $_GET['logbookID'] . "&tripID=NULL',
 'Popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1030,height=350,left=430,top=23'); return false;\">"
 ?>

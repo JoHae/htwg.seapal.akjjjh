@@ -10,7 +10,7 @@
 </script>
 
 <?php
-$con = (include './database/connect.php');
+$con = (include '../database/connect.php');
 $result = mysql_query("SELECT * FROM logbook");
 
 echo "<table border=\"1\">
@@ -30,7 +30,7 @@ while ($row = mysql_fetch_array($result)) {
          <td>" . $row['type'] . "</td>
          <td>" . $row['owner'] . "</td>
          <td>" . $row['sailsign'] . "</td>
-         <td><input type=\"button\" name=\"edit_" . $row['logbookID'] . "\" value=\"Editieren\" onclick=\"Popup=window.open('../app/dialogs/logbook_edit.php?logbookID=" . $row['logbookID'] . "',
+         <td><input type=\"button\" name=\"edit_" . $row['logbookID'] . "\" value=\"Editieren\" onclick=\"Popup=window.open('dialogs/logbook_edit.php?logbookID=" . $row['logbookID'] . "',
          	'Popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1030,height=350,left=430,top=23'); return false;\"></td>
         </tr>
         <tr id=\"" . $row['logbookID'] . "\" style=\"display:none\"><td colspan=\"5\">
@@ -41,5 +41,5 @@ while ($row = mysql_fetch_array($result)) {
 echo "</table>";
 mysql_close($con);
 ?>
-<input type="button" name="new_logbook" value="Neues Logbuch" onclick="Popup=window.open('../app/dialogs/logbook_edit.php?logbookID=NULL',
+<input type="button" name="new_logbook" value="Neues Logbuch" onclick="Popup=window.open('dialogs/logbook_edit.php?logbookID=NULL',
 'Popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1030,height=350,left=430,top=23'); return false;">

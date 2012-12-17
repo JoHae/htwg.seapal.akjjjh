@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="de">
 	<head>
-		<meta charset="utf-8" />
+		<meta charset="utf-8">
 
 		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
 		Remove this if you use the .htaccess -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
 		<title>logbooks</title>
-		<meta name="description" content="" />
+		<meta name="description" content="">
 
-		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="lib/img/favicon.ico" />
@@ -21,11 +21,12 @@
 		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
 		<script src="lib/js/jquery-1.8.3.js"></script>
 		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
+		<script src="lib/js/jquery.blockUI.js"></script>
 
 		<script src="lib/js/logbooks.js"></script>
 	</head>
 
-	<body>
+	<body style="">
 		<div id="seapal-root">
 			<header>
 				<span class="seapal-logo"> </span>
@@ -54,28 +55,32 @@
 						Rigisternr.
 					</div>
 				</div>
-				<div id="seapal-list">
-
-					<div class="seapal-header">
+				<div id="seapal-list" style="position: relative; zoom: 1;" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
+					<div class="seapal-header ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-seapal-list-header-0" aria-controls="ui-accordion-seapal-list-panel-0">
+						<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
 						<div class="seapal-nr-new">
-							<span class="seapal-ship-icon" > </span>
+							<span class="seapal-ship-icon"> </span>
 							<div class="seapal-readonly">
 								<div class="seapal-new-item">
 									<span class="ui-icon ui-icon-plus"> </span>Neues Logbuch
 								</div>
 							</div>
-							<div class="seapal-edit">
+							<div class="seapal-edit" style="display: none;">
 								<div class="seapal-shipname">
-									<input id="seapal-list-item-new-shipname" type="text" value="Vergin" />
+									<input type="text" id="seapal-list-item-new-input-shipname" value="">
+									<span class="seapal-info"> </span>
 								</div>
 								<div class="seapal-shiptype">
-									<input id="seapal-list-item-new-shiptype" type="text" value="X33" />
+									<input type="text" id="seapal-list-item-new-input-shiptype" value="">
+									<span class="seapal-info"> </span>
 								</div>
 								<div class="seapal-shipowner">
-									<input id="seapal-list-item-new-shipowner" type="text" value="HTWG Konstanz" />
+									<input type="text" id="seapal-list-item-new-input-shipowner" value="">
+									<span class="seapal-info"> </span>
 								</div>
 								<div class="seapal-shipregisternumber">
-									<input id="seapal-list-item-new-shipregisternumber" type="text" value="AB1234" />
+									<input type="text" id="seapal-list-item-new-input-shipregisternumber" value="">
+									<span class="seapal-info"> </span>
 								</div>
 								<div class="seapal-actions">
 									<div id="seapal-list-item-new-save" class="ui-state-default ui-corner-all" title="Speichern">
@@ -160,27 +165,73 @@
 									</div>
 									<input type="hidden" name="logbookID" value="1">
 								</div>
+								<div class="seapal-sizes">
+									<label for="seapal-list-item-new-input-length">Länge</label>
+									<input type="text" id="seapal-list-item-new-input-length" name="seapal-list-item-new-input-length" value="">
+									<br>
+									<label for="seapal-list-item-new-input-width">Breite</label>
+									<input type="text" id="seapal-list-item-new-input-width" name="seapal-list-item-new-input-width" value="">
+									<br>
+									<label for="seapal-list-item-new-input-gauge">Tiefgang</label>
+									<input type="text" id="seapal-list-item-new-input-gauge" name="seapal-list-item-new-input-gauge" value="">
+									<br>
+									<label for="seapal-list-item-new-input-mastheight">Masthöhe</label>
+									<input type="text" id="seapal-list-item-new-input-mastheight" name="seapal-list-item-new-input-mastheight" value="">
+									<br>
+									<label for="seapal-list-item-new-input-expulsion">Verdrängung</label>
+									<input type="text" id="seapal-list-item-new-input-expulsion" name="seapal-list-item-new-input-expulsion" value="">
+									<br>
+								</div>
+								<div class="seapal-equipment">
+									<label for="seapal-list-item-new-input-rigtype">Rigart</label>
+									<input type="text" id="seapal-list-item-new-input-rigtype" name="seapal-list-item-new-input-rigtype" value="">
+									<br>
+									<label for="seapal-list-item-new-input-constructionyear">Konstruktionsjahr</label>
+									<input type="text" id="seapal-list-item-new-input-constructionyear" name="seapal-list-item-new-input-constructionyear" value="">
+									<br>
+									<label for="seapal-list-item-new-input-engine">Motor</label>
+									<input type="text" id="seapal-list-item-new-input-engine" name="seapal-list-item-new-input-engine" value="">
+									<br>
+									<label for="seapal-list-item-new-input-size_fueltank">Tankgröße</label>
+									<input type="text" id="seapal-list-item-new-input-size_fueltank" name="seapal-list-item-new-input-size_fueltank" value="">
+									<br>
+									<label for="seapal-list-item-new-input-size_watertank">Wassertankgröße</label>
+									<input type="text" id="seapal-list-item-new-input-size_watertank" name="seapal-list-item-new-input-size_watertank" value="">
+									<br>
+									<label for="seapal-list-item-new-input-size_sewagetank">Abwassertankgröße</label>
+									<input type="text" id="seapal-list-item-new-input-size_sewagetank" name="seapal-list-item-new-input-size_sewagetank" value="">
+									<br>
+									<label for="seapal-list-item-new-input-size_mainsail">Großsegelgröße</label>
+									<input type="text" id="seapal-list-item-new-input-size_mainsail" name="seapal-list-item-new-input-size_mainsail" value="">
+									<br>
+									<label for="seapal-list-item-new-input-size_genua">Genuagröße</label>
+									<input type="text" id="seapal-list-item-new-input-size_genua" name="seapal-list-item-new-input-size_genua" value="">
+									<br>
+									<label for="seapal-list-item-new-input-size_spi">Spigröße</label>
+									<input type="text" id="seapal-list-item-new-input-size_spi" name="seapal-list-item-new-input-size_spi" value="">
+								</div>
+								<input type="hidden" id="seapal-list-item-new-input-logbookId" value="new">
 							</div>
 						</div>
 					</div>
-
-					<div class="seapal-header">
+					<div class="seapal-header ui-accordion-header ui-helper-reset ui-state-default ui-accordion-icons ui-corner-all" id="ui-accordion-seapal-list-header-1" >
+						<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
 						<div class="seapal-nr-1">
-							<span class="seapal-ship-icon" > </span>
-							<div class="seapal-readonly">
-								<div class="seapal-shipname">
-									Vergin
+							<span class="seapal-ship-icon"> </span>
+							<div class="seapal-readonly" style="display: block;">
+								<div class="seapal-shipname" id="seapal-list-item-1-readonly-shipname">
+									Victoria
 								</div>
-								<div class="seapal-shiptype">
-									X33
+								<div class="seapal-shiptype" id="seapal-list-item-1-readonly-shiptype">
+									geiles_boot
 								</div>
-								<div class="seapal-shipowner">
-									HTWG Konstanz
+								<div class="seapal-shipowner" id="seapal-list-item-1-readonly-shipowner">
+									Icke
 								</div>
-								<div class="seapal-shipregisternumber">
-									AB1234
+								<div class="seapal-shipregisternumber" id="seapal-list-item-1-readonly-shipregisternumber">
+									14525447
 								</div>
-								<div class="seapal-list-item-1-actions">
+								<div class="seapal-actions">
 									<div id="seapal-list-item-1-edit" class="ui-state-default ui-corner-all" title="Bearbeiten">
 										<span class="ui-icon ui-icon-pencil"> </span>
 									</div>
@@ -189,18 +240,22 @@
 									</div>
 								</div>
 							</div>
-							<div class="seapal-edit">
+							<div class="seapal-edit" style="display: none;">
 								<div class="seapal-shipname">
-									<input id="seapal-list-item-1-shipname" type="text" value="Vergin" />
+									<input type="text" id="seapal-list-item-1-input-shipname" value="Victoria">
+									<span class="seapal-info"> </span>
 								</div>
 								<div class="seapal-shiptype">
-									<input id="seapal-list-item-1-shiptype" type="text" value="X33" />
+									<input type="text" id="seapal-list-item-1-input-shiptype" value="geiles_boot">
+									<span class="seapal-info"> </span>
 								</div>
 								<div class="seapal-shipowner">
-									<input id="seapal-list-item-1-shipowner" type="text" value="HTWG Konstanz" />
+									<input type="text" id="seapal-list-item-1-input-shipowner" value="Icke">
+									<span class="seapal-info"> </span>
 								</div>
 								<div class="seapal-shipregisternumber">
-									<input id="seapal-list-item-1-shipregisternumber" type="text" value="AB1234" />
+									<input type="text" id="seapal-list-item-1-input-shipregisternumber" value="14525447">
+									<span class="seapal-info"> </span>
 								</div>
 								<div class="seapal-actions">
 									<div id="seapal-list-item-1-save" class="ui-state-default ui-corner-all" title="Speichern">
@@ -213,158 +268,500 @@
 							</div>
 						</div>
 					</div>
-					<div>
-						<div class="seapal-content">
-							<div class="seapal-nr-1">
-								<div class="seapal-readonly">
-									<div class="seapal-general">
-
-										<span class="seapal-description"> Segelzeichen: </span>
-										<span class="seapal-field">11</span>
-										<br/>
-										<span class="seapal-description"> Heimathafen: </span>
-										<span class="seapal-field">kk</span>
-										<br/>
-										<span class="seapal-description"> Yachtclub: </span>
-										<span class="seapal-field">uuu</span>
-										<br/>
-										<span class="seapal-description"> Versicherung: </span>
-										<span class="seapal-field">11</span>
-										<br/>
-										<span class="seapal-description"> Rufzeichen: </span>
-										<span class="seapal-field">pp</span>
-										<br/>
-										<span class="seapal-description"> Konstrukteur: </span>
-										<span class="seapal-field">ooo</span>
-
+					<div class="seapal-content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none; height: 1100.7999992370605px;" id="ui-accordion-seapal-list-panel-1">
+						<div class="seapal-nr-1">
+							<div class="seapal-readonly" style="display: block;">
+								<div class="seapal-general">
+									<span class="seapal-label">Segelzeichen</span><span class="seapal-field" id="seapal-list-item-1-readonly-sailsign">mein_zeichen</span>
+									<br>
+									<span class="seapal-label">Heimathafen</span><span class="seapal-field" id="seapal-list-item-1-readonly-homeport">Konstanzer_Hafe</span>
+									<br>
+									<span class="seapal-label">Yachtclub</span><span class="seapal-field" id="seapal-list-item-1-readonly-yachtclub">Yachtclub_Konst</span>
+									<br>
+									<span class="seapal-label">Versicherung</span><span class="seapal-field" id="seapal-list-item-1-readonly-insurance">Brauchichnet</span>
+									<br>
+									<span class="seapal-label">Rufzeichen</span><span class="seapal-field" id="seapal-list-item-1-readonly-callsign">jung</span>
+									<br>
+									<span class="seapal-label">Kunstrukteur</span><span class="seapal-field" id="seapal-list-item-1-readonly-constructer">icke_auch</span>
+								</div>
+								<div class="seapal-sizes">
+									<span class="seapal-label">Länge</span><span class="seapal-field" id="seapal-list-item-1-readonly-length">100000</span>
+									<br>
+									<span class="seapal-label">Breite</span><span class="seapal-field" id="seapal-list-item-1-readonly-width">500</span>
+									<br>
+									<span class="seapal-label">Tiefgang</span><span class="seapal-field" id="seapal-list-item-1-readonly-gauge">2</span>
+									<br>
+									<span class="seapal-label">Masthöhe</span><span class="seapal-field" id="seapal-list-item-1-readonly-mastheight">60</span>
+									<br>
+									<span class="seapal-label">Verdrängung</span><span class="seapal-field" id="seapal-list-item-1-readonly-expulsion">2.4</span>
+									<br>
+								</div>
+								<div class="seapal-equipment">
+									<span class="seapal-label">Rigart</span><span class="seapal-field" id="seapal-list-item-1-readonly-rigtype">rigtype_kp</span>
+									<br>
+									<span class="seapal-label">Konstruktionsjahr</span><span class="seapal-field" id="seapal-list-item-1-readonly-constructionyear">2015</span>
+									<br>
+									<span class="seapal-label">Motor</span><span class="seapal-field" id="seapal-list-item-1-readonly-engine">5000kwExport</span>
+									<br>
+									<span class="seapal-label">Tankgröße</span><span class="seapal-field" id="seapal-list-item-1-readonly-size_fueltank">100000</span>
+									<br>
+									<span class="seapal-label">Wassertankgröße</span><span class="seapal-field" id="seapal-list-item-1-readonly-size_watertank">1</span>
+									<br>
+									<span class="seapal-label">Abwassertankgröße</span><span class="seapal-field" id="seapal-list-item-1-readonly-size_sewagetank">5</span>
+									<br>
+									<span class="seapal-label">Großsegelgröße</span><span class="seapal-field" id="seapal-list-item-1-readonly-size_mainsail">123</span>
+									<br>
+									<span class="seapal-label">Genuagröße</span><span class="seapal-field" id="seapal-list-item-1-readonly-size_genua">43</span>
+									<br>
+									<span class="seapal-label">Spigröße</span><span class="seapal-field" id="seapal-list-item-1-readonly-size_spi">123</span>
+								</div>
+							</div>
+							<div class="seapal-edit" style="display: none;">
+								<div class="seapal-general">
+									<label for="seapal-list-item-1-input-sailsign">Segelzeichen</label>
+									<input type="text" id="seapal-list-item-1-input-sailsign" name="seapal-list-item-1-input-sailsign" value="mein_zeichen">
+									<br>
+									<label for="seapal-list-item-1-input-homeport">Heimathafen</label>
+									<input type="text" id="seapal-list-item-1-input-homeport" name="seapal-list-item-1-input-homeport" value="Konstanzer_Hafe">
+									<br>
+									<label for="seapal-list-item-1-input-yachtclub">Yachtclub</label>
+									<input type="text" id="seapal-list-item-1-input-yachtclub" name="seapal-list-item-1-input-yachtclub" value="Yachtclub_Konst">
+									<br>
+									<label for="seapal-list-item-1-input-insurance">Versicherung</label>
+									<input type="text" id="seapal-list-item-1-input-insurance" name="seapal-list-item-1-input-insurance" value="Brauchichnet">
+									<br>
+									<label for="seapal-list-item-1-input-callsign">Rufzeichen</label>
+									<input type="text" id="seapal-list-item-1-input-callsign" name="seapal-list-item-1-input-callsign" value="jung">
+									<br>
+									<label for="seapal-list-item-1-input-constructer">Kunstrukteur</label>
+									<input type="text" id="seapal-list-item-1-input-constructer" name="seapal-list-item-1-input-constructer" value="icke_auch">
+								</div>
+								<div class="seapal-sizes">
+									<label for="seapal-list-item-1-input-length">Länge</label>
+									<input type="text" id="seapal-list-item-1-input-length" name="seapal-list-item-1-input-length" value="100000">
+									<br>
+									<label for="seapal-list-item-1-input-width">Breite</label>
+									<input type="text" id="seapal-list-item-1-input-width" name="seapal-list-item-1-input-width" value="500">
+									<br>
+									<label for="seapal-list-item-1-input-gauge">Tiefgang</label>
+									<input type="text" id="seapal-list-item-1-input-gauge" name="seapal-list-item-1-input-gauge" value="2">
+									<br>
+									<label for="seapal-list-item-1-input-mastheight">Masthöhe</label>
+									<input type="text" id="seapal-list-item-1-input-mastheight" name="seapal-list-item-1-input-mastheight" value="60">
+									<br>
+									<label for="seapal-list-item-1-input-expulsion">Verdrängung</label>
+									<input type="text" id="seapal-list-item-1-input-expulsion" name="seapal-list-item-1-input-expulsion" value="2.4">
+									<br>
+								</div>
+								<div class="seapal-equipment">
+									<label for="seapal-list-item-1-input-rigtype">Rigart</label>
+									<input type="text" id="seapal-list-item-1-input-rigtype" name="seapal-list-item-1-input-rigtype" value="rigtype_kp">
+									<br>
+									<label for="seapal-list-item-1-input-constructionyear">Konstruktionsjahr</label>
+									<input type="text" id="seapal-list-item-1-input-constructionyear" name="seapal-list-item-1-input-constructionyear" value="2015">
+									<br>
+									<label for="seapal-list-item-1-input-engine">Motor</label>
+									<input type="text" id="seapal-list-item-1-input-engine" name="seapal-list-item-1-input-engine" value="5000kwExport">
+									<br>
+									<label for="seapal-list-item-1-input-size_fueltank">Tankgröße</label>
+									<input type="text" id="seapal-list-item-1-input-size_fueltank" name="seapal-list-item-1-input-size_fueltank" value="100000">
+									<br>
+									<label for="seapal-list-item-1-input-size_watertank">Wassertankgröße</label>
+									<input type="text" id="seapal-list-item-1-input-size_watertank" name="seapal-list-item-1-input-size_watertank" value="1">
+									<br>
+									<label for="seapal-list-item-1-input-size_sewagetank">Abwassertankgröße</label>
+									<input type="text" id="seapal-list-item-1-input-size_sewagetank" name="seapal-list-item-1-input-size_sewagetank" value="5">
+									<br>
+									<label for="seapal-list-item-1-input-size_mainsail">Großsegelgröße</label>
+									<input type="text" id="seapal-list-item-1-input-size_mainsail" name="seapal-list-item-1-input-size_mainsail" value="123">
+									<br>
+									<label for="seapal-list-item-1-input-size_genua">Genuagröße</label>
+									<input type="text" id="seapal-list-item-1-input-size_genua" name="seapal-list-item-1-input-size_genua" value="43">
+									<br>
+									<label for="seapal-list-item-1-input-size_spi">Spigröße</label>
+									<input type="text" id="seapal-list-item-1-input-size_spi" name="seapal-list-item-1-input-size_spi" value="123">
+								</div>
+								<input type="hidden" id="seapal-list-item-1-input-logbookId" value="">
+							</div>
+						</div>
+					</div>
+					<div class="seapal-header ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons" role="tab" id="ui-accordion-seapal-list-header-2" aria-controls="ui-accordion-seapal-list-panel-2">
+						<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+						<div class="seapal-nr-2">
+							<span class="seapal-ship-icon"> </span>
+							<div class="seapal-readonly">
+								<div class="seapal-shipname" id="seapal-list-item-2-readonly-shipname">
+									asd23447
+								</div>
+								<div class="seapal-shiptype" id="seapal-list-item-2-readonly-shiptype">
+									asd2asderer
+								</div>
+								<div class="seapal-shipowner" id="seapal-list-item-2-readonly-shipowner">
+									asdasd333
+								</div>
+								<div class="seapal-shipregisternumber" id="seapal-list-item-2-readonly-shipregisternumber">
+									asddsa
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-list-item-2-edit" class="ui-state-default ui-corner-all" title="Bearbeiten">
+										<span class="ui-icon ui-icon-pencil"> </span>
 									</div>
-									<div class="seapal-sizes">
-
-										<span class="seapal-description"> Länge: </span>
-										<span class="seapal-field">ppp</span>
-										<br/>
-										<span class="seapal-description"> Breite: </span>
-										<span class="seapal-field">uuu</span>
-										<br/>
-										<span class="seapal-description"> Tiefgang: </span>
-										<span class="seapal-field">ooo</span>
-										<br/>
-										<span class="seapal-description"> Masthöhe: </span>
-										<span class="seapal-field">ppp</span>
-										<br/>
-										<span class="seapal-description"> Verdrängung: </span>
-										<span class="seapal-field">ttt</span>
-
-									</div>
-									<div class="seapal-equipment">
-
-										<span class="seapal-description">Rig-Art:</span>
-										<span class="seapal-field">ttt</span>
-										<br/>
-										<span class="seapal-description">Baujahr: </span>
-										<span class="seapal-field">ttt</span>
-										<br/>
-										<span class="seapal-description"> Motor: </span>
-										<span class="seapal-field">ttt</span>
-										<br/>
-										<span class="seapal-description"> Tankgröße: </span>
-										<span class="seapal-field">ttt</span>
-										<br/>
-										<span class="seapal-description"> Wassertankgröße: </span>
-										<span class="seapal-field">ttt</span>
-										<br/>
-										<span class="seapal-description"> Abwassertankgröße: </span>
-										<span class="seapal-field">ttt</span>
-										<br/>
-										<span class="seapal-description"> Großsegelgröße: </span>
-										<span class="seapal-field">ttt</span>
-										<br/>
-										<span class="seapal-description"> Genuagröße: </span>
-										<span class="seapal-field">ttt</span>
-										<br/>
-										<span class="seapal-description"> Spigröße: </span>
-										<span class="seapal-field">ttt</span>
+									<div id="seapal-list-item-2-remove" class="ui-state-default ui-corner-all" title="Löschen">
+										<span class="ui-icon ui-icon-trash"> </span>
 									</div>
 								</div>
-								<div class="seapal-edit">
-									<div class="seapal-general">
-
-										<label for="sailsign">Segelzeichen</label>
-										<input type="text" name="sailsign" value="ll"/>
-										<br />
-										<label for="homeport">Heimathafen</label>
-										<input type="text" name="homeport" value="kk"/>
-										<br />
-										<label for="yachtclub">Yachtclub</label>
-										<input type="text" name="yachtclub" value="uuu"/>
-										<br />
-										<label for="insurance">Versicherung</label>
-										<input type="text" name="insurance" value="ll"/>
-										<br />
-										<label for="callsign">Rufzeichen</label>
-										<input type="text" name="callsign" value="pp"/>
-										<br />
-										<label for="constructer">Konstrukteur</label>
-										<input type="text" name="constructer" value="ooo"/>
-									</div>
-									<div class="seapal-sizes">
-										<label for="length">Länge</label>
-										<input type="text" name="length" value="ppp"/>
-										<br />
-										<label for="width">Breite</label>
-										<input type="text" name="width" value="uuu"/>
-										<br />
-										<label for="gauge">Tiefgang</label>
-										<input type="text" name="gauge" value="ooo"/>
-										<br />
-										<label for="mastheight">Masthöhe</label>
-										<input type="text" name="mastheight" value="ppp"/>
-										<br />
-										<label for="expulsion">Verdrängung</label>
-										<input type="text" name="expulsion" value="ttt"/>
-
-									</div>
-									<div class="seapal-equipment">
-										<label for="rigtype">Rig-Art</label>
-										<input type="text" name="rigtype" value="pppp"/>
-										<br />
-										<label for="constructionyear">Baujahr</label>
-										<input type="text" name="constructionyear" value="ooo"/>
-										<br />
-										<label for="engine">Motor</label>
-										<input type="text" name="engine" value="iii"/>
-										<br />
-										<label for="size_fueltank">Tankgröße</label>
-										<input type="text" name="size_fueltank" value="uu"/>
-										<br />
-										<label for="size_watertank">Wassertankgröße</label>
-										<input type="text" name="size_watertank" value="hallo"/>
-										<br />
-										<label for="size_sewagetank">Abwassertankgröße</label>
-										<input type="text" name="size_sewagetank" value="uuu"/>
-										<br />
-										<label for="size_mainsail">Großsegelgröße</label>
-										<input type="text" name="size_mainsail" value="ffff"/>
-										<br />
-										<label for="size_genua">Genuagröße</label>
-										<input type="text" name="size_genua" value="asd"/>
-										<br />
-										<label for="size_spi">Spigröße</label>
-										<input type="text" name="size_spi" value="asd"/>
-									</div>
-									<input type="hidden" name="logbookID" value="1">
+							</div>
+							<div class="seapal-edit" style="display: none;">
+								<div class="seapal-shipname">
+									<input type="text" id="seapal-list-item-2-input-shipname" value="asd23447">
+									<span class="seapal-info"> </span>
 								</div>
+								<div class="seapal-shiptype">
+									<input type="text" id="seapal-list-item-2-input-shiptype" value="asd2asderer">
+									<span class="seapal-info"> </span>
+								</div>
+								<div class="seapal-shipowner">
+									<input type="text" id="seapal-list-item-2-input-shipowner" value="asdasd333">
+									<span class="seapal-info"> </span>
+								</div>
+								<div class="seapal-shipregisternumber">
+									<input type="text" id="seapal-list-item-2-input-shipregisternumber" value="asddsa">
+									<span class="seapal-info"> </span>
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-list-item-2-save" class="ui-state-default ui-corner-all" title="Speichern">
+										<span class="ui-icon ui-icon-check"> </span>
+									</div>
+									<div id="seapal-list-item-2-cancel" class="ui-state-default ui-corner-all" title="Bearbeiten abbrechen">
+										<span class="ui-icon ui-icon-closethick"> </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="seapal-content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none; height: 1100.7999992370605px;" id="ui-accordion-seapal-list-panel-2">
+						<div class="seapal-nr-2">
+							<div class="seapal-readonly">
+								<div class="seapal-general">
+									<span class="seapal-label">Segelzeichen</span><span class="seapal-field" id="seapal-list-item-2-readonly-sailsign"></span>
+									<br>
+									<span class="seapal-label">Heimathafen</span><span class="seapal-field" id="seapal-list-item-2-readonly-homeport"></span>
+									<br>
+									<span class="seapal-label">Yachtclub</span><span class="seapal-field" id="seapal-list-item-2-readonly-yachtclub"></span>
+									<br>
+									<span class="seapal-label">Versicherung</span><span class="seapal-field" id="seapal-list-item-2-readonly-insurance"></span>
+									<br>
+									<span class="seapal-label">Rufzeichen</span><span class="seapal-field" id="seapal-list-item-2-readonly-callsign"></span>
+									<br>
+									<span class="seapal-label">Kunstrukteur</span><span class="seapal-field" id="seapal-list-item-2-readonly-constructer"></span>
+								</div>
+								<div class="seapal-sizes">
+									<span class="seapal-label">Länge</span><span class="seapal-field" id="seapal-list-item-2-readonly-length"></span>
+									<br>
+									<span class="seapal-label">Breite</span><span class="seapal-field" id="seapal-list-item-2-readonly-width">0</span>
+									<br>
+									<span class="seapal-label">Tiefgang</span><span class="seapal-field" id="seapal-list-item-2-readonly-gauge">0</span>
+									<br>
+									<span class="seapal-label">Masthöhe</span><span class="seapal-field" id="seapal-list-item-2-readonly-mastheight">0</span>
+									<br>
+									<span class="seapal-label">Verdrängung</span><span class="seapal-field" id="seapal-list-item-2-readonly-expulsion">0</span>
+									<br>
+								</div>
+								<div class="seapal-equipment">
+									<span class="seapal-label">Rigart</span><span class="seapal-field" id="seapal-list-item-2-readonly-rigtype"></span>
+									<br>
+									<span class="seapal-label">Konstruktionsjahr</span><span class="seapal-field" id="seapal-list-item-2-readonly-constructionyear">0</span>
+									<br>
+									<span class="seapal-label">Motor</span><span class="seapal-field" id="seapal-list-item-2-readonly-engine"></span>
+									<br>
+									<span class="seapal-label">Tankgröße</span><span class="seapal-field" id="seapal-list-item-2-readonly-size_fueltank">0</span>
+									<br>
+									<span class="seapal-label">Wassertankgröße</span><span class="seapal-field" id="seapal-list-item-2-readonly-size_watertank">0</span>
+									<br>
+									<span class="seapal-label">Abwassertankgröße</span><span class="seapal-field" id="seapal-list-item-2-readonly-size_sewagetank">0</span>
+									<br>
+									<span class="seapal-label">Großsegelgröße</span><span class="seapal-field" id="seapal-list-item-2-readonly-size_mainsail">0</span>
+									<br>
+									<span class="seapal-label">Genuagröße</span><span class="seapal-field" id="seapal-list-item-2-readonly-size_genua">0</span>
+									<br>
+									<span class="seapal-label">Spigröße</span><span class="seapal-field" id="seapal-list-item-2-readonly-size_spi">0</span>
+								</div>
+							</div>
+							<div class="seapal-edit" style="display: none;">
+								<div class="seapal-general">
+									<label for="seapal-list-item-2-input-sailsign">Segelzeichen</label>
+									<input type="text" id="seapal-list-item-2-input-sailsign" name="seapal-list-item-2-input-sailsign" value="">
+									<br>
+									<label for="seapal-list-item-2-input-homeport">Heimathafen</label>
+									<input type="text" id="seapal-list-item-2-input-homeport" name="seapal-list-item-2-input-homeport" value="">
+									<br>
+									<label for="seapal-list-item-2-input-yachtclub">Yachtclub</label>
+									<input type="text" id="seapal-list-item-2-input-yachtclub" name="seapal-list-item-2-input-yachtclub" value="">
+									<br>
+									<label for="seapal-list-item-2-input-insurance">Versicherung</label>
+									<input type="text" id="seapal-list-item-2-input-insurance" name="seapal-list-item-2-input-insurance" value="">
+									<br>
+									<label for="seapal-list-item-2-input-callsign">Rufzeichen</label>
+									<input type="text" id="seapal-list-item-2-input-callsign" name="seapal-list-item-2-input-callsign" value="">
+									<br>
+									<label for="seapal-list-item-2-input-constructer">Kunstrukteur</label>
+									<input type="text" id="seapal-list-item-2-input-constructer" name="seapal-list-item-2-input-constructer" value="">
+								</div>
+								<div class="seapal-sizes">
+									<label for="seapal-list-item-2-input-length">Länge</label>
+									<input type="text" id="seapal-list-item-2-input-length" name="seapal-list-item-2-input-length" value="">
+									<br>
+									<label for="seapal-list-item-2-input-width">Breite</label>
+									<input type="text" id="seapal-list-item-2-input-width" name="seapal-list-item-2-input-width" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-gauge">Tiefgang</label>
+									<input type="text" id="seapal-list-item-2-input-gauge" name="seapal-list-item-2-input-gauge" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-mastheight">Masthöhe</label>
+									<input type="text" id="seapal-list-item-2-input-mastheight" name="seapal-list-item-2-input-mastheight" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-expulsion">Verdrängung</label>
+									<input type="text" id="seapal-list-item-2-input-expulsion" name="seapal-list-item-2-input-expulsion" value="0">
+									<br>
+								</div>
+								<div class="seapal-equipment">
+									<label for="seapal-list-item-2-input-rigtype">Rigart</label>
+									<input type="text" id="seapal-list-item-2-input-rigtype" name="seapal-list-item-2-input-rigtype" value="">
+									<br>
+									<label for="seapal-list-item-2-input-constructionyear">Konstruktionsjahr</label>
+									<input type="text" id="seapal-list-item-2-input-constructionyear" name="seapal-list-item-2-input-constructionyear" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-engine">Motor</label>
+									<input type="text" id="seapal-list-item-2-input-engine" name="seapal-list-item-2-input-engine" value="">
+									<br>
+									<label for="seapal-list-item-2-input-size_fueltank">Tankgröße</label>
+									<input type="text" id="seapal-list-item-2-input-size_fueltank" name="seapal-list-item-2-input-size_fueltank" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-size_watertank">Wassertankgröße</label>
+									<input type="text" id="seapal-list-item-2-input-size_watertank" name="seapal-list-item-2-input-size_watertank" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-size_sewagetank">Abwassertankgröße</label>
+									<input type="text" id="seapal-list-item-2-input-size_sewagetank" name="seapal-list-item-2-input-size_sewagetank" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-size_mainsail">Großsegelgröße</label>
+									<input type="text" id="seapal-list-item-2-input-size_mainsail" name="seapal-list-item-2-input-size_mainsail" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-size_genua">Genuagröße</label>
+									<input type="text" id="seapal-list-item-2-input-size_genua" name="seapal-list-item-2-input-size_genua" value="0">
+									<br>
+									<label for="seapal-list-item-2-input-size_spi">Spigröße</label>
+									<input type="text" id="seapal-list-item-2-input-size_spi" name="seapal-list-item-2-input-size_spi" value="0">
+								</div>
+								<input type="hidden" id="seapal-list-item-2-input-logbookId" value="2">
+							</div>
+						</div>
+					</div>
+					<div class="seapal-header ui-accordion-header ui-helper-reset ui-state-default ui-corner-all ui-accordion-icons ui-state-hover" role="tab" id="ui-accordion-seapal-list-header-3" aria-controls="ui-accordion-seapal-list-panel-3">
+						<span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-e"></span>
+						<div class="seapal-nr-3">
+							<span class="seapal-ship-icon"> </span>
+							<div class="seapal-readonly">
+								<div class="seapal-shipname" id="seapal-list-item-3-readonly-shipname">
+									aaa
+								</div>
+								<div class="seapal-shiptype" id="seapal-list-item-3-readonly-shiptype">
+									aaa
+								</div>
+								<div class="seapal-shipowner" id="seapal-list-item-3-readonly-shipowner">
+									aaa
+								</div>
+								<div class="seapal-shipregisternumber" id="seapal-list-item-3-readonly-shipregisternumber">
+									aaa
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-list-item-3-edit" class="ui-state-default ui-corner-all" title="Bearbeiten">
+										<span class="ui-icon ui-icon-pencil"> </span>
+									</div>
+									<div id="seapal-list-item-3-remove" class="ui-state-default ui-corner-all" title="Löschen">
+										<span class="ui-icon ui-icon-trash"> </span>
+									</div>
+								</div>
+							</div>
+							<div class="seapal-edit" style="display: none;">
+								<div class="seapal-shipname">
+									<input type="text" id="seapal-list-item-3-input-shipname" value="aaa">
+									<span class="seapal-info"> </span>
+								</div>
+								<div class="seapal-shiptype">
+									<input type="text" id="seapal-list-item-3-input-shiptype" value="aaa">
+									<span class="seapal-info"> </span>
+								</div>
+								<div class="seapal-shipowner">
+									<input type="text" id="seapal-list-item-3-input-shipowner" value="aaa">
+									<span class="seapal-info"> </span>
+								</div>
+								<div class="seapal-shipregisternumber">
+									<input type="text" id="seapal-list-item-3-input-shipregisternumber" value="aaa">
+									<span class="seapal-info"> </span>
+								</div>
+								<div class="seapal-actions">
+									<div id="seapal-list-item-3-save" class="ui-state-default ui-corner-all" title="Speichern">
+										<span class="ui-icon ui-icon-check"> </span>
+									</div>
+									<div id="seapal-list-item-3-cancel" class="ui-state-default ui-corner-all" title="Bearbeiten abbrechen">
+										<span class="ui-icon ui-icon-closethick"> </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="seapal-content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="height: 1100.7999992370605px;" id="ui-accordion-seapal-list-panel-3">
+						<div class="seapal-nr-3">
+							<div class="seapal-readonly">
+								<div class="seapal-general">
+									<span class="seapal-label">Segelzeichen</span><span class="seapal-field" id="seapal-list-item-3-readonly-sailsign">a</span>
+									<br>
+									<span class="seapal-label">Heimathafen</span><span class="seapal-field" id="seapal-list-item-3-readonly-homeport"></span>
+									<br>
+									<span class="seapal-label">Yachtclub</span><span class="seapal-field" id="seapal-list-item-3-readonly-yachtclub"></span>
+									<br>
+									<span class="seapal-label">Versicherung</span><span class="seapal-field" id="seapal-list-item-3-readonly-insurance"></span>
+									<br>
+									<span class="seapal-label">Rufzeichen</span><span class="seapal-field" id="seapal-list-item-3-readonly-callsign"></span>
+									<br>
+									<span class="seapal-label">Kunstrukteur</span><span class="seapal-field" id="seapal-list-item-3-readonly-constructer"></span>
+								</div>
+								<div class="seapal-sizes">
+									<span class="seapal-label">Länge</span><span class="seapal-field" id="seapal-list-item-3-readonly-length"></span>
+									<br>
+									<span class="seapal-label">Breite</span><span class="seapal-field" id="seapal-list-item-3-readonly-width">0</span>
+									<br>
+									<span class="seapal-label">Tiefgang</span><span class="seapal-field" id="seapal-list-item-3-readonly-gauge">0</span>
+									<br>
+									<span class="seapal-label">Masthöhe</span><span class="seapal-field" id="seapal-list-item-3-readonly-mastheight">0</span>
+									<br>
+									<span class="seapal-label">Verdrängung</span><span class="seapal-field" id="seapal-list-item-3-readonly-expulsion">0</span>
+									<br>
+								</div>
+								<div class="seapal-equipment">
+									<span class="seapal-label">Rigart</span><span class="seapal-field" id="seapal-list-item-3-readonly-rigtype"></span>
+									<br>
+									<span class="seapal-label">Konstruktionsjahr</span><span class="seapal-field" id="seapal-list-item-3-readonly-constructionyear">0</span>
+									<br>
+									<span class="seapal-label">Motor</span><span class="seapal-field" id="seapal-list-item-3-readonly-engine"></span>
+									<br>
+									<span class="seapal-label">Tankgröße</span><span class="seapal-field" id="seapal-list-item-3-readonly-size_fueltank">0</span>
+									<br>
+									<span class="seapal-label">Wassertankgröße</span><span class="seapal-field" id="seapal-list-item-3-readonly-size_watertank">0</span>
+									<br>
+									<span class="seapal-label">Abwassertankgröße</span><span class="seapal-field" id="seapal-list-item-3-readonly-size_sewagetank">0</span>
+									<br>
+									<span class="seapal-label">Großsegelgröße</span><span class="seapal-field" id="seapal-list-item-3-readonly-size_mainsail">0</span>
+									<br>
+									<span class="seapal-label">Genuagröße</span><span class="seapal-field" id="seapal-list-item-3-readonly-size_genua">0</span>
+									<br>
+									<span class="seapal-label">Spigröße</span><span class="seapal-field" id="seapal-list-item-3-readonly-size_spi">0</span>
+								</div>
+							</div>
+							<div class="seapal-edit" style="display: none;">
+								<div class="seapal-general">
+									<label for="seapal-list-item-3-input-sailsign">Segelzeichen</label>
+									<input type="text" id="seapal-list-item-3-input-sailsign" name="seapal-list-item-3-input-sailsign" value="a">
+									<br>
+									<label for="seapal-list-item-3-input-homeport">Heimathafen</label>
+									<input type="text" id="seapal-list-item-3-input-homeport" name="seapal-list-item-3-input-homeport" value="">
+									<br>
+									<label for="seapal-list-item-3-input-yachtclub">Yachtclub</label>
+									<input type="text" id="seapal-list-item-3-input-yachtclub" name="seapal-list-item-3-input-yachtclub" value="">
+									<br>
+									<label for="seapal-list-item-3-input-insurance">Versicherung</label>
+									<input type="text" id="seapal-list-item-3-input-insurance" name="seapal-list-item-3-input-insurance" value="">
+									<br>
+									<label for="seapal-list-item-3-input-callsign">Rufzeichen</label>
+									<input type="text" id="seapal-list-item-3-input-callsign" name="seapal-list-item-3-input-callsign" value="">
+									<br>
+									<label for="seapal-list-item-3-input-constructer">Kunstrukteur</label>
+									<input type="text" id="seapal-list-item-3-input-constructer" name="seapal-list-item-3-input-constructer" value="">
+								</div>
+								<div class="seapal-sizes">
+									<label for="seapal-list-item-3-input-length">Länge</label>
+									<input type="text" id="seapal-list-item-3-input-length" name="seapal-list-item-3-input-length" value="">
+									<br>
+									<label for="seapal-list-item-3-input-width">Breite</label>
+									<input type="text" id="seapal-list-item-3-input-width" name="seapal-list-item-3-input-width" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-gauge">Tiefgang</label>
+									<input type="text" id="seapal-list-item-3-input-gauge" name="seapal-list-item-3-input-gauge" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-mastheight">Masthöhe</label>
+									<input type="text" id="seapal-list-item-3-input-mastheight" name="seapal-list-item-3-input-mastheight" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-expulsion">Verdrängung</label>
+									<input type="text" id="seapal-list-item-3-input-expulsion" name="seapal-list-item-3-input-expulsion" value="0">
+									<br>
+								</div>
+								<div class="seapal-equipment">
+									<label for="seapal-list-item-3-input-rigtype">Rigart</label>
+									<input type="text" id="seapal-list-item-3-input-rigtype" name="seapal-list-item-3-input-rigtype" value="">
+									<br>
+									<label for="seapal-list-item-3-input-constructionyear">Konstruktionsjahr</label>
+									<input type="text" id="seapal-list-item-3-input-constructionyear" name="seapal-list-item-3-input-constructionyear" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-engine">Motor</label>
+									<input type="text" id="seapal-list-item-3-input-engine" name="seapal-list-item-3-input-engine" value="">
+									<br>
+									<label for="seapal-list-item-3-input-size_fueltank">Tankgröße</label>
+									<input type="text" id="seapal-list-item-3-input-size_fueltank" name="seapal-list-item-3-input-size_fueltank" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-size_watertank">Wassertankgröße</label>
+									<input type="text" id="seapal-list-item-3-input-size_watertank" name="seapal-list-item-3-input-size_watertank" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-size_sewagetank">Abwassertankgröße</label>
+									<input type="text" id="seapal-list-item-3-input-size_sewagetank" name="seapal-list-item-3-input-size_sewagetank" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-size_mainsail">Großsegelgröße</label>
+									<input type="text" id="seapal-list-item-3-input-size_mainsail" name="seapal-list-item-3-input-size_mainsail" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-size_genua">Genuagröße</label>
+									<input type="text" id="seapal-list-item-3-input-size_genua" name="seapal-list-item-3-input-size_genua" value="0">
+									<br>
+									<label for="seapal-list-item-3-input-size_spi">Spigröße</label>
+									<input type="text" id="seapal-list-item-3-input-size_spi" name="seapal-list-item-3-input-size_spi" value="0">
+								</div>
+								<input type="hidden" id="seapal-list-item-3-input-logbookId" value="3">
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
 			<footer>
 				<p>
 					&copy; 2012 All rights reserved by J. Häussler, J. Jägers, A. Krüger
 				</p>
 			</footer>
+
+			<div id="seapal-busy-overlay" style="display: none;">
+				<p>
+					Bitte warten
+				</p>
+				<img src="lib/img/pleaseWait.gif">
+			</div>
+		</div>
+
+		<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable ui-dialog-buttons" style="outline: 0px; z-index: 1002; height: auto; width: 300px; top: 314px; left: 610px; display: none;" tabindex="-1" role="dialog" aria-labelledby="ui-id-1">
+			<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+				<span id="ui-id-1" class="ui-dialog-title">&nbsp;</span><a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a>
+			</div>
+			<div id="seapal-remove-dialog-confirm" style="width: auto; min-height: 0px; height: 0px;" class="ui-dialog-content ui-widget-content" scrolltop="0" scrollleft="0">
+				<p>
+					Wirklich löschen?
+				</p>
+			</div>
+			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+				<div class="ui-dialog-buttonset">
+					<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+						<span class="ui-button-text">Löschen</span>
+					</button>
+					<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false">
+						<span class="ui-button-text">Abbrechen</span>
+					</button>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

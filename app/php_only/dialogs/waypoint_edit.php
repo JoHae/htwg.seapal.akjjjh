@@ -8,14 +8,14 @@
 
 		<title>SeaPal</title>
 		<link rel="icon" type="image/png" href="http://www.seapal.de/images/Icon-32.png" />
-		<link href="lib/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="../lib/css/styles.css" rel="stylesheet" type="text/css" media="screen" />
 	</head>
 
 	<body>
 		<?php
 		if ($_GET["waypointID"] != 'NULL') {
 			$con = (
-			include '../database/connect.php');
+			include '../../database/connect.php');
 			$result = mysql_query("SELECT * FROM waypoint WHERE waypointID=" . $_GET["waypointID"]);
 			$row = mysql_fetch_array($result);
 			mysql_close($con);
@@ -44,7 +44,7 @@
 						<fieldset>
 							<label for="cog">COG</label>
 							<input id="cog" type="text" name="cog" size="5px" value="<?php if($row != "") echo $row["cog"] ?>" />
-							°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							ï¿½&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<label for="sog">SOG</label>
 							<input id="sog" type="text" name="sog" size="5px" value="<?php if($row != "") echo $row["sog"] ?>" />
 							kn	at <span id="timestamp">(timestamp)</timestamp></span>

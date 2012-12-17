@@ -2,12 +2,12 @@
 <html>
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta charset="UTF-8">
 		<link href="./css/map_styles.css" rel="stylesheet" type="text/css" media="screen" />
 		<script src="./lib/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
 		<script type="text/javascript" src="./lib/markerwithlabel.js"></script>
-		<script type="text/javascript" src="./lib/mapfunctions.js"></script>
-		<script type="text/javascript" src="./lib/jquery.contextmenu.r2.js"></script>
+		<script type="text/javascript" src="./lib/mapfunctions.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./mapserver/fancywebsocket.js"></script>
 		<script type="text/javascript" src="./mapserver/ship_position.js"></script>
 		<script type="text/javascript">
@@ -18,6 +18,9 @@
 			var route;
 			var distanceMarkerArray = new Array();
 			var distanceRoute;
+			var shipPositionArray = new Array();
+			var shipMarker = null;
+			var shipRoute;
 			var actualCrosshairMarker = null;
 			var selectedMarker;
 			function initialize() {
@@ -43,13 +46,20 @@
 				// -------- MAP EVENT HANDLING --------
 				google.maps.event.addListener(map, 'click', function(event) {
 					actualCrosshairPosition = event.latLng;
-					if (actualCrosshairMarker == null) {
-						addNewCrosshairMarker(map, actualCrosshairPosition);
+					if (distanceMarkerArray.length == 1) {
+						deleteCrosshairMarker();
+						distanceMarkerArray[1] = addNewDistanceMarker();
+						updateDistancePolylines();
+						endDistanceMode();
 					} else {
-						actualCrosshairMarker.setPosition(actualCrosshairPosition);
-						actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
+						if (actualCrosshairMarker == null) {
+							addNewCrosshairMarker(map, actualCrosshairPosition);
+						} else {
+							actualCrosshairMarker.setPosition(actualCrosshairPosition);
+							actualCrosshairMarker.set("labelContent", getPostionString(actualCrosshairPosition));
+						}
+						setNewCrosshairMarkerMenu();
 					}
-					setNewCrosshairMarkerMenu();
 				});
 
 				google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -93,6 +103,11 @@
 
 				// Set new distance marker and start distance Mode
 				$("#startDistanceModeCross").click(function() {
+					if (distanceMarkerArray.length >= 2) {
+						deleteDistanceMarker();
+						updateDistancePolylines();
+						endDistanceMode();
+					}
 					deleteCrosshairMarker();
 					map.setOptions({
 						draggableCursor : 'crosshair'
@@ -101,32 +116,34 @@
 					updateDistancePolylines();
 				});
 
-				$("#destDistanceModeCross").click(function() {
+				var interval;
+				$("#startPositionTest").click(function() {
 					deleteCrosshairMarker();
-					distanceMarkerArray[1] = addNewDistanceMarker();
-					updateDistancePolylines();
-					endDistanceMode();
+					sendPosition(actualCrosshairPosition);
+					interval = window.setInterval((function() {
+						var lat = map.getCenter().lat();
+						var lng = map.getCenter().lng();
+						var randomnumber = Math.floor(Math.random() * 11);
+
+						if (randomnumber >= 2) {
+							lat += Math.random() * 0.01;
+							lng += Math.random() * 0.01;
+						} else {
+							lat -= Math.random() * 0.01;
+							lng -= Math.random() * 0.01;
+						}
+						sendPosition(new google.maps.LatLng(lat, lng));
+					}), 2000);
 				});
 
-				$("#endDistanceModeCross").click(function() {
+				$("#endPositionTest").click(function() {
 					deleteCrosshairMarker();
-					deleteDistanceMarker();
-					updateDistancePolylines();
-					endDistanceMode();
-				});
-
-				$("#positionTest").click(function() {
-					deleteCrosshairMarker();
-					var lat = map.getCenter().lat();
-					var lng = map.getCenter().lng();
-					var b;
-					window.setInterval((function() {
-						lat = lat + 0.001;
-						lng = lng + 0.001;
-						b = new google.maps.LatLng(lat, lng);
-						sendPosition(b);
-					})
-					,1000);
+					window.clearInterval(interval);
+					shipMarker.setMap(null);
+					shipRoute.setMap(null);
+					shipMarker = null;
+					shipRoute = null;
+					shipPositionArray = new Array();
 				});
 
 				// --------------------------------------------------------
@@ -135,6 +152,11 @@
 				// Delete selected Standard marker
 				$("#deleteStandardMarker").click(function() {
 					standardMarkerArray.splice(standardMarkerArray.indexOf(selectedMarker), 1);
+					if (distanceMarkerArray.indexOf(selectedMarker) != -1) {
+						deleteDistanceMarker();
+						updateDistancePolylines();
+						endDistanceMode();
+					}
 					jQuery("#standardContext").hide();
 					selectedMarker.setMap(null);
 					selectedMarker = null;				});
@@ -145,6 +167,11 @@
 				// delete selected Route Marker
 				$("#deleteRouteMarker").click(function() {
 					routeMarkerArray.splice(routeMarkerArray.indexOf(selectedMarker), 1);
+					if (distanceMarkerArray.indexOf(selectedMarker) != -1) {
+						deleteDistanceMarker();
+						updateDistancePolylines();
+						endDistanceMode();
+					}
 					updateRoutePolylines();
 					jQuery("#routeContext").hide();
 					selectedMarker.setMap(null);
@@ -155,6 +182,11 @@
 				$("#deleteRoute").click(function() {
 					var length = routeMarkerArray.length;
 					for (var i = 0; i < length; i++) {
+						if (distanceMarkerArray.indexOf(routeMarkerArray[i]) != -1) {
+							deleteDistanceMarker();
+							updateDistancePolylines();
+							endDistanceMode();
+						}
 						routeMarkerArray[i].setMap(null);
 					}
 					routeMarkerArray = new Array();
@@ -166,13 +198,40 @@
 					selectedMarker = null;
 				});
 
+				// --------------------------------------------------------
+				// -------- MENU EVENT HANDLING OF DISTANCE MARKER -----------
+				// --------------------------------------------------------
+				// delete selected Route Marker
+				$("#endDistanceModeDistance").click(function() {
+					deleteDistanceMarker();
+					updateDistancePolylines();
+					endDistanceMode();
+					jQuery("#distanceContext").hide();
+				});
+				
+				$(".startDistanceMode").click(function() {
+					jQuery("#standardContext").hide();
+					jQuery("#routeContext").hide();
+					jQuery("#distanceContext").hide();
+					if (distanceMarkerArray.length >= 2) {
+						deleteDistanceMarker();
+						updateDistancePolylines();
+						endDistanceMode();
+					}
+					map.setOptions({
+						draggableCursor : 'crosshair'
+					});
+					distanceMarkerArray[0] = selectedMarker;
+					updateDistancePolylines();
+				});
+
 				// computeDistanceBetween(from:LatLng, to:LatLng, radius?:number) <<<<<< FOR DISTANCE
 			}
 		</script>
 	</head>
 	<body onload="initialize()">
 		<div id="coordsDiv" style="color: black; position: absolute; text-align: right; font-size: 1.4em; font-weight:bold; margin-right: 25px;">
-			<span id="coordinations">0�00.00'N 0�00.00'E</span>
+			<span id="coordinations">0&deg;00.00'N 0&deg;00.00'E</span>
 			<br />
 			Lat <span id="lat">42</span> Long <span id="long">9</span>
 			<br />
@@ -193,20 +252,17 @@
 				<li>
 					<a id="addRouteMarker" href="#">Route setzen</a>
 				</li>
-				<li class="startDistanceModeEntry">
-					<a id="startDistanceModeCross" href="#">Distanzmessung Start</a>
-				</li>
-				<li class="destDistanceModeEntry">
-					<a id="destDistanceModeCross" href="#">Distanzmessung Ziel</a>
-				</li>
-				<li class="endDistanceModeEntry">
-					<a id="endDistanceModeCross" href="#">Distanzmessung Beenden</a>
+				<li>
+					<a id="startDistanceModeCross" href="#">Distanzmessung von hier</a>
 				</li>
 				<li>
-					<a id="closecrosshairContext" href="#">Löschen</a>
+					<a id="closecrosshairContext" href="#">L&ouml;schen</a>
 				</li>
-				<li>
-					<a id="positionTest" href="#">Positionstest starten</a>
+				<li class="startPositionTestEntry">
+					<a id="startPositionTest" href="#">Positionstest starten</a>
+				</li>
+				<li class="endPositionTestEntry">
+					<a id="endPositionTest" href="#">Positionstest beenden</a>
 				</li>
 			</ul>
 		</div>
@@ -221,10 +277,13 @@
 					</div>
 				</li>
 				<li>
-					<a id="deleteStandardMarker" href="#">Markierung Löschen</a>
+					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
 				</li>
 				<li>
-					<a id="closestandardContext" href="#">Menü schließen</a>
+					<a id="deleteStandardMarker" href="#">Markierung L&ouml;schen</a>
+				</li>
+				<li>
+					<a id="closestandardContext" href="#">Men&uuml; schlie&szlig;en</a>
 				</li>
 			</ul>
 		</div>
@@ -241,23 +300,47 @@
 					</div>
 				</li>
 				<li>
-					<a id="deleteRouteMarker" href="#">Markierung Löschen</a>
+					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
 				</li>
 				<li>
-					<a id="deleteRoute" href="#">Route Löschen</a>
+					<a id="deleteRouteMarker" href="#">Markierung L&ouml;schen</a>
 				</li>
 				<li>
-					<a id="closerouteContext" href="#">Menü schlie�en</a>
+					<a id="deleteRoute" href="#">Route L&ouml;schen</a>
+				</li>
+				<li>
+					<a id="closerouteContext" href="#">Men&uuml; schlie&szlig;en</a>
+				</li>
+			</ul>
+		</div>
+
+		<!-- 	MENU FOR DISTANCE MARKER	 -->
+		<div id="distanceContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="distanceMenu" class="menu">
+				<li>
+					<div>
+						Position: <span id="distancePosition">Error</span>
+					</div>
+					<div>
+						Distanz: <span id="distanceDistance">Error</span>
+					</div>
+				</li>
+				<li>
+					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
+				</li>
+				<li>
+					<a id="endDistanceModeDistance" href="#">Distanzmessung Beenden</a>
+				</li>
+				<li>
+					<a id="closeDistanceContext" href="#">Men&uuml; schlie&szlig;en</a>
 				</li>
 			</ul>
 		</div>
 		<div id="mapCanvas" style="width:100%; height:100%"></div>
 	</body>
 	<!-- 	TODO:
-	1. distance: on Distance Mode click on Standard and Route Marker
-	2. distance: show polyline when distance Mode start
-	3. distance: show label with distance
-	4. Server puh with Comet
-	5. Waypoint Entries: editable details
+	1. distance: on Distance Mode click on Standard and Route Marker: DONE
+	2. distance: show label with distance
+	3. Waypoint Entries: editable details
 	-->
 </html>

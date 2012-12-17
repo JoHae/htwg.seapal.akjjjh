@@ -1,5 +1,5 @@
 <?php
-$con = (include '../database/connect.php');
+$con = (include '../../database/connect.php');
 
 # If logbookID already exists just update the entry
 if ($_POST['logbookID']!='NULL') {

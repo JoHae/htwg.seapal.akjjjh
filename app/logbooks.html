@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>logbooks</title>
+		<meta name="description" content="" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+		<!-- jQuery and jQuery Ui imports -->
+		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+		<script src="lib/js/jquery-1.8.3.js"></script>
+		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
+		<script src="lib/js/jquery.blockUI.js"></script>
+
+		<script src="logbooks.js"></script>
+	</head>
+
+	<body>
+		<div id="seapal-root">
+			<header>
+				<div>
+					<span class="seapal-logo"> </span>
+					<h1>seapal</h1>
+				</div>
+				<h2>Logbücher</h2>
+			</header>
+
+			<nav>
+				<div class="seapal-location">
+					<span>-></span><span class="seapal-space"> </span><span>logbücher</span>
+				</div>
+			</nav>
+
+			<div id="seapal-content">
+				<div class="seapal-list-header">
+					<div class="seapal-shipname">
+						Name
+					</div>
+					<div class="seapal-shiptype">
+						Typ
+					</div>
+					<div class="seapal-shipowner">
+						Eigner
+					</div>
+					<div class="seapal-shipregisternumber">
+						Rigisternr.
+					</div>
+				</div>
+				<div id="seapal-list">
+					<img src="lib/img/pleaseWait.gif" />
+				</div>
+			</div>
+			<footer>
+
+			</footer>
+
+			<div id="seapal-busy-overlay" style="display:none;">
+				<p>Bitte warten</p>
+				<img src="lib/img/pleaseWait.gif" />
+			</div>
+			
+			<div id="seapal-remove-dialog-confirm" style="display:none;">
+				<p>Wirklich löschen?</p>
+			</div>
+		</div>
+	</body>
+</html>
