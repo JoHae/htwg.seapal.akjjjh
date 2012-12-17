@@ -7,6 +7,7 @@ var seapalListItemEditingRequestId = -1;
 var seapalListData = null;
 
 $(function() {
+	// add the blocking of the list during an ajax request
 	$(document).ajaxStart(function() {
 		$("#seapal-list").block({
 			message : $('#seapal-busy-overlay')
@@ -15,8 +16,6 @@ $(function() {
 	$(document).ajaxStop(function() {
 		$("#seapal-list").unblock();
 	});
-
-	
 
 	loadLogbooks();
 });
@@ -111,10 +110,23 @@ function onBeforePanelActivate(event, ui) {
 	return true;
 }
 
+function blockAllOtherListItems(itemId) {
+	for (var i = 0; i < seapalListData.length; i++) {
+		var tCurrLogbookId = seapalListData[i].logbookId;
+		if (tCurrLogbookId === itemId) {
+			
+		} else {
+			$("#seapal-list .seapal-header .seapal-nr-" + tCurrLogbookId + " .seapal-readonly").block();
+		}
+	}
+}
+
+
 function itemEdit(itemId) {
 	if (seapalListItemEditing) {
 		return;
 	}
+	//blockAllOtherListItems(itemId);
 	$("#seapal-list .seapal-header .seapal-nr-" + itemId + " .seapal-readonly").hide();
 	$("#seapal-list .seapal-header .seapal-nr-" + itemId + " .seapal-edit").show();
 	$("#seapal-list .seapal-content .seapal-nr-" + itemId + " .seapal-readonly").hide();
@@ -142,10 +154,29 @@ function removeListItem(itemId) {
 		buttons : {
 			"Löschen" : function() {
 				$(this).dialog("close");
+				removeItemAjax(itemId);
 			},
 			"Abbrechen" : function() {
 				$(this).dialog("close");
 			}
+		}
+	});
+}
+
+function removeItemAjax(itemId) {
+	$.ajax({
+		url : "server/php/logbook_delete.php",
+		type : "POST",
+		dataType : "json",
+		cache : false,
+		data : {"logbookId" : itemId},
+		success : function(data, textStatus, jqXHR) {
+			// updating list
+			seapalListData = data;
+			logbooksLoaded();
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("fail :-(\n" + textStatus + " " + errorThrown);
 		}
 	});
 }

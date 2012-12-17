@@ -22,6 +22,20 @@
 		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
 		<script src="lib/js/jquery.blockUI.js"></script>
 
+		<!-- the new logbook template for the list !-->
+		<script id="logbookNewTmpl" type="text/x-jsrender">
+			<tr>
+			<td>{{>firstName}}</td>
+			</tr>
+		</script>
+
+		<!-- logbooks template for the list !-->
+		<script id="logbookTmpl" type="text/x-jsrender">
+			<tr>
+			<td>{{>firstName}}</td>
+			</tr>
+		</script>
+
 		<script src="logbooks.js"></script>
 	</head>
 
@@ -65,12 +79,16 @@
 			</footer>
 
 			<div id="seapal-busy-overlay" style="display:none;">
-				<p>Bitte warten</p>
+				<p>
+					Bitte warten
+				</p>
 				<img src="lib/img/pleaseWait.gif" />
 			</div>
-			
+
 			<div id="seapal-remove-dialog-confirm" style="display:none;">
-				<p>Wirklich löschen?</p>
+				<p>
+					Wirklich löschen?
+				</p>
 			</div>
 		</div>
 	</body>
