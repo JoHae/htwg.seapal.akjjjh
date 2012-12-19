@@ -1,0 +1,28 @@
+/**
+ *
+ * Hier werden Bug dokumentiert.
+ * Bitte zu jedem Bug folgende Angaben machen:
+ *
+ * a. Wer hat ihn gefunden?
+ * b. Beschreibung des falschen Verhaltens --> Was sollte statt dessen passieren?
+ * c. Vermutung, woran es liegen könnte
+ * d. Wer ist dafür zuständig?
+ * e. Datum und Uhrzeit des Auftretens oder Version des Repositorys (evtl. wird mit altem Stand getestet und der Bug wurde bereits behoben)
+ * f. Wer hat ihn behoben?
+ * g. Wann wurde er behoben? (Datum, Uhrzeit)
+ * h. Evtl. Anmerkungen, Kommentare, Notizen, auch von den anderen Teammitgleidern (aber bitte mit Namen)
+ *
+ */
+
+Bug 1:
+a. 
+b. 
+c. 
+d. 
+e. 
+f. 
+g. 
+h. 
+
+Bug 2:
+...
