@@ -124,6 +124,7 @@ function setNewCrosshairMarkerMenu() {
 	setPositionTestMenu();
 	document.getElementById("crosshairPosition").firstChild.nodeValue = getPostionString(actualCrosshairPosition);
 	document.getElementById("crosshairContext").style.cursor = "default";
+
 	jQuery("#crosshairContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + (point.y + 25))
@@ -199,7 +200,10 @@ function addNewStandardMarker() {
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = marker;
 			updateDistancePolylines();
-			endDistanceMode();
+			map.setOptions({
+				draggableCursor : ''
+			});
+			showDistanceLabel();
 		} else {
 			setNewStandardMarkerMenu(marker);
 		}
@@ -213,6 +217,8 @@ function setNewStandardMarkerMenu(marker) {
 
 	document.getElementById("standardPosition").firstChild.nodeValue = getPostionString(marker.getPosition());
 	document.getElementById("standardContext").style.cursor = "default";
+	showEndDistanceMode(marker);
+
 	jQuery("#standardContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
@@ -294,7 +300,10 @@ function addNewRouteMarker(position) {
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = marker;
 			updateDistancePolylines();
-			endDistanceMode();
+			map.setOptions({
+				draggableCursor : ''
+			});
+			showDistanceLabel();
 		} else {
 			setNewRouteMarkerMenu(marker);
 		}
@@ -309,6 +318,9 @@ function setNewRouteMarkerMenu(marker) {
 	document.getElementById("routePosition").firstChild.nodeValue = getPostionString(marker.getPosition());
 	document.getElementById("routeDistance").firstChild.nodeValue = getDistanceRoute(marker) + " sm";
 	document.getElementById("routeContext").style.cursor = "default";
+
+	showEndDistanceMode(marker);
+
 	jQuery("#routeContext").css({
 		left : (jQuery("#mapCanvas").position().left + point.x),
 		top : (jQuery("#mapCanvas").position().top + point.y)
@@ -334,7 +346,7 @@ function updateRoutePolylines() {
 			path : routePoints,
 			strokeColor : "#FF0000",
 			strokeOpacity : 1.0,
-			strokeWeight : 3
+			strokeWeight : 2
 		});
 		route.setMap(map);
 	}
@@ -412,6 +424,7 @@ function setNewDistanceMarkerMenu(marker) {
 
 	document.getElementById("distancePosition").firstChild.nodeValue = getPostionString(marker.getPosition());
 	document.getElementById("distanceDistance").firstChild.nodeValue = getDistanceDistance(marker) + " sm";
+	jQuery(".endDistanceMode").parent().show();
 
 	document.getElementById("distanceContext").style.cursor = "default";
 	jQuery("#distanceContext").css({
@@ -424,6 +437,20 @@ function setNewDistanceMarkerMenu(marker) {
 		e.preventDefault();
 		jQuery("#distanceContext").hide();
 	});
+}
+
+function showEndDistanceMode(marker) {
+	if (distanceMarkerArray.length == 0) {
+		jQuery(".endDistanceMode").parent().hide();
+		return;
+	}
+	for (var i = 0; i < distanceMarkerArray.length; i++) {
+		if (distanceMarkerArray[i] == marker) {
+			jQuery(".endDistanceMode").parent().show();
+			return;
+		}
+	}
+	jQuery(".endDistanceMode").parent().hide();
 }
 
 function updateDistancePolylines() {
@@ -439,7 +466,7 @@ function updateDistancePolylines() {
 			path : routePoints,
 			strokeColor : "#FFFF00",
 			strokeOpacity : 1.0,
-			strokeWeight : 2
+			strokeWeight : 5
 		});
 		distanceRoute.setMap(map);
 	}
@@ -447,7 +474,7 @@ function updateDistancePolylines() {
 
 function deleteDistanceMarker() {
 	for (var i = 0; i < distanceMarkerArray.length; i++) {
-		if(routeMarkerArray.indexOf(distanceMarkerArray[i]) != -1 || standardMarkerArray.indexOf(distanceMarkerArray[i]) != -1) {
+		if (routeMarkerArray.indexOf(distanceMarkerArray[i]) != -1 || standardMarkerArray.indexOf(distanceMarkerArray[i]) != -1) {
 			continue;
 		}
 		distanceMarkerArray[i].setMap(null);
@@ -459,6 +486,28 @@ function deleteDistanceMarker() {
 function endDistanceMode() {
 	map.setOptions({
 		draggableCursor : ''
+	});
+	jQuery(".endDistanceMode").parent().hide();
+}
+
+function showDistanceLabel() {
+	var projection = map.getProjection();
+	var startLatLng = distanceMarkerArray[0].getPosition();
+	var endLatLng = distanceMarkerArray[1].getPosition();
+	var startPoint = projection.fromLatLngToPoint(startLatLng);
+	var endPoint = projection.fromLatLngToPoint(endLatLng);
+	// Average
+	var midPoint = new google.maps.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2);
+	// Unproject
+	var midLatLng = projection.fromPointToLatLng(midPoint);	var infowindow = new google.maps.InfoWindow();
+	infowindow.setContent("Distanz beträgt: " + getDistanceDistance(distanceMarkerArray[1]) + "sm");
+	infowindow.setPosition(midLatLng);
+	infowindow.open(map);
+
+	google.maps.event.addListener(infowindow, 'closeclick', function() {
+		deleteDistanceMarker();
+		updateDistancePolylines();
+		endDistanceMode();
 	});
 }
 
