@@ -3,7 +3,7 @@ $con = (include '../../database/connect.php');
 
 
 # If logbookID already exists just update the entry
-if ($_POST['logbookId']!='NULL') {
+if ($_POST['dataId']!='NULL') {
 	$sql = "UPDATE `seapal`.`logbook`
 	SET
 	shipname='$_POST[shipname]',
@@ -31,7 +31,7 @@ if ($_POST['logbookId']!='NULL') {
 	size_genua='$_POST[size_genua]',
 	size_spi='$_POST[size_spi]'
 	WHERE
-	logbookID='$_POST[logbookId]'
+	logbookID='$_POST[dataId]'
 	";
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());

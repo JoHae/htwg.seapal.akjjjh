@@ -1,9 +1,9 @@
 <?php
 $con = (include '../../database/connect.php');
 
-	// notes and photos are missing
-# If tripID already exists just update the entry
-if ($_POST['tripID']!='NULL') {
+
+# If logbookID already exists just update the entry
+if ($_POST['dataId']!='NULL') {
 	$sql = "UPDATE `seapal`.`trip`
 	SET
 	triptitle='$_POST[triptitle]',
@@ -11,18 +11,17 @@ if ($_POST['tripID']!='NULL') {
 	startpoint='$_POST[startpoint]',
 	skipper='$_POST[skipper]',
 	crew='$_POST[crew]',
-	start='$_POST[start]',
-	end='$_POST[end]',
-	motor='$_POST[motor]',
-	tank_filled='$_POST[tank_filled]'
+	start='$_POST[starttime]',
+	end='$_POST[endtime]',
+	motor='$_POST[motorminutes]',
+	tank_filled='$_POST[fueltankfilled]'
 	WHERE
 	tripID='$_POST[dataId]' 
 	";
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());
 	}
-	echo "1 record edited";
-
+	
 } else {
 	$sql = "INSERT INTO `seapal`.`trip`
 	(
@@ -30,11 +29,15 @@ if ($_POST['tripID']!='NULL') {
 	)
 	VALUES
 	(
-	NULL,'$_POST[logbookID]', '$_POST[triptitle]','$_POST[destination]','$_POST[startpoint]','$_POST[skipper]','$_POST[crew]','$_POST[start]','$_POST[end]','$_POST[motor]','$_POST[tank_filled]')";
+	NULL,'$_GET[logbookId]', '$_POST[triptitle]','$_POST[destination]','$_POST[startpoint]','$_POST[skipper]','$_POST[crew]','$_POST[starttime]','$_POST[endtime]','$_POST[motorminutes]','$_POST[fueltankfilled]')";
+	
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());
 	}
-	echo "1 record added";
+	
 }
 mysql_close($con);
+
+include 'trips_get.php';
+
 ?>

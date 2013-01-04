@@ -31,7 +31,7 @@
 		'size_mainsail' => $row['size_mainsail'],
 		'size_genua' => $row['size_genua'],
 		'size_spi' => $row['size_spi'],
-		'logbookId' => $row['logbookID']
+		'dataId' => $row['logbookID']
 		);
 	}
 	echo json_encode($returnData);

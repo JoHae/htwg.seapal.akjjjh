@@ -16,6 +16,8 @@
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+		<link href="lib/css/styles.css" rel="stylesheet">
+
 		<!-- jQuery imports -->
 		<script src="lib/js/jquery-1.8.3.js"></script>
 		<!-- Query UI imports  -->
@@ -23,6 +25,8 @@
 		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
 		<!-- blockUI imports -->
 		<script src="lib/js/jquery.blockUI.js"></script>
+		<!-- urlParameter imports -->
+		<script src="lib/js/jquery.urlParameter.js"></script>
 		<!-- jsRender jquery views imports -->
 		<script src="lib/js/jsrender.js" type="text/javascript"></script>
 		<script src="lib/js/jquery.observable.js" type="text/javascript"></script>
@@ -30,9 +34,10 @@
 		
 		<script src="lib/js/seapal.views.dataoperations.js" type="text/javascript"></script>
 		<script src="lib/js/seapal.views.crudclient.js" type="text/javascript"></script>
+		<script src="lib/js/seapal.views.listfunctions.js"></script>
 
-		<script src="logbooks_data.js"></script>
-		<script src="logbooks.js"></script>
+		<script src="lib/js/logbooks_data.js"></script>
+		<script src="lib/js/logbooks.js"></script>
 	</head>
 
 	<body>
@@ -67,31 +72,30 @@
 					</div>
 				</div>
 				<div id="seapal-list">
-					<!-- Startup load image, removed when data is loaded -->
-					<img src="lib/img/pleaseWait.gif" />
+					<!-- Startup load image, removed when data is loaded <img src="lib/img/pleaseWait.gif" />-->
 				</div>
 
 				<!-- logbooks template for the list !-->
-				<script id="seapal-logbook-template" type="text/x-jsrender">
+				<script id="seapal-list-template" type="text/x-jsrender">
 
 					<div class="seapal-header">
-					<div class="seapal-nr-{{>logbookId}}">
+					<div class="seapal-nr-{{>dataId}}">
 						<span class="seapal-ship-icon"> </span>
 						<div class="seapal-readonly">
-							{{if logbookId == "new"}}
+							{{if dataId == "new"}}
 							<div class="seapal-new-item">
 								<span class="ui-icon ui-icon-plus"> </span>Neues Logbuch
 							</div>
 							{{else}}
-							<div class="seapal-shipname" data-link="{:shipname:}"></div>
-							<div class="seapal-shipname" data-link="{:shiptype:}"></div>
-							<div class="seapal-shipname" data-link="{:shipowner:}"></div>
-							<div class="seapal-shipname" data-link="{:shipregisternumber:}"></div>
+							<div class="seapal-shipname"><a href="trips.html?logbookID={{>dataId}}" data-link="{:shipname:}"></a></div>
+							<div class="seapal-shiptype" data-link="{:shiptype:}"></div>
+							<div class="seapal-shipowner" data-link="{:shipowner:}"></div>
+							<div class="seapal-shipregisternumber" data-link="{:shipregisternumber:}"></div>
 							<div class="seapal-actions">
-								<div id="seapal-list-item-{{>logbookId}}-edit" class="ui-state-default ui-corner-all" title="Bearbeiten">
+								<div id="seapal-list-item-{{>dataId}}-edit" class="ui-state-default ui-corner-all" title="Bearbeiten">
 									<span class="ui-icon ui-icon-pencil"> </span>
 								</div>
-								<div id="seapal-list-item-{{>logbookId}}-remove" class="ui-state-default ui-corner-all" title="Löschen">
+								<div id="seapal-list-item-{{>dataId}}-remove" class="ui-state-default ui-corner-all" title="Löschen">
 									<span class="ui-icon ui-icon-trash"> </span>
 								</div>
 							</div>
@@ -115,10 +119,10 @@
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-actions">
-								<div id="seapal-list-item-{{>logbookId}}-save" class="ui-state-default ui-corner-all" title="Speichern">
+								<div id="seapal-list-item-{{>dataId}}-save" class="ui-state-default ui-corner-all" title="Speichern">
 									<span class="ui-icon ui-icon-check"> </span>
 								</div>
-								<div id="seapal-list-item-{{>logbookId}}-cancel" class="ui-state-default ui-corner-all" title="Bearbeiten abbrechen">
+								<div id="seapal-list-item-{{>dataId}}-cancel" class="ui-state-default ui-corner-all" title="Bearbeiten abbrechen">
 									<span class="ui-icon ui-icon-closethick"> </span>
 								</div>
 							</div>
@@ -127,8 +131,8 @@
 				</div>
 
 				<div class="seapal-content">
-					<div class="seapal-nr-{{>logbookId}}">
-						{{if logbookId == "new"}}
+					<div class="seapal-nr-{{>dataId}}">
+						{{if dataId == "new"}}
 						<div class="seapal-readonly"></div>
 						{{else}}
 						<div class="seapal-readonly">
@@ -201,68 +205,68 @@
 
 						<div class="seapal-edit">
 							<div class="seapal-general">
-								<label for="seapal-list-item-{{>logbookId}}-input-sailsign">{{>info.sailsign.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-sailsign" data-link="{:sailsign:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-sailsign">{{>info.sailsign.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-sailsign" data-link="{:sailsign:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-homeport">{{>info.homeport.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-homeport" data-link="{:homeport:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-homeport">{{>info.homeport.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-homeport" data-link="{:homeport:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-yachtclub">{{>info.yachtclub.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-yachtclub" data-link="{:yachtclub:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-yachtclub">{{>info.yachtclub.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-yachtclub" data-link="{:yachtclub:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-insurance">{{>info.insurance.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-insurance" data-link="{:insurance:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-insurance">{{>info.insurance.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-insurance" data-link="{:insurance:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-callsign">{{>info.callsign.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-callsign" data-link="{:callsign:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-callsign">{{>info.callsign.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-callsign" data-link="{:callsign:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-constructer">{{>info.constructer.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-constructer" data-link="{:constructer:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-constructer">{{>info.constructer.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-constructer" data-link="{:constructer:}" />
 							</div>
 							<div class="seapal-sizes">
-								<label for="seapal-list-item-{{>logbookId}}-input-shiplength">{{>info.shiplength.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-shiplength" data-link="{:shiplength:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-shiplength">{{>info.shiplength.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-shiplength" data-link="{:shiplength:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-shipwidth">{{>info.shipwidth.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-shipwidth" data-link="{:shipwidth:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-shipwidth">{{>info.shipwidth.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-shipwidth" data-link="{:shipwidth:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-gauge">{{>info.gauge.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-gauge" data-link="{:gauge:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-gauge">{{>info.gauge.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-gauge" data-link="{:gauge:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-mastheight">{{>info.mastheight.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-mastheight" data-link="{:mastheight:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-mastheight">{{>info.mastheight.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-mastheight" data-link="{:mastheight:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-expulsion">{{>info.expulsion.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-expulsion" data-link="{:expulsion:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-expulsion">{{>info.expulsion.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-expulsion" data-link="{:expulsion:}" />
 								<br>
 							</div>
 							<div class="seapal-equipment">
-								<label for="seapal-list-item-{{>logbookId}}-input-rigtype">{{>info.rigtype.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-rigtype" data-link="{:rigtype:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-rigtype">{{>info.rigtype.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-rigtype" data-link="{:rigtype:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-constructionyear">{{>info.constructionyear.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-constructionyear" data-link="{:constructionyear:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-constructionyear">{{>info.constructionyear.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-constructionyear" data-link="{:constructionyear:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-engine">{{>info.engine.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-engine" data-link="{:engine:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-engine">{{>info.engine.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-engine" data-link="{:engine:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-size_fueltank">{{>info.size_fueltank.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-size_fueltank" data-link="{:size_fueltank:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-size_fueltank">{{>info.size_fueltank.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_fueltank" data-link="{:size_fueltank:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-size_watertank">{{>info.size_watertank.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-size_watertank" data-link="{:size_watertank:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-size_watertank">{{>info.size_watertank.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_watertank" data-link="{:size_watertank:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-size_sewagetank">{{>info.size_sewagetank.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-size_sewagetank" data-link="{:size_sewagetank:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-size_sewagetank">{{>info.size_sewagetank.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_sewagetank" data-link="{:size_sewagetank:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-size_mainsail">{{>info.size_mainsail.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-size_mainsail" data-link="{:size_mainsail:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-size_mainsail">{{>info.size_mainsail.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_mainsail" data-link="{:size_mainsail:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-size_genua">{{>info.size_genua.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-size_genua" data-link="{:size_genua:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-size_genua">{{>info.size_genua.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_genua" data-link="{:size_genua:}" />
 								<br>
-								<label for="seapal-list-item-{{>logbookId}}-input-size_spi">{{>info.size_spi.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>logbookId}}-input-size_spi" data-link="{:size_spi:}" />
+								<label for="seapal-list-item-{{>dataId}}-input-size_spi">{{>info.size_spi.labeltext}}</label>
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_spi" data-link="{:size_spi:}" />
 							</div>
 						</div>
 					</div>

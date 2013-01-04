@@ -18,7 +18,7 @@ function createBindingListData(backendListDataArray, newItemData, infoData) {
 
 function setBindingData(bindingDataList, data, itemId) {
 	for (var key in bindingDataList) {
-		if (bindingDataList[key].logbookId == itemId) {
+		if (bindingDataList[key].dataId == itemId) {
 			$.observable(bindingDataList[key]).setProperty(data);
 			return;
 		}
@@ -27,7 +27,7 @@ function setBindingData(bindingDataList, data, itemId) {
 
 function getDataFromDataList(dataList, data, itemId) {
 	for (var key in dataList) {
-		if (dataList[key].logbookId == itemId) {
+		if (dataList[key].dataId == itemId) {
 			for (var dataKey in data) {
 				data[dataKey] = dataList[key][dataKey];
 			}
