@@ -94,7 +94,7 @@ function getDistanceDistance(marker_end) {
 }
 
 function getMenuPoint(map, marker) {
-	if(marker == null) {
+	if (marker == null) {
 		return null;
 	}
 	var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
@@ -561,7 +561,7 @@ function addNewShipPositionMarker(position) {
 		shipMarker.set("labelClass", "");
 		shipMarker.set("labelContent", "");
 	});
-	
+
 	google.maps.event.addListener(shipMarker, 'click', function(event) {
 		deleteCrosshairMarker();
 		jQuery("#standardContext").hide();
@@ -578,7 +578,6 @@ function addNewShipPositionMarker(position) {
 			setNewRealRouteMarkerMenu(shipMarker);
 		}
 	})
-	
 	shipPositionArray[shipPositionArray.length] = position;
 	updateShipPositionPolylines();
 }
@@ -604,7 +603,6 @@ function setNewRealRouteMarkerMenu(marker) {
 		jQuery("#realRouteContext").hide();
 	});
 }
-
 
 function updateShipPositionPolylines() {
 	if (shipRoute != null) {
@@ -638,13 +636,13 @@ function showEditDialog() {
 		autoOpen : false,
 		height : 500,
 		width : 750,
-		modal : true,
-		resizable: true,
-		show: "slide",
-		position: ['left','top'],
+		modal : false,
+		resizable : false,
+		show : "slide",
+		position : ['left', 'top'],
 		buttons : {
 			OK : function() {
-				// Validate Data and add to database
+				// TODO: Validate Data and add to database
 				//$("#dialog > form").submit();
 				$(this).dialog('close');
 			},
@@ -660,38 +658,18 @@ function showEditDialog() {
 function showPhotoDialog() {
 	$("#container").dialog({
 		bgiframe : true,
-		height : 300,
+		height : 500,
+		width : 1000,
+		show : "slide",
+		position : ['left', 'top'],
 		modal : true,
 	});
 
 	$('#slides').slides({
 		preload : true,
-		preloadImage : '',
+		preloadImage : 'img/loading.gif',
 		play : 5000,
 		pause : 2500,
-		hoverPause : true,
-		animationStart : function(current) {
-			$('.caption').animate({
-				bottom : -35
-			}, 100);
-			if (window.console && console.log) {
-				// example return of current slide number
-				console.log('animationStart on slide: ', current);
-			};
-		},
-		animationComplete : function(current) {
-			$('.caption').animate({
-				bottom : 0
-			}, 200);
-			if (window.console && console.log) {
-				// example return of current slide number
-				console.log('animationComplete on slide: ', current);
-			};
-		},
-		slidesLoaded : function() {
-			$('.caption').animate({
-				bottom : 0
-			}, 200);
-		}
+		hoverPause : true
 	});
 }
