@@ -50,7 +50,10 @@
 						deleteCrosshairMarker();
 						distanceMarkerArray[1] = addNewDistanceMarker();
 						updateDistancePolylines();
-						endDistanceMode();
+						map.setOptions({
+							draggableCursor : ''
+						});
+						showDistanceLabel();
 					} else {
 						if (actualCrosshairMarker == null) {
 							addNewCrosshairMarker(map, actualCrosshairPosition);
@@ -106,7 +109,9 @@
 					if (distanceMarkerArray.length >= 2) {
 						deleteDistanceMarker();
 						updateDistancePolylines();
-						endDistanceMode();
+						map.setOptions({
+							draggableCursor : ''
+						});
 					}
 					deleteCrosshairMarker();
 					map.setOptions({
@@ -202,13 +207,16 @@
 				// -------- MENU EVENT HANDLING OF DISTANCE MARKER -----------
 				// --------------------------------------------------------
 				// delete selected Route Marker
-				$("#endDistanceModeDistance").click(function() {
+				$(".endDistanceMode").click(function() {
+					jQuery("#standardContext").hide();
+					jQuery("#routeContext").hide();
+					jQuery("#distanceContext").hide();
 					deleteDistanceMarker();
 					updateDistancePolylines();
 					endDistanceMode();
 					jQuery("#distanceContext").hide();
 				});
-				
+
 				$(".startDistanceMode").click(function() {
 					jQuery("#standardContext").hide();
 					jQuery("#routeContext").hide();
@@ -216,7 +224,9 @@
 					if (distanceMarkerArray.length >= 2) {
 						deleteDistanceMarker();
 						updateDistancePolylines();
-						endDistanceMode();
+						map.setOptions({
+							draggableCursor : ''
+						});
 					}
 					map.setOptions({
 						draggableCursor : 'crosshair'
@@ -224,7 +234,7 @@
 					distanceMarkerArray[0] = selectedMarker;
 					updateDistancePolylines();
 				});
-
+				
 				// computeDistanceBetween(from:LatLng, to:LatLng, radius?:number) <<<<<< FOR DISTANCE
 			}
 		</script>
@@ -280,6 +290,9 @@
 					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
 				</li>
 				<li>
+					<a class="endDistanceMode" href="#">Distanzmessung Beenden</a>
+				</li>
+				<li>
 					<a id="deleteStandardMarker" href="#">Markierung L&ouml;schen</a>
 				</li>
 				<li>
@@ -301,6 +314,9 @@
 				</li>
 				<li>
 					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
+				</li>
+				<li>
+					<a class="endDistanceMode" href="#">Distanzmessung Beenden</a>
 				</li>
 				<li>
 					<a id="deleteRouteMarker" href="#">Markierung L&ouml;schen</a>
@@ -326,10 +342,7 @@
 					</div>
 				</li>
 				<li>
-					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
-				</li>
-				<li>
-					<a id="endDistanceModeDistance" href="#">Distanzmessung Beenden</a>
+					<a class="endDistanceMode" href="#">Distanzmessung Beenden</a>
 				</li>
 				<li>
 					<a id="closeDistanceContext" href="#">Men&uuml; schlie&szlig;en</a>

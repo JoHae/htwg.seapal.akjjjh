@@ -13,31 +13,30 @@
 		<meta name="viewport" content="width=device-width; initial-scale=1.0">
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-		<link rel="shortcut icon" href="/favicon.ico">
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="shortcut icon" href="lib/img/favicon.ico" />
+		<link rel="apple-touch-icon" href="lib/img/apple-touch-icon.png" />
 
 		<!-- jQuery and jQuery Ui imports -->
+		<link href="lib/css/styles.css" rel="stylesheet">
 		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
 		<script src="lib/js/jquery-1.8.3.js"></script>
 		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
 		<script src="lib/js/jquery.blockUI.js"></script>
 
-		<!--<script src="logbooks.js"></script>!-->
+		<script src="lib/js/logbooks.js"></script>
 	</head>
 
 	<body style="">
 		<div id="seapal-root">
 			<header>
-				<div>
-					<span class="seapal-logo"> </span>
-					<h1>seapal</h1>
-				</div>
+				<span class="seapal-logo"> </span>
+				<h1>Seapal</h1>
 				<h2>Logbücher</h2>
 			</header>
 
 			<nav>
 				<div class="seapal-location">
-					<span>-&gt;</span><span class="seapal-space"> </span><span>logbücher</span>
+					<span>-></span><span class="seapal-breadcrumbs"> </span><span>logbücher</span>
 				</div>
 			</nav>
 
@@ -94,28 +93,77 @@
 							</div>
 						</div>
 					</div>
-					<div class="seapal-content ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom" style="display: none; height: 1100.7999992370605px;" id="ui-accordion-seapal-list-panel-0">
-						<div class="seapal-nr-new">
-							<div class="seapal-readonly"></div>
-							<div class="seapal-edit" style="display: none;">
-								<div class="seapal-general">
-									<label for="seapal-list-item-new-input-sailsign">Segelzeichen</label>
-									<input type="text" id="seapal-list-item-new-input-sailsign" name="seapal-list-item-new-input-sailsign" value="">
-									<br>
-									<label for="seapal-list-item-new-input-homeport">Heimathafen</label>
-									<input type="text" id="seapal-list-item-new-input-homeport" name="seapal-list-item-new-input-homeport" value="">
-									<br>
-									<label for="seapal-list-item-new-input-yachtclub">Yachtclub</label>
-									<input type="text" id="seapal-list-item-new-input-yachtclub" name="seapal-list-item-new-input-yachtclub" value="">
-									<br>
-									<label for="seapal-list-item-new-input-insurance">Versicherung</label>
-									<input type="text" id="seapal-list-item-new-input-insurance" name="seapal-list-item-new-input-insurance" value="">
-									<br>
-									<label for="seapal-list-item-new-input-callsign">Rufzeichen</label>
-									<input type="text" id="seapal-list-item-new-input-callsign" name="seapal-list-item-new-input-callsign" value="">
-									<br>
-									<label for="seapal-list-item-new-input-constructer">Kunstrukteur</label>
-									<input type="text" id="seapal-list-item-new-input-constructer" name="seapal-list-item-new-input-constructer" value="">
+					<div>
+						<div class="seapal-content">
+							<div class="seapal-nr-new">
+								<div class="seapal-readonly"></div>
+								<div class="seapal-edit">
+									<div class="seapal-general">
+
+										<label for="sailsign">Segelzeichen</label>
+										<input type="text" name="sailsign" value="ll"/>
+										<br />
+										<label for="homeport">Heimathafen</label>
+										<input type="text" name="homeport" value="kk"/>
+										<br />
+										<label for="yachtclub">Yachtclub</label>
+										<input type="text" name="yachtclub" value="uuu"/>
+										<br />
+										<label for="insurance">Versicherung</label>
+										<input type="text" name="insurance" value="ll"/>
+										<br />
+										<label for="callsign">Rufzeichen</label>
+										<input type="text" name="callsign" value="pp"/>
+										<br />
+										<label for="constructer">Konstrukteur</label>
+										<input type="text" name="constructer" value="ooo"/>
+									</div>
+									<div class="seapal-sizes">
+										<label for="length">Länge</label>
+										<input type="text" name="length" value="ppp"/>
+										<br />
+										<label for="width">Breite</label>
+										<input type="text" name="width" value="uuu"/>
+										<br />
+										<label for="gauge">Tiefgang</label>
+										<input type="text" name="gauge" value="ooo"/>
+										<br />
+										<label for="mastheight">Masthöhe</label>
+										<input type="text" name="mastheight" value="ppp"/>
+										<br />
+										<label for="expulsion">Verdrängung</label>
+										<input type="text" name="expulsion" value="ttt"/>
+
+									</div>
+									<div class="seapal-equipment">
+										<label for="rigtype">Rig-Art</label>
+										<input type="text" name="rigtype" value="pppp"/>
+										<br />
+										<label for="constructionyear">Baujahr</label>
+										<input type="text" name="constructionyear" value="ooo"/>
+										<br />
+										<label for="engine">Motor</label>
+										<input type="text" name="engine" value="iii"/>
+										<br />
+										<label for="size_fueltank">Tankgröße</label>
+										<input type="text" name="size_fueltank" value="uu"/>
+										<br />
+										<label for="size_watertank">Wassertankgröße</label>
+										<input type="text" name="size_watertank" value="hallo"/>
+										<br />
+										<label for="size_sewagetank">Abwassertankgröße</label>
+										<input type="text" name="size_sewagetank" value="uuu"/>
+										<br />
+										<label for="size_mainsail">Großsegelgröße</label>
+										<input type="text" name="size_mainsail" value="ffff"/>
+										<br />
+										<label for="size_genua">Genuagröße</label>
+										<input type="text" name="size_genua" value="asd"/>
+										<br />
+										<label for="size_spi">Spigröße</label>
+										<input type="text" name="size_spi" value="asd"/>
+									</div>
+									<input type="hidden" name="logbookID" value="1">
 								</div>
 								<div class="seapal-sizes">
 									<label for="seapal-list-item-new-input-length">Länge</label>
@@ -682,7 +730,9 @@
 				</div>
 			</div>
 			<footer>
-
+				<p>
+					&copy; 2012 All rights reserved by J. Häussler, J. Jägers, A. Krüger
+				</p>
 			</footer>
 
 			<div id="seapal-busy-overlay" style="display: none;">
