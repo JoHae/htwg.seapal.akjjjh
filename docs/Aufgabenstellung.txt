@@ -1,6 +1,6 @@
 3x komplette App implementieren, 1x zum Verständnis der Technologie:
 
-1. PHP mit AJAX: komplette App implementieren,
+OK 1. PHP mit AJAX: komplette App implementieren,
 2. JSP mit AJAX/JS: Webseiten, Formulare, aber keine Karten,
 3. GWT ODER Google Play: komplette App implementieren,
-4. mit einer anderen Technologie zeigen, dass man diese verstanden hat (eine Seite damit umsetzen)
+4. mit einer anderen Technologie zeigen, dass man diese verstanden hat (eine Seite damit umsetzen) (GWT oder Google Play)

@@ -10,8 +10,6 @@
 		<title>trips</title>
 		<meta name="description" content="" />
 
-		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
-
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -45,31 +43,25 @@
 			<header>
 				<div>
 					<span class="seapal-logo"> </span>
-					<h1>seapal</h1>
+					<h1>Seapal</h1>
 				</div>
 				<h2>Trips</h2>
 			</header>
 
 			<nav>
 				<div class="seapal-location">
-					<span>-></span><span class="seapal-space"> </span><span><a href="logbooks.html">logbücher</a></span><span class="seapal-space"> </span><span>-></span><span class="seapal-space"> </span><span>logbuch : </span>
+					<span>></span><span class="seapal-space"> </span><span><a href="logbooks.html">Logbücher</a></span><span class="seapal-space"> </span><span>></span><span class="seapal-space"> </span><span>Trips</span>
 				</div>  
 			</nav>
 
 			<div id="seapal-content">
 				<div class="seapal-list-header">
-					<div class="seapal-triptitle">
-						Trip
-					</div>
-					<div class="seapal-startpoint">
-						Von
-					</div>
-					<div class="seapal-destination">
-						Nach
-					</div>
-					<div class="seapal-skipper">
-						Skipper
-					</div>
+					<ul>
+						<li class="seapal-triptitle">Trip</li>
+						<li class="seapal-startpoint">Von</li>
+						<li class="seapal-destination">Nach</li>
+						<li class="seapal-skipper">Skipper</li>
+					</ul>
 				</div>
 				<div id="seapal-list">
 					<!-- Startup load image, removed when data is loaded <img src="lib/img/pleaseWait.gif" />-->
@@ -84,7 +76,12 @@
 						<div class="seapal-readonly">
 							{{if dataId == "new"}}
 							<div class="seapal-new-item">
-								<span class="ui-icon ui-icon-plus"> </span>Neuer Trip
+								<div class="seapal-actions">
+									<div id="seapal-list-item-{{>dataId}}-edit" class="ui-state-default ui-corner-all" title="Neuer Trip">
+										<span class="ui-icon ui-icon-plus"> </span>
+									</div>
+								</div>
+								Neuer Trip
 							</div>
 							{{else}}
 							<div class="seapal-triptitle" data-link="{:triptitle:}"></div>
@@ -152,11 +149,10 @@
 								<span class="seapal-label">{{>info.fueltankfilled.labeltext}}</span>
 								<span class="seapal-field" data-link="{:fueltankfilled:}"></span>
 							</div>
-							<div class="seapal-crew">
+							<div class="seapal-other">
 								<span class="seapal-label">{{>info.crew.labeltext}}</span>
 								<span class="seapal-field" data-link="{:crew:}"></span>
-							</div>
-							<div class="seapal-notes">
+							<br>
 								<span class="seapal-label">{{>info.notes.labeltext}}</span>
 								<span class="seapal-field" data-link="{:notes:}"></span>
 							</div>
@@ -180,13 +176,12 @@
 								<label for="seapal-list-item-{{>dataId}}-input-fueltankfilled">{{>info.fueltankfilled.labeltext}}</label>
 								<input type="text" name="seapal-list-item-{{>dataId}}-input-fueltankfilled" data-link="{:fueltankfilled:}" />
 							</div>
-							<div class="seapal-crew">
+							<div class="seapal-other">
 								<label for="seapal-list-item-{{>dataId}}-input-crew">{{>info.crew.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-crew" data-link="{:crew:}" />
-							</div>
-							<div class="seapal-notes">
+								<textarea name="seapal-list-item-{{>dataId}}-input-crew" data-link="{:crew:}"></textarea>
+								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-notes">{{>info.notes.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-notes" data-link="{:notes:}" />
+								<textarea name="seapal-list-item-{{>dataId}}-input-notes" data-link="{:notes:}"></textarea>
 							</div>
 						</div>
 					</div>
@@ -196,7 +191,9 @@
 
 			</div>
 			<footer>
-
+				<p>
+					&copy; 2012 All rights reserved by J. Häussler, J. Jägers, A. Krüger
+				</p>
 			</footer>
 
 			<!-- Overlay during loading of data -->

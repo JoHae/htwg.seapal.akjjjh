@@ -10,8 +10,6 @@
 		<title>logbooks</title>
 		<meta name="description" content="" />
 
-		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
-
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -45,7 +43,7 @@
 			<header>
 				<div>
 					<span class="seapal-logo"> </span>
-					<h1>seapal</h1>
+					<h1>Seapal</h1>
 				</div>
 				<h2>Logbücher</h2>
 			</header>
@@ -58,18 +56,12 @@
 
 			<div id="seapal-content">
 				<div class="seapal-list-header">
-					<div class="seapal-shipname">
-						Name
-					</div>
-					<div class="seapal-shiptype">
-						Typ
-					</div>
-					<div class="seapal-shipowner">
-						Eigentümer
-					</div>
-					<div class="seapal-shipregisternumber">
-						Registernr.
-					</div>
+					<ul>
+						<li class="seapal-shipname">Name</li>
+						<li class="seapal-shiptype">Typ</li>
+						<li class="seapal-shipowner">Eigentümer</li>
+						<li class="seapal-shipregisternumber">Registernr.</li>
+					</ul>
 				</div>
 				<div id="seapal-list">
 					<!-- Startup load image, removed when data is loaded <img src="lib/img/pleaseWait.gif" />-->
@@ -84,7 +76,12 @@
 						<div class="seapal-readonly">
 							{{if dataId == "new"}}
 							<div class="seapal-new-item">
-								<span class="ui-icon ui-icon-plus"> </span>Neues Logbuch
+								<div class="seapal-actions">
+									<div id="seapal-list-item-{{>dataId}}-edit" class="ui-state-default ui-corner-all" title="Neues Logbuch">
+										<span class="ui-icon ui-icon-plus"> </span>
+									</div>
+								</div>
+								Neues Logbuch
 							</div>
 							{{else}}
 							<div class="seapal-shipname"><a href="trips.html?logbookID={{>dataId}}" data-link="{:shipname:}"></a></div>
@@ -203,7 +200,6 @@
 							</div>
 						</div>
 						{{/if}}
-
 						<div class="seapal-edit">
 							<div class="seapal-general">
 								<label for="seapal-list-item-{{>dataId}}-input-sailsign">{{>info.sailsign.labeltext}}</label>
@@ -277,7 +273,9 @@
 
 			</div>
 			<footer>
-
+				<p>
+					&copy; 2012 All rights reserved by J. Häussler, J. Jägers, A. Krüger
+				</p>
 			</footer>
 
 			<!-- Overlay during loading of data -->

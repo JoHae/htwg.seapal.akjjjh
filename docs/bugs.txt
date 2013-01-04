@@ -15,11 +15,11 @@
  */
 
 Bug 1:
-a. 
-b. 
-c. 
-d. 
-e. 
+a. Anja
+b. Notizen werden nicht gespeichert
+c. vll falsche DB-Konfig?? --> stimmt in DB bei notes type=text? --> muss das nicht varchar(100) heißen??
+d. Janosch
+e. 04.01.13, 17:41, letzter Pull: 04.01.13, ca. 15:45
 f. 
 g. 
 h. 
