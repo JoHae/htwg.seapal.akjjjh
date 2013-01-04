@@ -16,8 +16,8 @@ if ($_POST['logbookId']!='NULL') {
 	callsign='$_POST[callsign]',
 	type='$_POST[shiptype]',
 	constructer='$_POST[constructer]',
-	length='$_POST[length]',
-	width='$_POST[width]',
+	length='$_POST[shiplength]',
+	width='$_POST[shipwidth]',
 	gauge='$_POST[gauge]',
 	mastheight='$_POST[mastheight]',
 	expulsion='$_POST[expulsion]',
@@ -47,7 +47,7 @@ if ($_POST['logbookId']!='NULL') {
 	VALUES
 	(
 	NULL,'$_POST[shipname]','$_POST[shipregisternumber]','$_POST[sailsign]','$_POST[homeport]','$_POST[yachtclub]','$_POST[shipowner]','$_POST[insurance]','$_POST[callsign]','$_POST[shiptype]',
-	'$_POST[constructer]','$_POST[length]','$_POST[width]','$_POST[gauge]','$_POST[mastheight]','$_POST[expulsion]','$_POST[rigtype]','$_POST[constructionyear]','$_POST[engine]','$_POST[size_fueltank]',
+	'$_POST[constructer]','$_POST[shiplength]','$_POST[shipwidth]','$_POST[gauge]','$_POST[mastheight]','$_POST[expulsion]','$_POST[rigtype]','$_POST[constructionyear]','$_POST[engine]','$_POST[size_fueltank]',
 	'$_POST[size_watertank]','$_POST[size_sewagetank]','$_POST[size_mainsail]','$_POST[size_genua]','$_POST[size_spi]')";
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());
