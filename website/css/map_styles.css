@@ -148,6 +148,10 @@ body {
 	width: 170px;
 }
 
+#realRouteMenu a {
+	width: 170px;
+}
+
 .menu a:hover {
 	background-color: #0186ba;
 	background-image: linear-gradient(#04acec, #0186ba);

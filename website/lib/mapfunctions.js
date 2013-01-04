@@ -28,8 +28,8 @@ function addSeamap() {
 }
 
 function updateCoords() {
-	document.getElementById("lat").firstChild.nodeValue = map.getCenter().lat();
-	document.getElementById("long").firstChild.nodeValue = map.getCenter().lng();
+	document.getElementById("lat").firstChild.nodeValue = extround(map.getCenter().lat(), 5);
+	document.getElementById("long").firstChild.nodeValue = extround(map.getCenter().lng(), 5);
 	document.getElementById("coordinations").firstChild.nodeValue = getPostionString(map.getCenter());
 }
 
@@ -71,6 +71,20 @@ function getDistanceRoute(marker_end) {
 	}
 }
 
+function getDistanceRealRoute(marker_end) {
+	if (marker_end === realRouteMarkerArray[0]) {
+		return 0;
+	}
+	var distance = 0;
+
+	for (var i = 1; i < realRouteMarkerArray.length; i++) {
+		distance = distance + google.maps.geometry.spherical.computeDistanceBetween(realRouteMarkerArray[i - 1].getPosition(), realRouteMarkerArray[i].getPosition());
+		if (marker_end === realRouteMarkerArray[i]) {
+			return extround(meterToNauticalMile(distance), 3);
+		}
+	}
+}
+
 function getDistanceDistance(marker_end) {
 	if (marker_end === distanceMarkerArray[0]) {
 		return 0;
@@ -80,6 +94,9 @@ function getDistanceDistance(marker_end) {
 }
 
 function getMenuPoint(map, marker) {
+	if(marker == null) {
+		return null;
+	}
 	var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
 	var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
 	var scale = Math.pow(2, map.getZoom());
@@ -107,6 +124,7 @@ function addNewCrosshairMarker() {
 	actualCrosshairMarker = new google.maps.Marker(markerOptions);
 	jQuery("#standardContext").hide();
 	jQuery("#routeContext").hide();
+	jQuery("#realRouteContext").hide();
 	google.maps.event.addListener(actualCrosshairMarker, 'drag', function() {
 		setNewCrosshairMarkerMenu(map);
 		actualCrosshairPosition = actualCrosshairMarker.getPosition();
@@ -196,6 +214,7 @@ function addNewStandardMarker() {
 	google.maps.event.addListener(marker, 'click', function(event) {
 		deleteCrosshairMarker();
 		jQuery("#routeContext").hide();
+		jQuery("#realRouteContext").hide();
 		selectedMarker = marker;
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = marker;
@@ -296,6 +315,7 @@ function addNewRouteMarker(position) {
 	google.maps.event.addListener(marker, 'click', function(event) {
 		deleteCrosshairMarker();
 		jQuery("#standardContext").hide();
+		jQuery("#realRouteContext").hide();
 		selectedMarker = marker;
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = marker;
@@ -327,7 +347,7 @@ function setNewRouteMarkerMenu(marker) {
 	});
 	jQuery("#routeContext").show();
 
-	jQuery('#closerouteContext').click(function(e) {
+	jQuery('#closeRouteContext').click(function(e) {
 		e.preventDefault();
 		jQuery("#routeContext").hide();
 	});
@@ -412,6 +432,7 @@ function addNewDistanceMarker() {
 		deleteCrosshairMarker();
 		jQuery("#standardContext").hide();
 		jQuery("#routeContext").hide();
+		jQuery("#realRouteContext").hide();
 		selectedMarker = marker;
 		setNewDistanceMarkerMenu(marker);
 	})
@@ -474,7 +495,7 @@ function updateDistancePolylines() {
 
 function deleteDistanceMarker() {
 	for (var i = 0; i < distanceMarkerArray.length; i++) {
-		if (routeMarkerArray.indexOf(distanceMarkerArray[i]) != -1 || standardMarkerArray.indexOf(distanceMarkerArray[i]) != -1) {
+		if (routeMarkerArray.indexOf(distanceMarkerArray[i]) != -1 || standardMarkerArray.indexOf(distanceMarkerArray[i]) != -1 || realRouteMarkerArray.indexOf(distanceMarkerArray[i]) != -1) {
 			continue;
 		}
 		distanceMarkerArray[i].setMap(null);
@@ -516,36 +537,74 @@ function addNewShipPositionMarker(position) {
 		alert("No position while trying to add new Ship Marker.");
 	}
 
-	if (shipMarker != null) {
-		shipMarker.setPosition(position);
-	} else {
-		var markerOptions = {
-			position : position,
-			map : map,
-			draggable : false,
-			icon : "./images/Sailing_Ship_48.png",
-			labelContent : "",
-			labelAnchor : new google.maps.Point(0, -10),
-			labelClass : "", // the CSS class for the label
-			labelStyle : {
-				opacity : 0.9
-			}
+	var markerOptions = {
+		position : position,
+		map : map,
+		draggable : false,
+		icon : "./images/Sailing_Ship_48.png",
+		labelContent : "",
+		labelAnchor : new google.maps.Point(0, -10),
+		labelClass : "", // the CSS class for the label
+		labelStyle : {
+			opacity : 0.9
 		}
-		shipMarker = new MarkerWithLabel(markerOptions);
-
-		google.maps.event.addListener(shipMarker, "mouseover", function(e) {
-			shipMarker.set("labelClass", "markerLabel");
-			shipMarker.set("labelContent", getPostionString(shipMarker.getPosition()));
-		});
-
-		google.maps.event.addListener(shipMarker, "mouseout", function(e) {
-			shipMarker.set("labelClass", "");
-			shipMarker.set("labelContent", "");
-		});
 	}
+	var shipMarker = new MarkerWithLabel(markerOptions);
+	realRouteMarkerArray[realRouteMarkerArray.length] = shipMarker;
+
+	google.maps.event.addListener(shipMarker, "mouseover", function(e) {
+		shipMarker.set("labelClass", "markerLabel");
+		shipMarker.set("labelContent", getPostionString(shipMarker.getPosition()));
+	});
+
+	google.maps.event.addListener(shipMarker, "mouseout", function(e) {
+		shipMarker.set("labelClass", "");
+		shipMarker.set("labelContent", "");
+	});
+	
+	google.maps.event.addListener(shipMarker, 'click', function(event) {
+		deleteCrosshairMarker();
+		jQuery("#standardContext").hide();
+		jQuery("#routeContext").hide();
+		selectedMarker = shipMarker;
+		if (distanceMarkerArray.length == 1) {
+			distanceMarkerArray[1] = shipMarker;
+			updateDistancePolylines();
+			map.setOptions({
+				draggableCursor : ''
+			});
+			showDistanceLabel();
+		} else {
+			setNewRealRouteMarkerMenu(shipMarker);
+		}
+	})
+	
 	shipPositionArray[shipPositionArray.length] = position;
 	updateShipPositionPolylines();
 }
+
+function setNewRealRouteMarkerMenu(marker) {
+	var point = getMenuPoint(map, marker);
+
+	document.getElementById("realRoutePosition").firstChild.nodeValue = getPostionString(marker.getPosition());
+	document.getElementById("realRouteDistance").firstChild.nodeValue = getDistanceRealRoute(marker) + " sm";
+
+	document.getElementById("realRouteContext").style.cursor = "default";
+
+	showEndDistanceMode(marker);
+
+	jQuery("#realRouteContext").css({
+		left : (jQuery("#mapCanvas").position().left + point.x),
+		top : (jQuery("#mapCanvas").position().top + point.y)
+	});
+	jQuery("#realRouteContext").show();
+
+	jQuery('#closeRealRouteContext').click(function(e) {
+		e.preventDefault();
+		jQuery("#realRouteContext").hide();
+	});
+}
+
 
 function updateShipPositionPolylines() {
 	if (shipRoute != null) {
@@ -570,5 +629,66 @@ function setPositionTestMenu() {
 	} else {
 		jQuery(".endPositionTestEntry").show();
 	}
-
 }
+
+function showEditDialog() {
+	jQuery("#realRouteContext").hide();
+	$("#dialog").dialog({
+		bgiframe : true,
+		autoOpen : false,
+		height : 1000,
+		modal : true,
+		position: ['left','top'],
+		buttons : {
+			OK : function() {
+				// Validate Data and add to database
+				//$("#dialog > form").submit();
+				$(this).dialog('close');
+			},
+			Abbrechen : function() {
+				$(this).dialog('close');
+			}
+		}
+	});
+	$('#dialog').dialog('open');
+	jQuery("#routeContext").hide();
+}
+
+function showPhotoDialog() {
+	$("#container").dialog({
+		bgiframe : true,
+		height : 300,
+		modal : true,
+	});
+
+	$('#slides').slides({
+		preload : true,
+		preloadImage : '',
+		play : 5000,
+		pause : 2500,
+		hoverPause : true,
+		animationStart : function(current) {
+			$('.caption').animate({
+				bottom : -35
+			}, 100);
+			if (window.console && console.log) {
+				// example return of current slide number
+				console.log('animationStart on slide: ', current);
+			};
+		},
+		animationComplete : function(current) {
+			$('.caption').animate({
+				bottom : 0
+			}, 200);
+			if (window.console && console.log) {
+				// example return of current slide number
+				console.log('animationComplete on slide: ', current);
+			};
+		},
+		slidesLoaded : function() {
+			$('.caption').animate({
+				bottom : 0
+			}, 200);
+		}
+	});
+}
