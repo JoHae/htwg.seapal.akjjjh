@@ -636,8 +636,11 @@ function showEditDialog() {
 	$("#dialog").dialog({
 		bgiframe : true,
 		autoOpen : false,
-		height : 1000,
+		height : 500,
+		width : 750,
 		modal : true,
+		resizable: true,
+		show: "slide",
 		position: ['left','top'],
 		buttons : {
 			OK : function() {
