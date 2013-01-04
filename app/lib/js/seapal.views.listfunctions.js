@@ -39,10 +39,8 @@ function seapalListInit(ajaxGetUrl, ajaxDeleteUrl, ajaxEditUrl) {
 		seapalListTemplate : "#seapal-list-template"
 	});
 
-	// load logbooks
-	$.getJSON(seapalAjaxGetUrl, function(data) {
-	 	seapalDataLoaded(data);
-	});
+	// load data
+	ajaxGet(seapalAjaxGetUrl, seapalDataLoaded);
 }
 
 function seapalDataLoaded(listData) {
