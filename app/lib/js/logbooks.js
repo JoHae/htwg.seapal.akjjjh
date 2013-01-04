@@ -1,23 +1,11 @@
 /**
  * javascript file with the functions for the logbooks page
+ * 
+ * 
  */
 
-var seapalListItemEditing = false;
-var seapalListItemEditingRequestId = -1;
-var seapalListData = null;
-
 $(function() {
-	// add the blocking of the list during an ajax request
-	$(document).ajaxStart(function() {
-		$("#seapal-list").block({
-			message : $('#seapal-busy-overlay')
-		});
-	});
-	$(document).ajaxStop(function() {
-		$("#seapal-list").unblock();
-	});
-
-	loadLogbooks();
+	seapalListInit('server/php/logbooks_get.php', 'server/php/logbook_delete.php', 'server/php/logbook_edit.php');
 });
 
 function loadLogbooks() {
@@ -678,17 +666,6 @@ function createLogbookHtmlElementContentReadonly(data, infoData) {
 	tNewHtmlString += createLogbookHtmlElementContentFields(data, infoData, createLogbookHtmlElementContentReadonlyField);
 	tNewHtmlString += '</div>';
 
-	return tNewHtmlString;
-}
 
-function createLogbookHtmlElementContentEdit(data, infoData) {
-	var tNewHtmlString = '';
-	// edit
-	tNewHtmlString += '<div class="seapal-edit">';
-	tNewHtmlString += createLogbookHtmlElementContentFields(data, infoData, createLogbookHtmlElementContentEditField);
-	tNewHtmlString += '<input type="hidden" id="' + createInputFieldName(data, "logbookId") + '" value="' + data["logbookId"] + '">';
-	tNewHtmlString += '</div>';
 
-	return tNewHtmlString;
-}
 

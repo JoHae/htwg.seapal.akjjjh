@@ -6,9 +6,9 @@ $con = (include '../../database/connect.php');
 # If logbookID is not NULL delete entry
 if ($_POST['removeId']!='NULL') {
 	$sql = "
-	DELETE FROM `seapal`.`logbook`
+	DELETE FROM `seapal`.`trip`
 	WHERE
-	logbookID='$_POST[removeId]'
+	tripID='$_POST[removeId]'
 	";
 	
 	if (!mysql_query($sql, $con)) {
@@ -18,6 +18,6 @@ if ($_POST['removeId']!='NULL') {
 
 mysql_close($con);
 
-include 'logbooks_get.php';
+include 'trips_get.php';
 
 ?>

@@ -17,9 +17,9 @@
 		'insurance' => $row['insurance'],
 		'callsign' => $row['callsign'],
 		'constructer' => $row['constructer'],
-		'length' => $row['length'],
+		'shiplength' => $row['length'],
 		'engine' => $row['engine'],
-		'width' => $row['width'],
+		'shipwidth' => $row['width'],
 		'gauge' => $row['gauge'],
 		'mastheight' => $row['mastheight'],
 		'expulsion' => $row['expulsion'],
@@ -31,7 +31,7 @@
 		'size_mainsail' => $row['size_mainsail'],
 		'size_genua' => $row['size_genua'],
 		'size_spi' => $row['size_spi'],
-		'logbookId' => $row['logbookID']
+		'dataId' => $row['logbookID']
 		);
 	}
 	echo json_encode($returnData);
