@@ -25,7 +25,7 @@ function getTestData() {
 		"size_mainsail" : "12GEFD",
 		"size_genua" : "12GEFD",
 		"size_spi" : "12GEFD",
-		"logbookId" : "eeeeeeee"
+		"dataId" : "eeeeeeee"
 	};
 }
 
@@ -55,7 +55,7 @@ function getEmpyData() {
 		"size_mainsail" : "",
 		"size_genua" : "",
 		"size_spi" : "",
-		"logbookId" : "new"
+		"dataId" : "new"
 	};
 }
 
