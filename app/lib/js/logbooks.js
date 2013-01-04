@@ -149,7 +149,6 @@ function itemEditReset(itemId) {
 function removeListItem(itemId) {
 	$("#seapal-remove-dialog-confirm").dialog({
 		resizable : false,
-		height : 140,
 		modal : true,
 		buttons : {
 			"Löschen" : function() {
@@ -491,7 +490,12 @@ function createLogbookHtmlElementNew() {
 	// readonly header
 	tNewHtmlString += '<div class="seapal-readonly">';
 	tNewHtmlString += '<div class="seapal-' + data["logbookId"] + '-item">'
-	tNewHtmlString += '<span class="ui-icon ui-icon-plus"> </span>Neues Logbuch';
+	tNewHtmlString += 'Neues Logbuch';
+	tNewHtmlString += '<div class="seapal-new-logbook">';
+	tNewHtmlString += '<div id="seapal-icon-plus" class="ui-state-default ui-corner-all" title="Neues Logbuch">';
+	tNewHtmlString += '<span class="ui-icon ui-icon-plus"> </span>';
+	tNewHtmlString += '</div>';
+	tNewHtmlString += '</div>';
 	tNewHtmlString += '</div>';
 	tNewHtmlString += '</div>';
 

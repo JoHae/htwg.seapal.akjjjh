@@ -9,8 +9,9 @@
 
 		<title>logbooks</title>
 		<meta name="description" content="">
-
-		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		
+		<!-- Chrome zeigt hier Fehler an -->
+		<!-- meta name="viewport" content="width=device-width; initial-scale=1.0"-->
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="lib/img/favicon.ico" />
@@ -36,7 +37,7 @@
 
 			<nav>
 				<div class="seapal-location">
-					<span>-></span><span class="seapal-breadcrumbs"> </span><span>logbücher</span>
+					<span>></span><span class="seapal-breadcrumbs"> </span><span>Logbücher</span>
 				</div>
 			</nav>
 
@@ -49,10 +50,10 @@
 						Typ
 					</div>
 					<div class="seapal-shipowner">
-						Eigner
+						Eigentümer
 					</div>
 					<div class="seapal-shipregisternumber">
-						Rigisternr.
+						Registernr.
 					</div>
 				</div>
 				<div id="seapal-list" style="position: relative; zoom: 1;" class="ui-accordion ui-widget ui-helper-reset" role="tablist">
@@ -96,10 +97,9 @@
 					<div>
 						<div class="seapal-content">
 							<div class="seapal-nr-new">
-								<div class="seapal-readonly"></div>
+								<div class="seapal-readonly"> </div>
 								<div class="seapal-edit">
 									<div class="seapal-general">
-
 										<label for="sailsign">Segelzeichen</label>
 										<input type="text" name="sailsign" value="ll"/>
 										<br />
@@ -133,7 +133,6 @@
 										<br />
 										<label for="expulsion">Verdrängung</label>
 										<input type="text" name="expulsion" value="ttt"/>
-
 									</div>
 									<div class="seapal-equipment">
 										<label for="rigtype">Rig-Art</label>
@@ -747,10 +746,8 @@
 			<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
 				<span id="ui-id-1" class="ui-dialog-title">&nbsp;</span><a href="#" class="ui-dialog-titlebar-close ui-corner-all" role="button"><span class="ui-icon ui-icon-closethick">close</span></a>
 			</div>
-			<div id="seapal-remove-dialog-confirm" style="width: auto; min-height: 0px; height: 0px;" class="ui-dialog-content ui-widget-content" scrolltop="0" scrollleft="0">
-				<p>
-					Wirklich löschen?
-				</p>
+			<div id="seapal-remove-dialog-confirm" style="width: auto; height: auto;" class="ui-dialog-content ui-widget-content" scrolltop="0" scrollleft="0">
+				Wirklich löschen?
 			</div>
 			<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
 				<div class="ui-dialog-buttonset">
