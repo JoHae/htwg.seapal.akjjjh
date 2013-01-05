@@ -19,27 +19,35 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 	// Write TripID and position to database as new waypoint and send wayPointid + TripID + position to client
 	$data_object = json_decode($message);
 	
-	$tripID = $data_object->{'tripID'};
+	$tripId = $data_object->{'tripId'};
 	$position = $data_object->{'position'};
 
 	$con = (include '../../database/connect.php');
 
 	$sql = "INSERT INTO `seapal`.`waypoint`
 	(
-	`waypointID`, `tripID`, `waypoint_name`, `position`
+	`waypointID`, `tripID`, `position`
 	)
 	VALUES
 	(
-	NULL, '$tripID', 'name', '$position')";
+	NULL, '$tripId', '$position')";
 
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());
 	}
 	
+	$waypoint_id = mysql_insert_id();
+	
+	$returnData = array(
+		'waypointId' => $waypoint_id,
+		'tripId' => $tripId,
+		'position' => $position
+	);
+	
 	//Send the message to everyone but the person who said it
 	foreach ($Server->wsClients as $id => $client) {
 		if ($id == $clientID)
-			$Server -> wsSend($id, $message);
+			$Server -> wsSend($id, json_encode($returnData));
 	}
 }
 

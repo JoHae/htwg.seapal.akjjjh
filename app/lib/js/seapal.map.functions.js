@@ -8,6 +8,15 @@ function meterToNauticalMile(meter) {
 	return (meter * oneMeterInNM);
 }
 
+function convertPositionToObject(positionString) {
+	var latlngStr = positionString.substring(1, positionString.length-1);
+	latlngStr = latlngStr.split(",", 2);
+	var lat = parseFloat(latlngStr[0]);
+	var lng = parseFloat(latlngStr[1]);
+	var new_position = new google.maps.LatLng(lat, lng);
+	return new_position;
+}
+
 function addSeamap() {
 	map.mapTypes.set("OSM", new google.maps.ImageMapType({
 		getTileUrl : function(coord, zoom) {
@@ -537,7 +546,10 @@ function showDistanceLabel() {
 	});
 }
 
-function addNewShipPositionMarker(position) {
+function addNewShipPositionMarker(dataObject) {
+	// dataObject contains position tripId and waypointId
+	var position = dataObject.position;	
+	
 	if (position == null) {
 		alert("No position while trying to add new Ship Marker.");
 	}
@@ -588,6 +600,10 @@ function addNewShipPositionMarker(position) {
 }
 
 function setNewRealRouteMarkerMenu(marker) {
+	ajaxGet('server/php/waypoints_get.php?tripId=' + tripID, function(data) {
+		// Set Details of specified waypoint
+				var u = 1;
+	});
 	var point = getMenuPoint(map, marker);
 
 	document.getElementById("realRoutePosition").firstChild.nodeValue = getPostionString(marker.getPosition());
