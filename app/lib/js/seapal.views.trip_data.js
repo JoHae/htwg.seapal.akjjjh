@@ -121,11 +121,11 @@ function getWaypointFullTestData() {
 	return {
 		"tripId" : "HTWG Konstanz",
 		"waypointtitle" : "Vergin",
-		"position" : "X44",
-		"btm" : "12GEFD",
-		"dtm" : "12GEFD",
-		"cog" : "12GEFD",
-		"sog" : "12GEFD",
+		"position" : "(47.66, 9.00)",
+		"btm" : "asd",
+		"dtm" : "asd",
+		"cog" : "asd",
+		"sog" : "asd",
 		"maneuverId" : "0",
 		"headsailId" : "0",
 		"mainsailId" : "0",
@@ -135,60 +135,39 @@ function getWaypointFullTestData() {
 
 function getWaypointFillInfoData() {
 	return {
-		"triptitle" : {
+		"waypointtitle" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Trip"
+			"labeltext" : "Wegpunkt"
 		},
-		"startpoint" : {
+		"position" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Von"
+			"labeltext" : "Position"
 		},
-		"destination" : {
+		"btm" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Nach"
+			"labeltext" : "BTM"
 		},
-		"skipper" : {
+		"dtm" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Skipper"
+			"labeltext" : "DTM"
 		},
-		"starttime" : {
+		"cog" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Start"
+			"labeltext" : "COG"
 		},
-		"endtime" : {
+		"sog" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Ende"
+			"labeltext" : "SOG"
 		},
-		"duration" : {
-			"checkfunction" : null,
-			"infotext" : "",
-			"labeltext" : "Dauer"
-		},
-		"motorminutes" : {
-			"checkfunction" : null,
-			"infotext" : "",
-			"labeltext" : "Motormin."
-		},
-		"fueltankfilled" : {
-			"checkfunction" : null,
-			"infotext" : "",
-			"labeltext" : "Tank befüllt"
-		},
-		"crew" : {
-			"checkfunction" : null,
-			"infotext" : "",
-			"labeltext" : "Crew"
-		},
-		"notes" : {
-			"checkfunction" : null,
-			"infotext" : "",
-			"labeltext" : "Notitzen"
-		}
+		"headsailtypes" : getHeadsailTypesTestData(),
+		"mainsailtypes" : getMainsailTypesTestData(),
+		"maneuvertypes" : getManeuverTypesTestData(),
+		
 	};
 }
