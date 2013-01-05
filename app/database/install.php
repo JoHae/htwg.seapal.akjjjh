@@ -81,12 +81,7 @@ tripID  int,
 FOREIGN KEY (tripID) REFERENCES trip(tripID),
 
 waypoint_name varchar(15),
-degree_north  int,
-minutes_north int,
-seconds_north int,
-degree_east   int,
-minutes_east  int,
-seconds_east  int,
+position  varchar(50),
 
 btm varchar(15),
 dtm varchar(15),

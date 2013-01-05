@@ -27,11 +27,11 @@ NULL, '1', 'sommereventsail', 'karibik', 'konstanz', 'tscho', NULL, '2012-11-01 
 
 $tscho_insert_waypoint1="INSERT INTO `seapal`.`waypoint`
 (
-`waypointID`, `tripID`, `waypoint_name`, `degree_north`, `minutes_north`, `seconds_north`, `degree_east`, `minutes_east`, `seconds_east`, `btm`, `dtm`, `cog`, `sog`, `maneuverID`, `headsailID`, `mainsailID`
+`waypointID`, `tripID`, `waypoint_name`, `position`, `btm`, `dtm`, `cog`, `sog`, `maneuverID`, `headsailID`, `mainsailID`
 )
 VALUES
 (
-NULL, '1', 'hoernle', '12', '34', '45', '45', '85', '55', '123', '456', '789', '1203', '1', '1', '1'
+NULL, '1', 'hoernle', '0', '123', '456', '789', '1203', '1', '1', '1'
 )";
 
 
