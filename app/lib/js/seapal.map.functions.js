@@ -106,7 +106,7 @@ function getMenuPoint(map, marker) {
 }
 
 function addNewCrosshairMarker() {
-	var image = new google.maps.MarkerImage('./images/crosshair50.png',
+	var image = new google.maps.MarkerImage('./lib/img/crosshair50.png',
 	// This marker is 20 pixels wide by 32 pixels tall.
 	new google.maps.Size(50, 50),
 	// The origin for this image is 0,0.
@@ -251,7 +251,7 @@ function setNewStandardMarkerMenu(marker) {
 }
 
 function addNewRouteMarker(position) {
-	var image = new google.maps.MarkerImage('./images/flag50.png',
+	var image = new google.maps.MarkerImage('./lib/img/flag50.png',
 	// This marker is 20 pixels wide by 32 pixels tall.
 	new google.maps.Size(45, 50),
 	// The origin for this image is 0,0.
@@ -373,7 +373,7 @@ function updateRoutePolylines() {
 }
 
 function addNewDistanceMarker() {
-	var image = new google.maps.MarkerImage('./images/flag_yellow_50.png',
+	var image = new google.maps.MarkerImage('./lib/img/flag_yellow_50.png',
 	// This marker is 20 pixels wide by 32 pixels tall.
 	new google.maps.Size(45, 50),
 	// The origin for this image is 0,0.
@@ -546,7 +546,7 @@ function addNewShipPositionMarker(position) {
 		position : position,
 		map : map,
 		draggable : false,
-		icon : "./images/Sailing_Ship_48.png",
+		icon : "./lib/img/Sailing_Ship_48.png",
 		labelContent : "",
 		labelAnchor : new google.maps.Point(0, -10),
 		labelClass : "", // the CSS class for the label
@@ -658,23 +658,4 @@ function showEditDialog() {
 	});
 	$('#dialog').dialog('open');
 	jQuery("#routeContext").hide();
-}
-
-function showPhotoDialog() {
-	$("#container").dialog({
-		bgiframe : true,
-		height : 500,
-		width : 1000,
-		show : "slide",
-		position : ['left', 'top'],
-		modal : true,
-	});
-
-	$('#slides').slides({
-		preload : true,
-		preloadImage : 'img/loading.gif',
-		play : 5000,
-		pause : 2500,
-		hoverPause : true,
-	});
 }
