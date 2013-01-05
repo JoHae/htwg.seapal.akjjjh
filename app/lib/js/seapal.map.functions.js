@@ -592,17 +592,22 @@ function addNewShipPositionMarker(dataObject) {
 			});
 			showDistanceLabel();
 		} else {
-			setNewRealRouteMarkerMenu(shipMarker);
+			setNewRealRouteMarkerMenu(shipMarker, dataObject.waypointId);
 		}
 	})
 	shipPositionArray[shipPositionArray.length] = position;
 	updateShipPositionPolylines();
 }
 
-function setNewRealRouteMarkerMenu(marker) {
-	ajaxGet('server/php/waypoints_get.php?tripId=' + tripID, function(data) {
+function setNewRealRouteMarkerMenu(marker, waypointID) {
+	jQuery("#editDetails").block({ message: null });
+	
+	ajaxGet('server/php/waypoints_details_get.php?waypointId=' + waypointID, function(data) {
 		// Set Details of specified waypoint
-				var u = 1;
+		data.info = getWaypointFullInfoData();
+		selectedWaypointData = data;
+		jQuery("#editDetails").unblock();
+		$.link.waypointDetailsTemplate("#seapal-realroutemenu-details", selectedWaypointData);
 	});
 	var point = getMenuPoint(map, marker);
 
@@ -652,12 +657,13 @@ function setPositionTestMenu() {
 
 function showEditDialog() {
 	jQuery("#realRouteContext").hide();
-	$("#dialog").dialog({
+	$.link.waypointDetailsEditTemplate("#seapal-waypoint-details-dialog", selectedWaypointData);
+	$("#seapal-waypoint-details-dialog").dialog({
 		bgiframe : true,
 		autoOpen : false,
 		height : 500,
 		width : 800,
-		modal : false,
+		modal : true,
 		resizable : false,
 		show : "slide",
 		position : ['left', 'top'],
@@ -672,6 +678,6 @@ function showEditDialog() {
 			}
 		}
 	});
-	$('#dialog').dialog('open');
+	$('#seapal-waypoint-details-dialog').dialog('open');
 	jQuery("#routeContext").hide();
 }

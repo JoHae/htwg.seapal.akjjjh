@@ -153,6 +153,9 @@
 					<div id ="seapal-realroutemenu-details">
 						<img src="lib/img/pleaseWait.gif" />
 					</div>
+					<script id="seapal-waypoint-details-template" type="text/x-jsrender">
+						{{>info.waypointtitle.labeltext}}: <span data-link="waypointtitle">N.A.</span>
+					</script>
 				</li>
 				<li>
 					<a id="editDetails" href="#">Details editieren</a>
@@ -194,12 +197,12 @@
 
 		<div id="mapCanvas" style="width:100%; height:100%"> </div>
 		
-		<div id="seapal-waypoint-details-dialog">
+		<div id="seapal-waypoint-details-dialog" style="display: none;">
 			
 		</div>
 
 		<!-- edit DETAILS OF ROUTE MARKER template	 -->
-		<script id="seapal-waypoint-details-template" type="text/x-jsrender">
+		<script id="seapal-waypoint-details-edit-template" type="text/x-jsrender">
 			
 			<div class="seapal-waypoint-details">
 			<fieldset class="seapal-title">
@@ -259,5 +262,10 @@
 	1. distance: on Distance Mode click on Standard and Route Marker: DONE
 	2. distance: show label with distance: DONE
 	3. Waypoint Entries: editable details
+	4. ajaxCreateUpdate on OK click
+	5. dynamicly add busy button when clicking on shipmarker
+	6. layout for details (within menu)
+	7. planed Route in Database (dynamic on creation and dragend)
+	8. Status label (wird gespeichert ...)
 	-->
 </html>
