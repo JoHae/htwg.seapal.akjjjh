@@ -121,7 +121,7 @@ name varchar(20)
 )";
 
 # GENERAL DATA
-$insert_mainsail="INSERT INTO `seapal`.`maneuvertype`
+$insert_maneuver="INSERT INTO `seapal`.`maneuvertype`
 (
 `maneuverID`, `name`
 )
@@ -135,7 +135,7 @@ $insert_headsail="INSERT INTO `seapal`.`headsailtype`
 VALUES
 (NULL, 'Genua1'), (NULL, 'Genua2'), (NULL, 'Genua3'), (NULL, 'Fock'), (NULL, 'Storm Fock'), (NULL, 'Blister'), (NULL, 'Spinaker')";
 
-$insert_maneuver="INSERT INTO `seapal`.`mainsailtype` (`mainsailID`, `name`) VALUES (NULL, 'Full'), (NULL, 'Ref1'), (NULL, 'Ref2')";
+$insert_mainsail="INSERT INTO `seapal`.`mainsailtype` (`mainsailID`, `name`) VALUES (NULL, 'Full'), (NULL, 'Ref1'), (NULL, 'Ref2')";
 
 # Execute query
 mysql_select_db("seapal", $con);
