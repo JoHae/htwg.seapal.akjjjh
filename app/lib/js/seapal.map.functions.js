@@ -663,7 +663,7 @@ function showEditDialog() {
 		autoOpen : false,
 		height : 500,
 		width : 800,
-		modal : false,
+		modal : true,
 		resizable : false,
 		show : "slide",
 		position : ['left', 'top'],

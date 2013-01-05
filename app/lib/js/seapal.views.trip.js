@@ -13,6 +13,7 @@ var shipRoute;
 
 var actualCrosshairMarker;
 var selectedMarker;
+var selectedWaypointData;
 
 var realRouteMarkerArray = new Array();
 var realRoute;
