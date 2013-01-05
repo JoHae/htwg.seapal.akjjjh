@@ -5,18 +5,22 @@ var routeMarkerArray = new Array();
 var route;
 var distanceMarkerArray = new Array();
 var distanceRoute;
-var infowindow = null;
+var infowindow;
 
 var shipPositionArray = new Array();
-var shipMarker = null;
+var shipMarker;
 var shipRoute;
 
-var actualCrosshairMarker = null;
+var actualCrosshairMarker;
 var selectedMarker;
 
 var realRouteMarkerArray = new Array();
 var realRoute;
+
+var tripID;
+
 $(function() {
+	tripID = $.urlParam('tripId');
 	var mapTypeIds = ["roadmap", "satellite", "OSM"];
 	var mapOptions = {
 		center : new google.maps.LatLng(47.66, 9.16),
@@ -136,7 +140,7 @@ $(function() {
 				lat -= Math.random() * 0.005;
 				lng -= Math.random() * 0.005;
 			}
-			sendPosition(new google.maps.LatLng(lat, lng));
+			sendPosition(tripID, new google.maps.LatLng(lat, lng));
 			i++;
 		}), 1000);
 	});

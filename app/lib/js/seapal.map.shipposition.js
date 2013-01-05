@@ -34,6 +34,10 @@ function updatePosition(position) {
 	map.setCenter(new_position);
 }
 
-function sendPosition(position) {
-	Server.send('message', position);
+function sendPosition(tripID, position) {
+	var position = position.toString();
+	var data = getWaypointNewData(tripID, position);
+	var jdata = $.toJSON(data);
+	
+	Server.send('message', jdata);
 }
