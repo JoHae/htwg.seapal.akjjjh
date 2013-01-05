@@ -16,6 +16,10 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 		return;
 	}
 	
+	// Write TripID and position to database as new waypoint and send wayPointid + TripID + position to client
+	
+	
+	
 	//Send the message to everyone but the person who said it
 	foreach ( $Server->wsClients as $id => $client ) {
 		if ( $id == $clientID )

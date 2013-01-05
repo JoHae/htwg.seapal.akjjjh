@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<meta charset="UTF-8">
+		<link href="./lib/css/map_styles.css" rel="stylesheet" type="text/css" media="screen" />
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+		<script src="./lib/js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
+		<script type="text/javascript" src="./lib/js/markerwithlabel.js"></script>
+		<script type="text/javascript" src="./lib/js/seapal.map.functions.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./lib/js/seapal.map.websocket.js"></script>
+		<script type="text/javascript" src="./lib/js/seapal.map.shipposition.js"></script>
+		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<script src="./lib/slides.jquery.js"></script>
+		<script type="text/javascript" src="./lib/js/seapal.views.trip.js"></script>
+	</head>
+	<body>
+		<div id="coordsDiv" style="color: black; position: absolute; text-align: right; font-size: 1.4em; font-weight:bold; margin-right: 25px;">
+			<span id="coordinations">0&deg;00.00'N 0&deg;00.00'E</span>
+			<br />
+			Lat <span id="lat">42</span> Long <span id="long">9</span>
+			<br />
+		</div>
+
+		<!-- 	MENU FOR CROSSHAIR MARKER	 -->
+		<div id="crosshairContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="crosshairMenu" class="menu">
+				<li>
+					<!-- Remove style attribute if there is more than one div within this li tag -->
+					<div style="padding: 12px 30px;">
+						Position: <span id="crosshairPosition">Error</span>
+					</div>
+				</li>
+				<li>
+					<a id="addStandardMarker" href="#">Markierung setzen</a>
+				</li>
+				<li>
+					<a id="addRouteMarker" href="#">Route setzen</a>
+				</li>
+				<li>
+					<a id="startDistanceModeCross" href="#">Distanzmessung von hier</a>
+				</li>
+				<li>
+					<a id="closecrosshairContext" href="#">L&ouml;schen</a>
+				</li>
+				<li class="startPositionTestEntry">
+					<a id="startPositionTest" href="#">Positionstest starten</a>
+				</li>
+				<li class="endPositionTestEntry">
+					<a id="endPositionTest" href="#">Positionstest beenden</a>
+				</li>
+			</ul>
+		</div>
+
+		<!-- 	MENU FOR STANDARD MARKER	 -->
+		<div id="standardContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="standardMenu" class="menu">
+				<li>
+					<!-- Remove style attribute if there is more than one div within this li tag -->
+					<div style="padding: 12px 30px;">
+						Position: <span id="standardPosition">Error</span>
+					</div>
+				</li>
+				<li>
+					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
+				</li>
+				<li>
+					<a class="endDistanceMode" href="#">Distanzmessung Beenden</a>
+				</li>
+				<li>
+					<a id="deleteStandardMarker" href="#">Markierung L&ouml;schen</a>
+				</li>
+				<li>
+					<a id="closestandardContext" href="#">Men&uuml; schlie&szlig;en</a>
+				</li>
+			</ul>
+		</div>
+
+		<!-- 	MENU FOR ROUTE MARKER	 -->
+		<div id="routeContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="routeMenu" class="menu">
+				<li>
+					<div>
+						Position: <span id="routePosition">Error</span>
+					</div>
+					<div>
+						Distanz vom Start: <span id="routeDistance">Error</span>
+					</div>
+				</li>
+				<li>
+					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
+				</li>
+				<li>
+					<a class="endDistanceMode" href="#">Distanzmessung Beenden</a>
+				</li>
+				<li>
+					<a id="deleteRouteMarker" href="#">Markierung L&ouml;schen</a>
+				</li>
+				<li>
+					<a id="deleteRoute" href="#">Route L&ouml;schen</a>
+				</li>
+				<li>
+					<a id="closeRouteContext" href="#">Men&uuml; schlie&szlig;en</a>
+				</li>
+			</ul>
+		</div>
+
+		<!-- 	MENU FOR REAL ROUTE MARKER	 -->
+		<div id="realRouteContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="realRouteMenu" class="menu">
+				<li>
+					<div>
+						Position: <span id="realRoutePosition">Error</span>
+					</div>
+					<div>
+						Distanz vom Start: <span id="realRouteDistance">Error</span>
+					</div>
+				</li>
+				<li>
+					<a id="editDetails" href="#">Details editieren</a>
+				</li>
+				<li>
+					<a class="startDistanceMode" href="#">Distanzmessung von hier</a>
+				</li>
+				<li>
+					<a class="endDistanceMode" href="#">Distanzmessung Beenden</a>
+				</li>
+				<li>
+					<a id="deleteRealRouteMarker" href="#">Markierung L&ouml;schen</a>
+				</li>
+				<li>
+					<a id="closeRealRouteContext" href="#">Men&uuml; schlie&szlig;en</a>
+				</li>
+			</ul>
+		</div>
+
+		<!-- 	MENU FOR DISTANCE MARKER	 -->
+		<div id="distanceContext" style="z-index: 1000; position: absolute; display: none;">
+			<ul id="distanceMenu" class="menu">
+				<li>
+					<div>
+						Position: <span id="distancePosition">Error</span>
+					</div>
+					<div>
+						Distanz: <span id="distanceDistance">Error</span>
+					</div>
+				</li>
+				<li>
+					<a class="endDistanceMode" href="#">Distanzmessung Beenden</a>
+				</li>
+				<li>
+					<a id="closeDistanceContext" href="#">Men&uuml; schlie&szlig;en</a>
+				</li>
+			</ul>
+		</div>
+
+		<div id="mapCanvas" style="width:100%; height:100%"></div>
+
+		<!-- 	EDIT DETAILS OF ROUTE MARKER	 -->
+		<div id="dialog" title="Details Editieren" style="display: none;">
+			<form action="" method="get">
+				<fieldset class="title">
+					<label for="waypoint_name">Name</label>
+					<input type="text" name="waypoint_name" size="50px" />
+				</fieldset>
+				<fieldset>
+					<label for="degree_north">Position</label>
+					<input id="position" type="text" name="position" onblur="isCoordinateOk(this, null)" />
+					<br />
+					<br />
+					<label for="btm">BTM</label>
+					<input type="text" name="btm" size="5px" onblur="checkBTM(this)" />
+					<!-- , '/^([0-3]?[0-5]?[\d]\.[\d])|(360.0)$/', 'Bitte gültigen Bangladesh Transverse Mercator-Wert zwischen 0.0 und 360.0 eingeben! Beispiel: 243.6' -->
+					°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
+					<input type="text" name="dtm" size="5px" onblur="checkDTM(this)" />
+					<!-- , '/^[\d]*\.[\d]{4}$/', 'Bitte gültigen Digital Terrain Modell-Wert eingeben! Beispiel: 251.4325' -->
+					nm
+				</fieldset>
+				<fieldset>
+					<label for="cog">COG</label>
+					<input id="cog" type="text" name="cog" size="5px" onblur="checkCOG(this)" />
+					°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label for="sog">SOG</label>
+					<input id="sog" type="text" name="sog" size="5px" onblur="checkSOG(this)" />
+					kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;&nbsp;&nbsp;<span id="timestamp"> </span>
+					<br />
+					<br />
+				</fieldset>
+				<fieldset>
+					<label for="manoever">Manöver</label>
+					<select name="maneuver">
+						<option>-</option>
+						<option>Tack</option>
+						<option>Jibe</option>
+						<option>Lay to</option>
+						<option>Set Sails</option>
+						<option>Change Sails</option>
+						<option>Sails Down</option>
+						<option>Ref</option>
+						<option>Anker Up</option>
+						<option>Anker Down</option>
+					</select>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="vorsegel">Vorsegel</label>
+					<select name="vorsegel">
+						<option>-</option>
+						<option>Genua1</option>
+						<option>Genua2</option>
+						<option>Genua3</option>
+						<option>Fock</option>
+						<option>Storm Fock</option>
+						<option>Blister</option>
+						<option>Spinaker</option>
+					</select>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="grosssegel">Großsegel</label>
+					<select name="grosssegel">
+						<option>-</option>
+						<option>Full</option>
+						<option>Ref1</option>
+						<option>Ref2</option>
+					</select>
+				</fieldset>
+			</form>
+		</div>
+	</body>
+	<!-- 	TODO:
+	1. distance: on Distance Mode click on Standard and Route Marker: DONE
+	2. distance: show label with distance: DONE
+	3. Waypoint Entries: editable details
+	-->
+</html>
