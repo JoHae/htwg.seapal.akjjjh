@@ -21,6 +21,17 @@ var tripID;
 
 $(function() {
 	tripID = $.urlParam('tripId');
+	
+	// Load and Draw Waypoints
+	ajaxGet('server/php/waypoints_get.php?tripId=' + tripID, function(data) {
+		var length = data.length;
+		for (var i = 0; i < length; i++) {
+			var new_position = convertPositionToObject(data[i].position);
+			data[i].position = new_position;
+			addNewShipPositionMarker(data[i]);
+		}
+	});	
+	
 	var mapTypeIds = ["roadmap", "satellite", "OSM"];
 	var mapOptions = {
 		center : new google.maps.LatLng(47.66, 9.16),
