@@ -22,9 +22,12 @@
 			var route;
 			var distanceMarkerArray = new Array();
 			var distanceRoute;
+			var infowindow = null;
+			
 			var shipPositionArray = new Array();
 			var shipMarker = null;
 			var shipRoute;
+			
 			var actualCrosshairMarker = null;
 			var selectedMarker;
 
@@ -235,6 +238,7 @@
 					updateDistancePolylines();
 					endDistanceMode();
 					jQuery("#distanceContext").hide();
+					infowindow.close();
 				});
 
 				$(".startDistanceMode").click(function() {

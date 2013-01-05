@@ -425,6 +425,8 @@ function addNewDistanceMarker() {
 			marker.set("labelClass", "");
 			marker.set("labelContent", "");
 		}
+		showDistanceLabel();
+		// close infowindow
 		updateDistancePolylines();
 	});
 
@@ -512,6 +514,9 @@ function endDistanceMode() {
 }
 
 function showDistanceLabel() {
+	if(infowindow != null) {
+		infowindow.close();		
+	}
 	var projection = map.getProjection();
 	var startLatLng = distanceMarkerArray[0].getPosition();
 	var endLatLng = distanceMarkerArray[1].getPosition();
@@ -520,7 +525,7 @@ function showDistanceLabel() {
 	// Average
 	var midPoint = new google.maps.Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2);
 	// Unproject
-	var midLatLng = projection.fromPointToLatLng(midPoint);	var infowindow = new google.maps.InfoWindow();
+	var midLatLng = projection.fromPointToLatLng(midPoint);	infowindow = new google.maps.InfoWindow();
 	infowindow.setContent("Distanz beträgt: " + getDistanceDistance(distanceMarkerArray[1]) + "sm");
 	infowindow.setPosition(midLatLng);
 	infowindow.open(map);
@@ -635,7 +640,7 @@ function showEditDialog() {
 		bgiframe : true,
 		autoOpen : false,
 		height : 500,
-		width : 750,
+		width : 800,
 		modal : false,
 		resizable : false,
 		show : "slide",
@@ -670,6 +675,6 @@ function showPhotoDialog() {
 		preloadImage : 'img/loading.gif',
 		play : 5000,
 		pause : 2500,
-		hoverPause : true
+		hoverPause : true,
 	});
 }
