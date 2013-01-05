@@ -5,11 +5,25 @@
 		<meta charset="UTF-8">
 		<link href="./lib/css/map_styles.css" rel="stylesheet" type="text/css" />
 		<link href="./lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css" />
-		<script src="./lib/js/jquery-1.8.3.js"></script>
+		
+		<!-- jQuery imports -->
+		<script src="lib/js/jquery-1.8.3.js"></script>
+		<!-- Query UI imports  -->
+		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
+		<!-- blockUI imports -->
+		<script src="lib/js/jquery.blockUI.js"></script>
+		<!-- urlParameter imports -->
+		<script src="lib/js/jquery.urlParameter.js"></script>
+		<!-- jsRender jquery views imports -->
+		<script src="lib/js/jsrender.js" type="text/javascript"></script>
+		<script src="lib/js/jquery.observable.js" type="text/javascript"></script>
+		<script src="lib/js/jquery.views.js" type="text/javascript"></script>
+		
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
 		<script type="text/javascript" src="./lib/js/jquery.json-2.4.js"></script>
-		<script type="text/javascript" src="./lib/js/jquery-ui-1.9.2.custom.js"></script>
-		<script type="text/javascript" src="./lib/js/jquery.urlParameter.js"></script>
+
+
 		<script type="text/javascript" src="./lib/js/markerwithlabel.js"></script>
 		<script type="text/javascript" src="./lib/js/seapal.views.trip_data.js"></script>
 		<script type="text/javascript" src="./lib/js/seapal.views.crudclient.js"></script>
@@ -17,10 +31,21 @@
 		<script type="text/javascript" src="./lib/js/seapal.map.functions.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./lib/js/seapal.map.shipposition.js"></script>
 		<script type="text/javascript" src="./lib/js/seapal.views.trip.js"></script>
-		
+
 		<script type="text/javascript">
-			$(function () {
+			var testData;
+			
+			$(function() {
+				$.views.allowCode = true;
 				
+				// Compile templates
+				$.templates({
+					waypointDetailsTemplate : "#seapal-waypoint-details-template"
+				});
+				
+				testData = getWaypointFullTestData();
+				
+				$.link.waypointDetailsTemplate("#seapal-waypoint-details-dialog", testData);
 			});
 		</script>
 	</head>
@@ -168,139 +193,67 @@
 		</div>
 
 		<div id="mapCanvas" style="width:100%; height:100%"> </div>
+		
+		<div id="seapal-waypoint-details-dialog">
+			
+		</div>
 
 		<!-- edit DETAILS OF ROUTE MARKER template	 -->
 		<script id="seapal-waypoint-details-template" type="text/x-jsrender">
+			
 			<div class="seapal-waypoint-details">
-				<fieldset class="seapal-title">
-					<label for="seapal-input-name">Name</label>
-					<input type="text" name="seapal-input-name" size="50px" />
-				</fieldset>
-				<fieldset>
-					<label for="seapal-input-position">Position</label>
-					<input type="text" name="seapal-input-position" />
-					<br />
-					<br />
-					<label for="seapal-input-btm">BTM</label>
-					<input type="text" name="seapal-input-btm" size="5px" />
-					°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label for="seapal-input-dtm">DTM</label>
-					<input type="text" name="seapal-input-dtm" size="5px" />
-					nm
-				</fieldset>
-				<fieldset>
-					<label for="seapal-input-cog">COG</label>
-					<input type="text" name="seapal-input-cog" size="5px" />
-					°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label for="seapal-input-sog">SOG</label>
-					<input type="text" name="seapal-input-sog" size="5px" />
-					kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;&nbsp;&nbsp;
-					<span id="seapal-input-timestamp"> </span>
-					<br />
-					<br />
-				</fieldset>
-				<fieldset>
-					<label for="seapal-input-manoever">Manöver</label>
-					<select name="seapal-input-maneuver">
-						<option>-</option>
-						<option>Tack</option>
-						<option>Jibe</option>
-						<option>Lay to</option>
-						<option>Set Sails</option>
-						<option>Change Sails</option>
-						<option>Sails Down</option>
-						<option>Ref</option>
-						<option>Anker Up</option>
-						<option>Anker Down</option>
-					</select>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="vorsegel">Vorsegel</label>
-					<select name="vorsegel">
-						<option>-</option>
-						<option>Genua1</option>
-						<option>Genua2</option>
-						<option>Genua3</option>
-						<option>Fock</option>
-						<option>Storm Fock</option>
-						<option>Blister</option>
-						<option>Spinaker</option>
-					</select>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="grosssegel">Großsegel</label>
-					<select name="grosssegel">
-						<option>-</option>
-						<option>Full</option>
-						<option>Ref1</option>
-						<option>Ref2</option>
-					</select>
-				</fieldset>
-			</div>
-		</script>
-		
-		
-		<!-- 	EDIT DETAILS OF ROUTE MARKER	 -->
-		<div id="dialog" title="Details Editieren" style="display: none;">
-			<form action="" method="get">
-				<fieldset class="title">
-					<label for="waypoint_name">Name</label>
-					<input type="text" name="waypoint_name" size="50px" />
-				</fieldset>
-				<fieldset>
-					<label for="degree_north">Position</label>
-					<input id="position" type="text" name="position" onblur="isCoordinateOk(this, null)" />
-					<br />
-					<br />
-					<label for="btm">BTM</label>
-					<input type="text" name="btm" size="5px" onblur="checkBTM(this)" />
-					<!-- , '/^([0-3]?[0-5]?[\d]\.[\d])|(360.0)$/', 'Bitte gültigen Bangladesh Transverse Mercator-Wert zwischen 0.0 und 360.0 eingeben! Beispiel: 243.6' -->
-					°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="dtm">DTM</label>
-					<input type="text" name="dtm" size="5px" onblur="checkDTM(this)" />
-					<!-- , '/^[\d]*\.[\d]{4}$/', 'Bitte gültigen Digital Terrain Modell-Wert eingeben! Beispiel: 251.4325' -->
-					nm
-				</fieldset>
-				<fieldset>
-					<label for="cog">COG</label>
-					<input id="cog" type="text" name="cog" size="5px" onblur="checkCOG(this)" />
-					°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label for="sog">SOG</label>
-					<input id="sog" type="text" name="sog" size="5px" onblur="checkSOG(this)" />
-					kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;&nbsp;&nbsp;<span id="timestamp"> </span>
-					<br />
-					<br />
-				</fieldset>
-				<fieldset>
-					<label for="manoever">Manöver</label>
-					<select name="maneuver">
-						<option>-</option>
-						<option>Tack</option>
-						<option>Jibe</option>
-						<option>Lay to</option>
-						<option>Set Sails</option>
-						<option>Change Sails</option>
-						<option>Sails Down</option>
-						<option>Ref</option>
-						<option>Anker Up</option>
-						<option>Anker Down</option>
-					</select>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="vorsegel">Vorsegel</label>
-					<select name="vorsegel">
-						<option>-</option>
-						<option>Genua1</option>
-						<option>Genua2</option>
-						<option>Genua3</option>
-						<option>Fock</option>
-						<option>Storm Fock</option>
-						<option>Blister</option>
-						<option>Spinaker</option>
-					</select>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label for="grosssegel">Großsegel</label>
-					<select name="grosssegel">
-						<option>-</option>
-						<option>Full</option>
-						<option>Ref1</option>
-						<option>Ref2</option>
-					</select>
-				</fieldset>
-			</form>
+			<fieldset class="seapal-title">
+				<label for="seapal-input-waypointtitle">{{>info.waypointtitle.labeltext}}</label>
+				<input type="text" name="seapal-input-waypointtitle" size="50px" data-link="waypointtitle" />
+			</fieldset>
+			<fieldset>
+				<label for="seapal-input-position">{{>info.position.labeltext}}</label>
+				<input type="text" name="seapal-input-position" data-link="position" />
+				<br />
+				<br />
+				<label for="seapal-input-btm">{{>info.btm.labeltext}}</label>
+				<input type="text" name="seapal-input-btm" size="5px" data-link="btm" />
+				°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<label for="seapal-input-dtm">{{>info.dtm.labeltext}}</label>
+				<input type="text" name="seapal-input-dtm" size="5px" data-link="dtm" />
+				nm
+			</fieldset>
+			<fieldset>
+				<label for="seapal-input-cog">{{>info.cog.labeltext}}</label>
+				<input type="text" name="seapal-input-cog" size="5px" data-link="cog" />
+				°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<label for="seapal-input-sog">{{>info.sog.labeltext}}</label>
+				<input type="text" name="seapal-input-sog" size="5px" data-link="sog" />
+				kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;&nbsp;&nbsp;
+				<span id="seapal-input-timestamp"> </span>
+				<br />
+				<br />
+			</fieldset>
+			<fieldset>
+				<label for="seapal-input-maneuver">{{>info.maneuver.labeltext}}</label>
+				<select name="seapal-input-maneuver" data-link="maneuverId">
+					{{for info.maneuvertypes}}
+					<option value="{{>typeId}}">{{>typename}}</option>
+					{{/for}}
+				</select>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<label for="seapal-input-headsail">{{>info.headsail.labeltext}}</label>
+				<select name="seapal-input-headsail" data-link="headsailId">
+					{{for info.headsailtypes}}
+					<option value="{{>typeId}}">{{>typename}}</option>
+					{{/for}}
+				</select>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<label for="seapal-input-mainsail">{{>info.mainsail.labeltext}}</label>
+				<select name="seapal-input-mainsail" data-link="mainsailId">
+					{{for info.mainsailtypes}}
+					<option value="{{>typeId}}">{{>typename}}</option>
+					{{/for}}
+				</select>
+			</fieldset>
 		</div>
+		</script>
+
 	</body>
 	<!-- 	TODO:
 	1. distance: on Distance Mode click on Standard and Route Marker: DONE

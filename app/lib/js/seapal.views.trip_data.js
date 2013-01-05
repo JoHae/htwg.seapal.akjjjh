@@ -29,32 +29,32 @@ function getWaypointNewData(tripID, position) {
 function getHeadsailTypesTestData() {
 	return [
 		{ 
-			"headsailId" : "1",
-			"headsailName" : "Genua1"
+			"typeId" : "1",
+			"typename" : "Genua1"
 		},
 		{ 
-			"headsailId" : "2",
-			"headsailName" : "Genua2"
+			"typeId" : "2",
+			"typename" : "Genua2"
 		},
 		{ 
-			"headsailId" : "3",
-			"headsailName" : "Genua3"
+			"typeId" : "3",
+			"typename" : "Genua3"
 		},
 		{ 
-			"headsailId" : "4",
-			"headsailName" : "Fock"
+			"typeId" : "4",
+			"typename" : "Fock"
 		},
 		{ 
-			"headsailId" : "5",
-			"headsailName" : "Storm Fock"
+			"typeId" : "5",
+			"typename" : "Storm Fock"
 		},
 		{ 
-			"headsailId" : "6",
-			"headsailName" : "Blister"
+			"typeId" : "6",
+			"typename" : "Blister"
 		},
 		{ 
-			"headsailId" : "7",
-			"headsailName" : "Spinaker"
+			"typeId" : "7",
+			"typename" : "Spinaker"
 		}		
 	];
 }
@@ -62,16 +62,16 @@ function getHeadsailTypesTestData() {
 function getMainsailTypesTestData() {
 	return [
 		{ 
-			"headsailId" : "1",
-			"headsailName" : "Full"
+			"typeId" : "1",
+			"typename" : "Full"
 		},
 		{ 
-			"headsailId" : "2",
-			"headsailName" : "Ref1"
+			"typeId" : "2",
+			"typename" : "Ref1"
 		},
 		{ 
-			"headsailId" : "3",
-			"headsailName" : "Ref2"
+			"typeId" : "3",
+			"typename" : "Ref2"
 		}
 	];
 }
@@ -79,40 +79,40 @@ function getMainsailTypesTestData() {
 function getManeuverTypesTestData() {
 	return [
 		{ 
-			"headsailId" : "1",
-			"headsailName" : "Tack"
+			"typeId" : "1",
+			"typename" : "Tack"
 		},
 		{ 
-			"headsailId" : "2",
-			"headsailName" : "Jibe"
+			"typeId" : "2",
+			"typename" : "Jibe"
 		},
 		{ 
-			"headsailId" : "3",
-			"headsailName" : "Lay to"
+			"typeId" : "3",
+			"typename" : "Lay to"
 		},
 		{ 
-			"headsailId" : "4",
-			"headsailName" : "Set Sails"
+			"typeId" : "4",
+			"typename" : "Set Sails"
 		},
 		{ 
-			"headsailId" : "5",
-			"headsailName" : "Change Sails"
+			"typeId" : "5",
+			"typename" : "Change Sails"
 		},
 		{ 
-			"headsailId" : "6",
-			"headsailName" : "Sails Down"
+			"typeId" : "6",
+			"typename" : "Sails Down"
 		},
 		{ 
-			"headsailId" : "7",
-			"headsailName" : "Ref"
+			"typeId" : "7",
+			"typename" : "Ref"
 		},
 		{ 
-			"headsailId" : "8",
-			"headsailName" : "Anker Up"
+			"typeId" : "8",
+			"typename" : "Anker Up"
 		},
 		{ 
-			"headsailId" : "9",
-			"headsailName" : "Anker Down"
+			"typeId" : "9",
+			"typename" : "Anker Down"
 		}	
 	];
 }
@@ -129,11 +129,12 @@ function getWaypointFullTestData() {
 		"maneuverId" : "0",
 		"headsailId" : "0",
 		"mainsailId" : "0",
-		"dataId" : "1"
+		"dataId" : "1",
+		"info" : getWaypointFullInfoData()
 	};
 }
 
-function getWaypointFillInfoData() {
+function getWaypointFullInfoData() {
 	return {
 		"waypointtitle" : {
 			"checkfunction" : null,
@@ -164,6 +165,21 @@ function getWaypointFillInfoData() {
 			"checkfunction" : null,
 			"infotext" : "",
 			"labeltext" : "SOG"
+		},
+		"headsail" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Vorsegel"
+		},
+		"mainsail" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Großsegel"
+		},
+		"maneuver" : {
+			"checkfunction" : null,
+			"infotext" : "",
+			"labeltext" : "Mannöver"
 		},
 		"headsailtypes" : getHeadsailTypesTestData(),
 		"mainsailtypes" : getMainsailTypesTestData(),
