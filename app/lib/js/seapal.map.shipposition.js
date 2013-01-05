@@ -24,13 +24,8 @@ var Server;
 function updatePosition(dataObject) {
 	// position is "(lat, lng)"
 	
-	var position = dataObject.position;
-	var latlngStr = position.substring(1, position.length-1);
-	latlngStr = latlngStr.split(",", 2);
-	var lat = parseFloat(latlngStr[0]);
-	var lng = parseFloat(latlngStr[1]);
-	var new_position = new google.maps.LatLng(lat, lng);
-	var length = shipPositionArray.length;	dataObject.position = new_position;
+	var new_position = convertPositionToObject(dataObject.position);
+	dataObject.position = new_position;
 	addNewShipPositionMarker(dataObject);
 	map.setCenter(new_position);
 }

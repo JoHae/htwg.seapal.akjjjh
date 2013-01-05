@@ -22,15 +22,15 @@ var tripID;
 $(function() {
 	tripID = $.urlParam('tripId');
 	
-	// Load and Draw Waypoints
-	ajaxGet('server/php/waypoints_get.php?tripId=' + tripID, function(data) {
-		var length = data.length;
-		for (var i = 0; i < length; i++) {
-			var new_position = convertPositionToObject(data[i].position);
-			data[i].position = new_position;
-			addNewShipPositionMarker(data[i]);
-		}
-	});	
+	$.views.allowCode = true;
+				
+	// Compile templates
+	$.templates({
+		waypointDetailsEditTemplate : "#seapal-waypoint-details-edit-template",
+		waypointDetailsTemplate : "#seapal-waypoint-details-template"
+	});
+	
+	
 	
 	var mapTypeIds = ["roadmap", "satellite", "OSM"];
 	var mapOptions = {
@@ -42,6 +42,16 @@ $(function() {
 		}
 	};
 	map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
+	
+	// Load and Draw Waypoints
+	ajaxGet('server/php/waypoints_get.php?tripId=' + tripID, function(data) {
+		var length = data.length;
+		for (var i = 0; i < length; i++) {
+			var new_position = convertPositionToObject(data[i].position);
+			data[i].position = new_position;
+			addNewShipPositionMarker(data[i]);
+		}
+	});	
 
 	// -------- Open Sea Map --------
 	addSeamap();
