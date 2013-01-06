@@ -259,7 +259,14 @@ function setNewStandardMarkerMenu(marker) {
 	});
 }
 
-function addNewRouteMarker(position) {
+function addNewRouteMarker(dataObject) {
+	// dataObject contains position tripId and waypointId
+	var position = dataObject.position;
+
+	if (position == null) {
+		alert("No position while trying to add new Ship Marker.");
+	}
+
 	var image = new google.maps.MarkerImage('./lib/img/flag50.png',
 	// This marker is 20 pixels wide by 32 pixels tall.
 	new google.maps.Size(45, 50),
@@ -269,10 +276,6 @@ function addNewRouteMarker(position) {
 	new google.maps.Point(1, 50));
 
 	anchorPoint = new google.maps.Point(0, 0);
-
-	if (position == null) {
-		position = actualCrosshairPosition;
-	}
 
 	var markerOptions = {
 		position : position,
@@ -318,6 +321,13 @@ function addNewRouteMarker(position) {
 			marker.set("labelContent", "");
 		}
 		jQuery("#routeContext").hide();
+		
+		// Set new position to database
+		// TODO: label wirdgespeichert...
+		dataObject.position = marker.getPosition().toString();
+		ajaxUpdateCreate('server/php/routepoint_edit.php', dataObject, function() {
+				// label speichern fertig...
+		});
 		updateRoutePolylines();
 	});
 
@@ -326,6 +336,8 @@ function addNewRouteMarker(position) {
 		jQuery("#standardContext").hide();
 		jQuery("#realRouteContext").hide();
 		selectedMarker = marker;
+		selectedRoutepointData = dataObject;
+		
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = marker;
 			updateDistancePolylines();
@@ -606,7 +618,7 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		message : null
 	});
 
-	ajaxGet('server/php/waypoints_details_get.php?waypointId=' + waypointID, function(data) {
+	ajaxGet('server/php/waypoint_details_get.php?waypointId=' + waypointID, function(data) {
 		// Set Details of specified waypoint
 		selectedWaypointData = data;
 		selectedWaypointDataBinded = createBindingData(data, getWaypointFullInfoData());
@@ -678,7 +690,7 @@ function showEditDialog() {
 				getDataFromBindedData(selectedWaypointDataBinded, selectedWaypointData);
 				$(this).dialog('close');
 				// TODO: label wirdgespeichert...
-				ajaxUpdateCreate('server/php/waypoints_edit.php', selectedWaypointData, function() {
+				ajaxUpdateCreate('server/php/waypoint_edit.php', selectedWaypointData, function() {
 					// label speichern fertig...
 				});
 			},

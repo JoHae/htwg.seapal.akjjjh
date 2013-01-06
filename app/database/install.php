@@ -104,7 +104,7 @@ PRIMARY KEY (routepointID),
 tripID  int,
 FOREIGN KEY (tripID) REFERENCES trip(tripID),
 
-routepoint_name varchar(15),
+name varchar(15),
 notes blob,
 position  varchar(50)
 )";

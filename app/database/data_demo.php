@@ -25,15 +25,6 @@ VALUES
 (
 NULL, '1', 'sommereventsail', 'karibik', 'konstanz', 'tscho', NULL, '2012-11-01 00:00:00', '2012-11-22 00:00:00', '0', '1', NULL)";
 
-$tscho_insert_waypoint1="INSERT INTO `seapal`.`waypoint`
-(
-`waypointID`, `tripID`, `waypoint_name`, `position`, `btm`, `dtm`, `cog`, `sog`, `maneuverID`, `headsailID`, `mainsailID`
-)
-VALUES
-(
-NULL, '1', 'hoernle', '0', '123', '456', '789', '1203', '1', '1', '1'
-)";
-
 
 mysql_select_db("seapal", $con);
 echo "Insert Tschos Logbuch...</br>";
@@ -42,10 +33,6 @@ if (!mysql_query($tscho_insert_logbook,$con))
 	die('Error: ' . mysql_error());
 }
 if (!mysql_query($tscho_insert_trip1,$con))
-{
-	die('Error: ' . mysql_error());
-}
-if (!mysql_query($tscho_insert_waypoint1,$con))
 {
 	die('Error: ' . mysql_error());
 }

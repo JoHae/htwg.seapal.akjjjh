@@ -1,8 +1,11 @@
 var map;
 var actualCrosshairPosition;
 var standardMarkerArray = new Array();
+
 var routeMarkerArray = new Array();
+var selectedRoutepointData;
 var route;
+
 var distanceMarkerArray = new Array();
 var distanceRoute;
 var infowindow;
@@ -23,15 +26,15 @@ var tripID;
 
 $(function() {
 	tripID = $.urlParam('tripId');
-	
+
 	$.views.allowCode = true;
-				
+
 	// Compile templates
 	$.templates({
 		waypointDetailsEditTemplate : "#seapal-waypoint-details-edit-template",
 		waypointDetailsTemplate : "#seapal-waypoint-details-template"
 	});
-	
+
 	var mapTypeIds = ["roadmap", "satellite", "OSM"];
 	var mapOptions = {
 		center : new google.maps.LatLng(47.66, 9.16),
@@ -42,7 +45,18 @@ $(function() {
 		}
 	};
 	map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
-	
+
+	// Load and Draw Routepoints
+	ajaxGet('server/php/routepoints_get.php?tripId=' + tripID, function(data) {
+		var length = data.length;
+		for (var i = 0; i < length; i++) {
+			var new_position = convertPositionToObject(data[i].position);
+			data[i].position = new_position;
+			routeMarkerArray[routeMarkerArray.length] = addNewRouteMarker(data[i]);
+		}
+		updateRoutePolylines();
+	});
+
 	// Load and Draw Waypoints
 	ajaxGet('server/php/waypoints_get.php?tripId=' + tripID, function(data) {
 		var length = data.length;
@@ -51,7 +65,7 @@ $(function() {
 			data[i].position = new_position;
 			addNewShipPositionMarker(data[i]);
 		}
-	});	
+	});
 
 	// -------- Open Sea Map --------
 	addSeamap();
@@ -99,12 +113,14 @@ $(function() {
 		jQuery("#standardContext").hide();
 		jQuery("#routeContext").hide();
 		jQuery("#realRouteContext").hide();
+		jQuery("#standardContext").hide();
+		deleteCrosshairMarker();
 		updateCoords();
-		zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
-			//here I have the correct zoom level
-			setNewCrosshairMarkerMenu();
-			google.maps.event.removeListener(zoomChangeBoundsListener);
-		});
+		// zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
+		// //here I have the correct zoom level
+		// setNewCrosshairMarkerMenu();
+		// google.maps.event.removeListener(zoomChangeBoundsListener);
+		// });
 	});
 
 	// --------------------------------------------------------
@@ -119,8 +135,19 @@ $(function() {
 
 	// Set new route marker
 	$("#addRouteMarker").click(function() {
+		// Add all Markers to Database
+		var data = getRoutepointNewData(tripID, actualCrosshairPosition);
+		data.position = data.position.toString();
+		
+		// TODO: label wirdgespeichert...
+		ajaxUpdateCreate('server/php/routepoint_edit.php', data, function() {
+			// label speichern fertig...
+		});
+		data.position = convertPositionToObject(data.position);
+		
+		// Update View
 		var length = routeMarkerArray.length;
-		routeMarkerArray[length] = addNewRouteMarker();
+		routeMarkerArray[length] = addNewRouteMarker(data);
 		updateRoutePolylines();
 		deleteCrosshairMarker();
 	});
@@ -203,6 +230,12 @@ $(function() {
 			updateDistancePolylines();
 			endDistanceMode();
 		}
+		
+		// TODO: label wirdgespeichert...
+		ajaxDelete('server/php/routepoint_delete.php', selectedRoutepointData.routepointId, function() {
+			// label speichern fertig...
+		});
+		
 		updateRoutePolylines();
 		jQuery("#routeContext").hide();
 		selectedMarker.setMap(null);
