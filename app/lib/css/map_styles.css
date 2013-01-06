@@ -4,11 +4,42 @@ html {
 body {
 	height: 100%;
 	margin: 0;
-	padding: 0
+	padding: 0;
+	overflow: hidden
 }
-#map_canvas {
+
+/* header */
+.seapalmap-header {
+	background: #1F5689;	
+	height: 50px;
+	color: white
+}
+
+.seapalmap-header .seapal-logo {
+	border: 1px solid white;
+	background: url(../img/Icon-Small-50.png) no-repeat;
+	background-size: cover;
+	width: 45px;
+	height: 45px;
+	float: left;
+	margin: 5px;
+	vertical-align: middle
+}
+
+.seapalmap-header .seapal-name {
+	margin: 5px;
+	font-size: 2em;
+	float: left;
+	vertical-align: middle
+}
+
+.seapalmap-header nav {
+	float: left;
 	height: 100%
 }
+
+
+
 
 .markerLabel {
 	width: 110px;

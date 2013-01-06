@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<link href="./lib/css/map_styles.css" rel="stylesheet" type="text/css" />
 		<link href="./lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css" />
-		
+
 		<!-- jQuery imports -->
 		<script src="lib/js/jquery-1.8.3.js"></script>
 		<!-- Query UI imports  -->
@@ -19,7 +19,7 @@
 		<script src="lib/js/jsrender.js" type="text/javascript"></script>
 		<script src="lib/js/jquery.observable.js" type="text/javascript"></script>
 		<script src="lib/js/jquery.views.js" type="text/javascript"></script>
-		
+
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
 		<script type="text/javascript" src="./lib/js/jquery.json-2.4.js"></script>
 
@@ -34,17 +34,17 @@
 
 		<script type="text/javascript">
 			var testData;
-			
+
 			$(function() {
 				$.views.allowCode = true;
-				
+
 				// Compile templates
 				$.templates({
 					waypointDetailsTemplate : "#seapal-waypoint-details-template"
 				});
-				
+
 				testData = getWaypointFullTestData();
-				
+
 				$.link.waypointDetailsTemplate("#seapal-waypoint-details-dialog", testData);
 			});
 		</script>
@@ -150,8 +150,11 @@
 					<div>
 						Distanz vom Start: <span id="realRouteDistance">Error</span>
 					</div>
-					<div id ="seapal-load-details"><img src="lib/img/pleaseWait.gif" /></div>
-					<div id ="seapal-realroutemenu-details">Loading</div>
+					<div id ="seapal-load-details"><img src="lib/img/pleaseWait.gif" />
+					</div>
+					<div id ="seapal-realroutemenu-details">
+						Loading
+					</div>
 					<script id="seapal-waypoint-details-template" type="text/x-jsrender">
 						{{>info.waypointtitle.labeltext}}: <span data-link="waypointtitle"></span><br />
 						{{>info.btm.labeltext}}: <span data-link="{:btm:}"></span><br />
@@ -197,63 +200,80 @@
 			</ul>
 		</div>
 
-		<div id="mapCanvas" style="width:100%; height:100%"> </div>
-		
+		<table style="height: 100%; width: 100%; min-height: 100%; min-width: 100%">
+			<tbody>
+			<tr >
+				<td class="seapalmap-header">
+					<span class="seapal-logo"> </span>
+					<span class="seapal-name">Seapal</span>
+				<nav>
+				<div class="seapal-location">
+					<span>></span><span class="seapal-space"> </span><span>Logbücher</span>
+				</div>
+			</nav>
+				</td>
+			</tr>
+			<tr>
+				<td style="height: 100%; width: 100%; min-height: 100%; min-width: 100%"><div id="mapCanvas" style="width:100%; height: 100%"></div></td>
+			</tr>
+</tbody>
+		</table>
+
 		<div id="seapal-waypoint-details-dialog" style="display: none;">
-			
+
 		</div>
 
 		<!-- edit DETAILS OF ROUTE MARKER template	 -->
 		<script id="seapal-waypoint-details-edit-template" type="text/x-jsrender">
-			
+
 			<div class="seapal-waypoint-details">
 			<fieldset class="seapal-title">
-				<label for="seapal-input-waypointtitle">{{>info.waypointtitle.labeltext}}</label>
-				<input type="text" name="seapal-input-waypointtitle" size="50px" data-link="waypointtitle" />
+			<label for="seapal-input-waypointtitle">{{>info.waypointtitle.labeltext}}</label>
+			<input type="text" name="seapal-input-waypointtitle" size="50px" data-link="waypointtitle" />
 			</fieldset>
 			<fieldset>
-				<span class="seapal-label">{{>info.position.labeltext}}</span>
-				<span class="seapal-field" data-link="{:position:}"></span>
-				<br />
-				<span class="seapal-label">{{>info.btm.labeltext}}</span>
-				<span class="seapal-field" data-link="{:btm:}"></span>
-				°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span class="seapal-label">{{>info.dtm.labeltext}}</span>
-				<span class="seapal-field" data-link="{:dtm:}"></span>
-				nm
+			<span class="seapal-label">{{>info.position.labeltext}}</span>
+			<span class="seapal-field" data-link="{:position:}"></span>
+			<br />
+			<span class="seapal-label">{{>info.btm.labeltext}}</span>
+			<span class="seapal-field" data-link="{:btm:}"></span>
+			°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span class="seapal-label">{{>info.dtm.labeltext}}</span>
+			<span class="seapal-field" data-link="{:dtm:}"></span>
+			nm
 			</fieldset>
 			<fieldset>
-				<span class="seapal-label">{{>info.dtm.labeltext}}</span>
-				<span class="seapal-field" data-link="{:dtm:}"></span>
-				°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<span class="seapal-label">{{>info.dtm.labeltext}}</span>
-				<span class="seapal-field" data-link="{:dtm:}"></span>
-				kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;um&nbsp;&nbsp;&nbsp;
-				<span id="seapal-input-timestamp"> </span>
+			<span class="seapal-label">{{>info.dtm.labeltext}}</span>
+			<span class="seapal-field" data-link="{:dtm:}"></span>
+			°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span class="seapal-label">{{>info.dtm.labeltext}}</span>
+			<span class="seapal-field" data-link="{:dtm:}"></span>
+			kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;um&nbsp;&nbsp;&nbsp;
+			<span id="seapal-input-timestamp"> </span>
 			</fieldset>
 			<fieldset>
-				<label for="seapal-input-maneuver">{{>info.maneuver.labeltext}}</label>
-				<select name="seapal-input-maneuver" data-link="maneuverId">
-					{{for info.maneuvertypes}}
-					<option value="{{>typeId}}">{{>typename}}</option>
-					{{/for}}
-				</select>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<label for="seapal-input-headsail">{{>info.headsail.labeltext}}</label>
-				<select name="seapal-input-headsail" data-link="headsailId">
-					{{for info.headsailtypes}}
-					<option value="{{>typeId}}">{{>typename}}</option>
-					{{/for}}
-				</select>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<label for="seapal-input-mainsail">{{>info.mainsail.labeltext}}</label>
-				<select name="seapal-input-mainsail" data-link="mainsailId">
-					{{for info.mainsailtypes}}
-					<option value="{{>typeId}}">{{>typename}}</option>
-					{{/for}}
-				</select>
+			<label for="seapal-input-maneuver">{{>info.maneuver.labeltext}}</label>
+			<select name="seapal-input-maneuver" data-link="maneuverId">
+			{{for info.maneuvertypes}}
+			<option value="{{>typeId}}">{{>typename}}</option>
+			{{/for}}
+			</select>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<label for="seapal-input-headsail">{{>info.headsail.labeltext}}</label>
+			<select name="seapal-input-headsail" data-link="headsailId">
+			{{for info.headsailtypes}}
+			<option value="{{>typeId}}">{{>typename}}</option>
+			{{/for}}
+			</select>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<label for="seapal-input-mainsail">{{>info.mainsail.labeltext}}</label>
+			<select name="seapal-input-mainsail" data-link="mainsailId">
+			{{for info.mainsailtypes}}
+			<option value="{{>typeId}}">{{>typename}}</option>
+			{{/for}}
+			</select>
 			</fieldset>
-		</div>
+			</div>
 		</script>
 
 	</body>
