@@ -33,9 +33,30 @@ body {
 	vertical-align: middle
 }
 
-.seapalmap-header nav {
+nav {
 	float: left;
 	height: 100%
+}
+
+nav {
+	float: left;
+	height: 100%
+}
+
+nav a:link {
+	color: white
+}
+
+nav a:visited {
+	color: white
+}
+
+nav a:active {
+	color: white
+}
+
+nav a:hover {
+	color: white
 }
 
 

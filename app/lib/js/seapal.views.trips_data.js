@@ -96,4 +96,11 @@ function getInfoData() {
 	};
 }
 
+function getNavigationInfoTestData() {
+	return {
+		"shipname" : "Vergin",
+		"logbookId" : "eeeeeeee"
+	};
+}
+
 

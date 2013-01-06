@@ -26,6 +26,13 @@ var tripID;
 
 $(function() {
 	tripID = $.urlParam('tripId');
+	
+	// insert the navigation information
+	ajaxGet('server/php/trip_navigationinfo_get.php?tripId=' + tripID, function(data) {
+		$(".seapal-logbookname").html(data.shipname);
+		$(".seapal-triptitle").html(data.triptitle);
+		$(".seapal-trips-link").attr("href", $(".seapal-trips-link").attr("href") + "?logbookId=" + data.logbookId);
+	});
 
 	$.views.allowCode = true;
 
