@@ -187,3 +187,36 @@ function getWaypointFullInfoData() {
 		
 	};
 }
+
+/**
+ * 
+ */
+function getRoutepointTestData() {
+	return {
+		"tripId" : "1",
+		"routepointId" : "NULL",
+		"position" : "(47.66, 9.00)",
+		"name" : "Routenpunkt1",
+		"notes" : "Eine Notiz"
+	};
+}
+
+function getRoutepointMinimalData() {
+	return {
+		"tripId" : "1",
+		"routepointId" : "NULL",
+		"position" : "(47.66, 9.00)",
+		"name" : "",
+		"notes" : ""
+	};
+}
+
+function getRoutepointNewData(tripID, position) {
+	return {
+		"tripId" : tripID,
+		"routepointId" : "NULL",
+		"position" : position,
+		"name" : "",
+		"notes" : ""
+	};
+}

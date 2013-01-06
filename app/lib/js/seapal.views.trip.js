@@ -31,8 +31,6 @@ $(function() {
 		waypointDetailsTemplate : "#seapal-waypoint-details-template"
 	});
 	
-	
-	
 	var mapTypeIds = ["roadmap", "satellite", "OSM"];
 	var mapOptions = {
 		center : new google.maps.LatLng(47.66, 9.16),

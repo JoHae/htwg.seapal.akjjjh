@@ -96,6 +96,19 @@ FOREIGN KEY (headsailID) REFERENCES headsailtype(headsailID),
 FOREIGN KEY (mainsailID) REFERENCES mainsailtype(mainsailID)
 )";
 
+# Table for planed_route
+$create_routepoint_table = "CREATE TABLE routepoint
+(
+routepointID int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (routepointID),
+tripID  int,
+FOREIGN KEY (tripID) REFERENCES trip(tripID),
+
+routepoint_name varchar(15),
+notes blob,
+position  varchar(50)
+)";
+
 # Table for maneuver
 $create_maneuver_table = "CREATE TABLE maneuvertype
 (
@@ -172,6 +185,12 @@ if (!mysql_query($create_trip_table,$con))
 
 echo "Creating Table for waypoints...</br>";
 if (!mysql_query($create_waypoint_table,$con))
+{
+	die('Error: ' . mysql_error());
+}
+
+echo "Creating Table for routepoint...</br>";
+if (!mysql_query($create_routepoint_table,$con))
 {
 	die('Error: ' . mysql_error());
 }

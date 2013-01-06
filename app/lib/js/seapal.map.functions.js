@@ -9,7 +9,7 @@ function meterToNauticalMile(meter) {
 }
 
 function convertPositionToObject(positionString) {
-	var latlngStr = positionString.substring(1, positionString.length-1);
+	var latlngStr = positionString.substring(1, positionString.length - 1);
 	latlngStr = latlngStr.split(",", 2);
 	var lat = parseFloat(latlngStr[0]);
 	var lng = parseFloat(latlngStr[1]);
@@ -523,8 +523,8 @@ function endDistanceMode() {
 }
 
 function showDistanceLabel() {
-	if(infowindow != null) {
-		infowindow.close();		
+	if (infowindow != null) {
+		infowindow.close();
 	}
 	var projection = map.getProjection();
 	var startLatLng = distanceMarkerArray[0].getPosition();
@@ -548,8 +548,8 @@ function showDistanceLabel() {
 
 function addNewShipPositionMarker(dataObject) {
 	// dataObject contains position tripId and waypointId
-	var position = dataObject.position;	
-	
+	var position = dataObject.position;
+
 	if (position == null) {
 		alert("No position while trying to add new Ship Marker.");
 	}
@@ -600,8 +600,10 @@ function addNewShipPositionMarker(dataObject) {
 }
 
 function setNewRealRouteMarkerMenu(marker, waypointID) {
-	jQuery("#editDetails").block({ message: null });
-	
+	jQuery("#editDetails").block({
+		message : null
+	});
+
 	ajaxGet('server/php/waypoints_details_get.php?waypointId=' + waypointID, function(data) {
 		// Set Details of specified waypoint
 		data.info = getWaypointFullInfoData();
@@ -671,7 +673,9 @@ function showEditDialog() {
 			OK : function() {
 				// TODO: Validate Data and add to database
 				//$("#dialog > form").submit();
-				$(this).dialog('close');
+				ajaxUpdateCreate('server/php/waypoints_edit.php', selectedWaypointData, function() {
+					$(this).dialog('close');
+				});
 			},
 			Abbrechen : function() {
 				$(this).dialog('close');
