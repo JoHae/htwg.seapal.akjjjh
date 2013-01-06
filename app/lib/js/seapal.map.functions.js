@@ -600,6 +600,8 @@ function addNewShipPositionMarker(dataObject) {
 }
 
 function setNewRealRouteMarkerMenu(marker, waypointID) {
+	jQuery("#seapal-realroutemenu-details").hide();
+	jQuery("#seapal-load-details").show();
 	jQuery("#editDetails").block({
 		message : null
 	});
@@ -608,6 +610,8 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		// Set Details of specified waypoint
 		selectedWaypointData = data;
 		selectedWaypointDataBinded = createBindingData(data, getWaypointFullInfoData());
+		jQuery("#seapal-load-details").hide();
+		jQuery("#seapal-realroutemenu-details").show();
 		jQuery("#editDetails").unblock();
 		$.link.waypointDetailsTemplate("#seapal-realroutemenu-details", selectedWaypointDataBinded);
 	});

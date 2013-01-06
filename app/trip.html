@@ -150,12 +150,17 @@
 					<div>
 						Distanz vom Start: <span id="realRouteDistance">Error</span>
 					</div>
-					<div id ="seapal-realroutemenu-details">
-						<img src="lib/img/pleaseWait.gif" />
-					</div>
+					<div id ="seapal-load-details"><img src="lib/img/pleaseWait.gif" /></div>
+					<div id ="seapal-realroutemenu-details">Loading</div>
 					<script id="seapal-waypoint-details-template" type="text/x-jsrender">
-						{{>info.waypointtitle.labeltext}}: <span data-link="waypointtitle">N.A.</span>
+						{{>info.waypointtitle.labeltext}}: <span data-link="waypointtitle"></span><br />
+						{{>info.btm.labeltext}}: <span data-link="{:btm:}"></span><br />
+						{{>info.dtm.labeltext}}: <span data-link="{:dtm:}"></span><br />
+						{{>info.maneuver.labeltext}}: <span data-link="">{{>info.maneuvertypes[maneuverId-1].typename}}</span><br />
+						{{>info.headsail.labeltext}}: <span data-link="">{{>info.headsailtypes[headsailId-1].typename}}</span><br />
+						{{>info.mainsail.labeltext}}: <span data-link="">{{>info.mainsailtypes[mainsailId-1].typename}}</span>
 					</script>
+					<div></div>
 				</li>
 				<li>
 					<a id="editDetails" href="#">Details editieren</a>
@@ -165,9 +170,6 @@
 				</li>
 				<li>
 					<a class="endDistanceMode" href="#">Distanzmessung Beenden</a>
-				</li>
-				<li>
-					<a id="deleteRealRouteMarker" href="#">Markierung L&ouml;schen</a>
 				</li>
 				<li>
 					<a id="closeRealRouteContext" href="#">Men&uuml; schlie&szlig;en</a>
