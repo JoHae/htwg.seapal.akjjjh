@@ -35,3 +35,16 @@ function getDataFromDataList(dataList, data, itemId) {
 		}
 	}
 }
+
+function createBindingData(backendData, infoData) {
+ var tData = jQuery.extend(true, {}, backendData);
+ tData.info = infoData;
+ return tData;
+}
+
+function getDataFromBindedData(bindedData, copiedData) {
+ for (var dataKey in copiedData) {
+  copiedData[dataKey] = bindedData[dataKey];
+ }
+ return;
+}

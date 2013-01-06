@@ -26,11 +26,11 @@ function wsOnMessage($clientID, $message, $messageLength, $binary) {
 
 	$sql = "INSERT INTO `seapal`.`waypoint`
 	(
-	`waypointID`, `tripID`, `position`
+	`waypointID`, `tripID`, `position`, `maneuverID`, `headsailID`, `mainsailID`
 	)
 	VALUES
 	(
-	NULL, '$tripId', '$position')";
+	NULL, '$tripId', '$position', 1, 1, 1)";
 
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());

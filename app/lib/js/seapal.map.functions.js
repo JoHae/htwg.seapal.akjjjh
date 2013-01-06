@@ -606,10 +606,10 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 
 	ajaxGet('server/php/waypoints_details_get.php?waypointId=' + waypointID, function(data) {
 		// Set Details of specified waypoint
-		data.info = getWaypointFullInfoData();
 		selectedWaypointData = data;
+		selectedWaypointDataBinded = createBindingData(data, getWaypointFullInfoData());
 		jQuery("#editDetails").unblock();
-		$.link.waypointDetailsTemplate("#seapal-realroutemenu-details", selectedWaypointData);
+		$.link.waypointDetailsTemplate("#seapal-realroutemenu-details", selectedWaypointDataBinded);
 	});
 	var point = getMenuPoint(map, marker);
 
@@ -659,7 +659,7 @@ function setPositionTestMenu() {
 
 function showEditDialog() {
 	jQuery("#realRouteContext").hide();
-	$.link.waypointDetailsEditTemplate("#seapal-waypoint-details-dialog", selectedWaypointData);
+	$.link.waypointDetailsEditTemplate("#seapal-waypoint-details-dialog", selectedWaypointDataBinded);
 	$("#seapal-waypoint-details-dialog").dialog({
 		bgiframe : true,
 		autoOpen : false,
@@ -671,10 +671,11 @@ function showEditDialog() {
 		position : ['left', 'top'],
 		buttons : {
 			OK : function() {
-				// TODO: Validate Data and add to database
-				//$("#dialog > form").submit();
+				getDataFromBindedData(selectedWaypointDataBinded, selectedWaypointData);
+				$(this).dialog('close');
+				// TODO: label wirdgespeichert...
 				ajaxUpdateCreate('server/php/waypoints_edit.php', selectedWaypointData, function() {
-					$(this).dialog('close');
+					// label speichern fertig...
 				});
 			},
 			Abbrechen : function() {
