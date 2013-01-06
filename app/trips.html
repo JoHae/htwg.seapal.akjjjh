@@ -29,6 +29,10 @@
 		<script src="lib/js/jsrender.js" type="text/javascript"></script>
 		<script src="lib/js/jquery.observable.js" type="text/javascript"></script>
 		<script src="lib/js/jquery.views.js" type="text/javascript"></script>
+		<!-- input validation plugin -->
+		<script src="lib/js/jquery.validationEngine-de.js" type="text/javascript"></script>
+		<script src="lib/js/jquery.validationEngine.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="lib/css/validationEngine.jquery.css" type="text/css"/>
 		
 		<script src="lib/js/seapal.views.dataoperations.js" type="text/javascript"></script>
 		<script src="lib/js/seapal.views.crudclient.js" type="text/javascript"></script>
@@ -98,21 +102,21 @@
 							</div>
 							{{/if}}
 						</div> 
-						<div class="seapal-edit">
+						<div class="seapal-edit validationEngineContainer">
 							<div class="seapal-triptitle">
-								<input type="text" data-link="{:triptitle:}" />
+								<input type="text" data-link="{:triptitle:}" class="validate[required]"/>
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-startpoint">
-								<input type="text" data-link="{:startpoint:}" />
+								<input type="text" data-link="{:startpoint:}" class="validate[required]"/>
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-destination">
-								<input type="text" data-link="{:destination:}" />
+								<input type="text" data-link="{:destination:}"  class="validate[required]"/>
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-skipper">
-								<input type="text" data-link="{:skipper:}" />
+								<input type="text" data-link="{:skipper:}"  class="validate[required]"/>
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-actions">
@@ -160,19 +164,19 @@
 						</div>
 						{{/if}}
 
-						<div class="seapal-edit">
+						<div class="seapal-edit validationEngineContainer">
 							<div class="seapal-general">
-								<label for="seapal-list-item-{{>dataId}}-input-starttime">{{>info.starttime.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-starttime" data-link="{:starttime:}" />
+								<span class="seapal-label">{{>info.starttime.labeltext}}</span>
+								<span class="seapal-field" data-link="{:starttime:}"></span>
 								<br>
-								<label for="seapal-list-item-{{>dataId}}-input-endtime">{{>info.endtime.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-endtime" data-link="{:endtime:}" />
+								<span class="seapal-label">{{>info.endtime.labeltext}}</span>
+								<span class="seapal-field" data-link="{:endtime:}"></span>
 								<br>
-								<label for="seapal-list-item-{{>dataId}}-input-duration">{{>info.duration.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-duration" data-link="{:duration:}" />
+								<span class="seapal-label">{{>info.duration.labeltext}}</span>
+								<span class="seapal-field" data-link="{:duration:}"></span>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-motorminutes">{{>info.motorminutes.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-motorminutes" data-link="{:motorminutes:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-motorminutes" data-link="{:motorminutes:}" class="validate[custom[integer],min[0]]"/>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-fueltankfilled">{{>info.fueltankfilled.labeltext}}</label>
 								<input type="text" name="seapal-list-item-{{>dataId}}-input-fueltankfilled" data-link="{:fueltankfilled:}" />

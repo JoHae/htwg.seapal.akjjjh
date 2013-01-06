@@ -18,7 +18,7 @@
 		<link href="lib/css/styles.css" rel="stylesheet">
 		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
 		<script src="lib/js/jquery-1.8.3.js"></script>
-		<!-- Query UI imports  -->
+		<!-- jQuery UI imports  -->
 		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
 		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
 		<!-- blockUI imports -->
@@ -29,13 +29,18 @@
 		<script src="lib/js/jsrender.js" type="text/javascript"></script>
 		<script src="lib/js/jquery.observable.js" type="text/javascript"></script>
 		<script src="lib/js/jquery.views.js" type="text/javascript"></script>
-		
+		<!-- input validation plugin -->
+		<script src="lib/js/jquery.validationEngine-de.js" type="text/javascript"></script>
+		<script src="lib/js/jquery.validationEngine.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="lib/css/validationEngine.jquery.css" type="text/css"/>
+
 		<script src="lib/js/seapal.views.dataoperations.js" type="text/javascript"></script>
 		<script src="lib/js/seapal.views.crudclient.js" type="text/javascript"></script>
 		<script src="lib/js/seapal.views.listfunctions.js"></script>
 
 		<script src="lib/js/logbooks_data.js"></script>
 		<script src="lib/js/logbooks.js"></script>
+		
 	</head>
 
 	<body>
@@ -64,7 +69,7 @@
 					</ul>
 				</div>
 				<div id="seapal-list">
-					<!-- Startup load image, removed when data is loaded <img src="lib/img/pleaseWait.gif" />-->
+					
 				</div>
 
 				<!-- logbooks template for the list !-->
@@ -98,21 +103,21 @@
 							</div>
 							{{/if}}
 						</div> 
-						<div class="seapal-edit">
+						<div class="seapal-edit validationEngineContainer">
 							<div class="seapal-shipname">
-								<input type="text" data-link="{:shipname:}" />
+								<input type="text" data-link="{:shipname:}" class="validate[required]"/>
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-shiptype">
-								<input type="text" data-link="{:shiptype:}" />
+								<input type="text" data-link="{:shiptype:}" class="validate[required]"/>
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-shipowner">
-								<input type="text" data-link="{:shipowner:}" />
+								<input type="text" data-link="{:shipowner:}" class="validate[required]"/>
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-shipregisternumber">
-								<input type="text" data-link="{:shipregisternumber:}" />
+								<input type="text" data-link="{:shipregisternumber:}" class="validate[required]"/>
 								<span class="seapal-info"> </span>
 							</div>
 							<div class="seapal-actions">
@@ -200,7 +205,7 @@
 							</div>
 						</div>
 						{{/if}}
-						<div class="seapal-edit">
+						<div class="seapal-edit validationEngineContainer">
 							<div class="seapal-general">
 								<label for="seapal-list-item-{{>dataId}}-input-sailsign">{{>info.sailsign.labeltext}}</label>
 								<input type="text" name="seapal-list-item-{{>dataId}}-input-sailsign" data-link="{:sailsign:}" />
@@ -222,19 +227,19 @@
 							</div>
 							<div class="seapal-sizes">
 								<label for="seapal-list-item-{{>dataId}}-input-shiplength">{{>info.shiplength.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-shiplength" data-link="{:shiplength:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-shiplength" data-link="{:shiplength:}" class="validate[custom[number],min[0]]" />
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-shipwidth">{{>info.shipwidth.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-shipwidth" data-link="{:shipwidth:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-shipwidth" data-link="{:shipwidth:}" class="validate[custom[number],min[0]]" />
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-gauge">{{>info.gauge.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-gauge" data-link="{:gauge:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-gauge" data-link="{:gauge:}" class="validate[custom[number],min[0]]" />
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-mastheight">{{>info.mastheight.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-mastheight" data-link="{:mastheight:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-mastheight" data-link="{:mastheight:}" class="validate[custom[number],min[0]]"/>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-expulsion">{{>info.expulsion.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-expulsion" data-link="{:expulsion:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-expulsion" data-link="{:expulsion:}" class="validate[custom[number],min[0]]"/>
 								<br>
 							</div>
 							<div class="seapal-equipment">
@@ -242,28 +247,28 @@
 								<input type="text" name="seapal-list-item-{{>dataId}}-input-rigtype" data-link="{:rigtype:}" />
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-constructionyear">{{>info.constructionyear.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-constructionyear" data-link="{:constructionyear:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-constructionyear" data-link="{:constructionyear:}" class="validate[custom[integer],minSize[4],maxSize[4]]"/>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-engine">{{>info.engine.labeltext}}</label>
 								<input type="text" name="seapal-list-item-{{>dataId}}-input-engine" data-link="{:engine:}" />
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-size_fueltank">{{>info.size_fueltank.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_fueltank" data-link="{:size_fueltank:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_fueltank" data-link="{:size_fueltank:}" class="validate[custom[number],min[0]]"/>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-size_watertank">{{>info.size_watertank.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_watertank" data-link="{:size_watertank:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_watertank" data-link="{:size_watertank:}" class="validate[custom[number],min[0]]"/>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-size_sewagetank">{{>info.size_sewagetank.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_sewagetank" data-link="{:size_sewagetank:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_sewagetank" data-link="{:size_sewagetank:}" class="validate[custom[number],min[0]]"/>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-size_mainsail">{{>info.size_mainsail.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_mainsail" data-link="{:size_mainsail:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_mainsail" data-link="{:size_mainsail:}" class="validate[custom[number],min[0]]"/>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-size_genua">{{>info.size_genua.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_genua" data-link="{:size_genua:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_genua" data-link="{:size_genua:}" class="validate[custom[number],min[0]]"/>
 								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-size_spi">{{>info.size_spi.labeltext}}</label>
-								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_spi" data-link="{:size_spi:}" />
+								<input type="text" name="seapal-list-item-{{>dataId}}-input-size_spi" data-link="{:size_spi:}" class="validate[custom[number],min[0]]"/>
 							</div>
 						</div>
 					</div>

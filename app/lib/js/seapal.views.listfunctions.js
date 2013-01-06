@@ -62,6 +62,10 @@ function seapalDataLoaded(listData) {
 	seapalListDataBinded = createBindingListData(seapalListData, getEmpyData(), getInfoData());
 
 	$.link.seapalListTemplate("#seapal-list", seapalListDataBinded);
+	
+	// add the form validations
+	jQuery(".seapal-edit").validationEngine();
+
 
 	for (var item in seapalListDataBinded) {
 		addFunctionsToListitem(seapalListDataBinded[item].dataId);
