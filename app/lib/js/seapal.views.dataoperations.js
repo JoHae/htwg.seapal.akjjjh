@@ -31,7 +31,7 @@ function getDataFromDataList(dataList, data, itemId) {
 			for (var dataKey in data) {
 				data[dataKey] = dataList[key][dataKey];
 			}
-			return;
+			return; 
 		}
 	}
 }
