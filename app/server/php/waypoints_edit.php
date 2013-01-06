@@ -22,4 +22,6 @@ if ($_POST['dataId']!='NULL') {
 
 mysql_close($con);
 
+echo "";
+
 ?>

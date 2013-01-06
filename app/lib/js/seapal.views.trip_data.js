@@ -30,30 +30,34 @@ function getHeadsailTypesTestData() {
 	return [
 		{ 
 			"typeId" : "1",
-			"typename" : "Genua1"
+			"typename" : "-"
 		},
 		{ 
 			"typeId" : "2",
-			"typename" : "Genua2"
+			"typename" : "Genua1"
 		},
 		{ 
 			"typeId" : "3",
-			"typename" : "Genua3"
+			"typename" : "Genua2"
 		},
 		{ 
 			"typeId" : "4",
-			"typename" : "Fock"
+			"typename" : "Genua3"
 		},
 		{ 
 			"typeId" : "5",
-			"typename" : "Storm Fock"
+			"typename" : "Fock"
 		},
 		{ 
 			"typeId" : "6",
-			"typename" : "Blister"
+			"typename" : "Storm Fock"
 		},
 		{ 
 			"typeId" : "7",
+			"typename" : "Blister"
+		},
+		{ 
+			"typeId" : "8",
 			"typename" : "Spinaker"
 		}		
 	];
@@ -63,14 +67,18 @@ function getMainsailTypesTestData() {
 	return [
 		{ 
 			"typeId" : "1",
-			"typename" : "Full"
+			"typename" : "-"
 		},
 		{ 
 			"typeId" : "2",
-			"typename" : "Ref1"
+			"typename" : "Full"
 		},
 		{ 
 			"typeId" : "3",
+			"typename" : "Ref1"
+		},
+		{ 
+			"typeId" : "4",
 			"typename" : "Ref2"
 		}
 	];
@@ -80,38 +88,42 @@ function getManeuverTypesTestData() {
 	return [
 		{ 
 			"typeId" : "1",
-			"typename" : "Tack"
+			"typename" : "-"
 		},
 		{ 
 			"typeId" : "2",
-			"typename" : "Jibe"
+			"typename" : "Tack"
 		},
 		{ 
 			"typeId" : "3",
-			"typename" : "Lay to"
+			"typename" : "Jibe"
 		},
 		{ 
 			"typeId" : "4",
-			"typename" : "Set Sails"
+			"typename" : "Lay to"
 		},
 		{ 
 			"typeId" : "5",
-			"typename" : "Change Sails"
+			"typename" : "Set Sails"
 		},
 		{ 
 			"typeId" : "6",
-			"typename" : "Sails Down"
+			"typename" : "Change Sails"
 		},
 		{ 
 			"typeId" : "7",
-			"typename" : "Ref"
+			"typename" : "Sails Down"
 		},
 		{ 
 			"typeId" : "8",
-			"typename" : "Anker Up"
+			"typename" : "Ref"
 		},
 		{ 
 			"typeId" : "9",
+			"typename" : "Anker Up"
+		},
+		{ 
+			"typeId" : "10",
 			"typename" : "Anker Down"
 		}	
 	];
