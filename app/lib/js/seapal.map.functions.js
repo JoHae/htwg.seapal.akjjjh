@@ -259,7 +259,14 @@ function setNewStandardMarkerMenu(marker) {
 	});
 }
 
-function addNewRouteMarker(position) {
+function addNewRouteMarker(dataObject) {
+	// dataObject contains position tripId and waypointId
+	var position = dataObject.position;
+
+	if (position == null) {
+		alert("No position while trying to add new Ship Marker.");
+	}
+
 	var image = new google.maps.MarkerImage('./lib/img/flag50.png',
 	// This marker is 20 pixels wide by 32 pixels tall.
 	new google.maps.Size(45, 50),
@@ -269,10 +276,6 @@ function addNewRouteMarker(position) {
 	new google.maps.Point(1, 50));
 
 	anchorPoint = new google.maps.Point(0, 0);
-
-	if (position == null) {
-		position = actualCrosshairPosition;
-	}
 
 	var markerOptions = {
 		position : position,
