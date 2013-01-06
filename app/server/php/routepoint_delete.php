@@ -1,23 +1,25 @@
 <?php
 
-$con = (include '../../database/connect.php');
-
+$con = (
+include '../../database/connect.php');
 
 # If logbookID is not NULL delete entry
-if ($_POST['removeId']!='NULL') {
+if ($_POST['removeId'] != 'NULL') {
 	$sql = "
 	DELETE FROM `seapal`.`routepoint`
 	WHERE
 	routepointID='$_POST[removeId]'
 	";
-	
-	if (!mysql_query($sql, $con)) {
-		die('Error: ' . mysql_error());
-	}
+} else {
+	# remove all records
+	$sql = "TRUNCATE TABLE routepoint";
+}
+
+if (!mysql_query($sql, $con)) {
+	die('Error: ' . mysql_error());
 }
 
 mysql_close($con);
 
 echo "";
-
 ?>
