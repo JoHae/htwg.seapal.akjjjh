@@ -321,6 +321,13 @@ function addNewRouteMarker(dataObject) {
 			marker.set("labelContent", "");
 		}
 		jQuery("#routeContext").hide();
+		
+		// Set new position to database
+		// TODO: label wirdgespeichert...
+		dataObject.position = marker.getPosition().toString();
+		ajaxUpdateCreate('server/php/routepoint_edit.php', dataObject, function() {
+				// label speichern fertig...
+		});
 		updateRoutePolylines();
 	});
 
@@ -329,6 +336,8 @@ function addNewRouteMarker(dataObject) {
 		jQuery("#standardContext").hide();
 		jQuery("#realRouteContext").hide();
 		selectedMarker = marker;
+		selectedRoutepointData = dataObject;
+		
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = marker;
 			updateDistancePolylines();
@@ -609,7 +618,7 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		message : null
 	});
 
-	ajaxGet('server/php/waypoints_details_get.php?waypointId=' + waypointID, function(data) {
+	ajaxGet('server/php/waypoint_details_get.php?waypointId=' + waypointID, function(data) {
 		// Set Details of specified waypoint
 		selectedWaypointData = data;
 		selectedWaypointDataBinded = createBindingData(data, getWaypointFullInfoData());
@@ -681,7 +690,7 @@ function showEditDialog() {
 				getDataFromBindedData(selectedWaypointDataBinded, selectedWaypointData);
 				$(this).dialog('close');
 				// TODO: label wirdgespeichert...
-				ajaxUpdateCreate('server/php/waypoints_edit.php', selectedWaypointData, function() {
+				ajaxUpdateCreate('server/php/waypoint_edit.php', selectedWaypointData, function() {
 					// label speichern fertig...
 				});
 			},

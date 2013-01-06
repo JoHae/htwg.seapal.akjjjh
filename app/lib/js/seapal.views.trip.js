@@ -3,7 +3,7 @@ var actualCrosshairPosition;
 var standardMarkerArray = new Array();
 
 var routeMarkerArray = new Array();
-var routepointData = new Array();
+var selectedRoutepointData;
 var route;
 
 var distanceMarkerArray = new Array();
@@ -140,12 +140,10 @@ $(function() {
 		data.position = data.position.toString();
 		
 		// TODO: label wirdgespeichert...
-		ajaxUpdateCreate('server/php/routepoints_edit.php', data, function() {
+		ajaxUpdateCreate('server/php/routepoint_edit.php', data, function() {
 			// label speichern fertig...
 		});
-		
 		data.position = convertPositionToObject(data.position);
-		routepointData[routepointData.length] = data;
 		
 		// Update View
 		var length = routeMarkerArray.length;
@@ -232,6 +230,12 @@ $(function() {
 			updateDistancePolylines();
 			endDistanceMode();
 		}
+		
+		// TODO: label wirdgespeichert...
+		ajaxDelete('server/php/routepoint_delete.php', selectedRoutepointData.routepointId, function() {
+			// label speichern fertig...
+		});
+		
 		updateRoutePolylines();
 		jQuery("#routeContext").hide();
 		selectedMarker.setMap(null);
