@@ -17,7 +17,7 @@ function ajaxGet(serviceUrl, successFunction) {
 }
 
 
-// serviceUrl = "server/php/logbook_edit.php"
+// serviceUrl = "logbook_edit.php"
 function ajaxUpdateCreate(serviceUrl, newData, successFunction) {
 	$.ajax({
 		url : serviceUrl,

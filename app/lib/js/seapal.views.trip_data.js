@@ -232,3 +232,13 @@ function getRoutepointNewData(tripID, position) {
 		"notes" : ""
 	};
 }
+
+
+function getNavigationInfoTestData() {
+	return {
+		"shipname" : "Vergin",
+		"logbookId" : "eeeeeeee",
+		"triptitle" : "Vergin",
+		"tripId" : "eeeeeeee",
+	};
+}

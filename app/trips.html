@@ -14,12 +14,12 @@
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-		<link href="lib/css/styles.css" rel="stylesheet">
 
 		<!-- jQuery imports -->
 		<script src="lib/js/jquery-1.8.3.js"></script>
 		<!-- Query UI imports  -->
 		<link href="lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+		<link href="lib/css/styles.css" rel="stylesheet">
 		<script src="lib/js/jquery-ui-1.9.2.custom.js"></script>
 		<!-- blockUI imports -->
 		<script src="lib/js/jquery.blockUI.js"></script>
@@ -33,6 +33,10 @@
 		<script src="lib/js/jquery.validationEngine-de.js" type="text/javascript"></script>
 		<script src="lib/js/jquery.validationEngine.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="lib/css/validationEngine.jquery.css" type="text/css"/>
+		<!-- jQuery cookie import -->
+		<script src="lib/js/jquery.cookie.js" type="text/javascript"></script>
+		
+		<script src="./lib/js/seapal.views.technology.js" type="text/javascript"></script>
 		
 		<script src="lib/js/seapal.views.dataoperations.js" type="text/javascript"></script>
 		<script src="lib/js/seapal.views.crudclient.js" type="text/javascript"></script>
@@ -49,12 +53,18 @@
 					<span class="seapal-logo"> </span>
 					<h1>Seapal</h1>
 				</div>
-				<h2>Trips</h2>
+				<h2>Trips des Logbuchs <span class="seapal-logbookname"> </span></h2>
 			</header>
 
 			<nav>
 				<div class="seapal-location">
-					<span>></span><span class="seapal-space"> </span><span><a href="logbooks.html">Logbücher</a></span><span class="seapal-space"> </span><span>></span><span class="seapal-space"> </span><span>Trips</span>
+					<span>></span>
+					<span class="seapal-space"> </span>
+					<span><a href="logbooks.html">Logbücher</a></span>
+					<span class="seapal-space"> </span>
+					<span>></span>
+					<span class="seapal-space"> </span>
+					<span>Logbuch:</span><span class="seapal-logbookname"></span>
 				</div>  
 			</nav>
 

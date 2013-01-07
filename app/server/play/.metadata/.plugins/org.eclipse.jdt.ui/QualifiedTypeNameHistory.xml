@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="play.db.DB"/>
+<fullyQualifiedTypeName name="play.mvc.BodyParser"/>
+<fullyQualifiedTypeName name="org.codehaus.jackson.node.ObjectNode"/>
+<fullyQualifiedTypeName name="play.mvc.BodyParser.Json"/>
+<fullyQualifiedTypeName name="play.libs.Json"/>
+<fullyQualifiedTypeName name="org.codehaus.jackson.node.ArrayNode"/>
+<fullyQualifiedTypeName name="org.codehaus.jackson.node.ContainerNode"/>
+<fullyQualifiedTypeName name="org.codehaus.jackson.node.JsonNodeFactory"/>
+<fullyQualifiedTypeName name="play.mvc.Result"/>
+</qualifiedTypeNameHistroy>

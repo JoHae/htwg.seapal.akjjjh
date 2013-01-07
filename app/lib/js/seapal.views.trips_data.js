@@ -61,12 +61,12 @@ function getInfoData() {
 		"starttime" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Start"
+			"labeltext" : "Startzeit"
 		},
 		"endtime" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Ende"
+			"labeltext" : "Endzeit"
 		},
 		"duration" : {
 			"checkfunction" : null,
@@ -91,8 +91,15 @@ function getInfoData() {
 		"notes" : {
 			"checkfunction" : null,
 			"infotext" : "",
-			"labeltext" : "Notitzen"
+			"labeltext" : "Notizen"
 		}
+	};
+}
+
+function getNavigationInfoTestData() {
+	return {
+		"shipname" : "Vergin",
+		"logbookId" : "eeeeeeee"
 	};
 }
 

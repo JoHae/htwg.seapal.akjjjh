@@ -26,6 +26,13 @@ var tripID;
 
 $(function() {
 	tripID = $.urlParam('tripId');
+	
+	// insert the navigation information
+	ajaxGet(getServiceURL('trip_navigationinfo_get.php?tripId=' + tripID), function(data) {
+		$(".seapal-logbookname").html(data.shipname);
+		$(".seapal-triptitle").html(data.triptitle);
+		$(".seapal-trips-link").attr("href", $(".seapal-trips-link").attr("href") + "?logbookId=" + data.logbookId);
+	});
 
 	$.views.allowCode = true;
 
@@ -47,7 +54,7 @@ $(function() {
 	map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
 
 	// Load and Draw Routepoints
-	ajaxGet('server/php/routepoints_get.php?tripId=' + tripID, function(data) {
+	ajaxGet(getServiceURL('routepoints_get.php?tripId=' + tripID), function(data) {
 		var length = data.length;
 		for (var i = 0; i < length; i++) {
 			var new_position = convertPositionToObject(data[i].position);
@@ -58,7 +65,7 @@ $(function() {
 	});
 
 	// Load and Draw Waypoints
-	ajaxGet('server/php/waypoints_get.php?tripId=' + tripID, function(data) {
+	ajaxGet(getServiceURL('waypoints_get.php?tripId=' + tripID), function(data) {
 		var length = data.length;
 		for (var i = 0; i < length; i++) {
 			var new_position = convertPositionToObject(data[i].position);
@@ -140,7 +147,7 @@ $(function() {
 		data.position = data.position.toString();
 		
 		// TODO: label wirdgespeichert...
-		ajaxUpdateCreate('server/php/routepoint_edit.php', data, function() {
+		ajaxUpdateCreate(getServiceURL('routepoint_edit.php'), data, function() {
 			// label speichern fertig...
 		});
 		data.position = convertPositionToObject(data.position);
@@ -232,7 +239,7 @@ $(function() {
 		}
 		
 		// TODO: label wirdgespeichert...
-		ajaxDelete('server/php/routepoint_delete.php', selectedRoutepointData.routepointId, function() {
+		ajaxDelete(getServiceURL('routepoint_delete.php'), selectedRoutepointData.routepointId, function() {
 			// label speichern fertig...
 		});
 		
