@@ -1,23 +1,24 @@
 /**
- * // example.com?param1=name&amp;param2=&amp;id=6
-	$.urlParam('param1'); // name
-	$.urlParam('id');        // 6
-	$.urlParam('param2');   // null
+ 	URL: http://www.example.com/?titel=test&trinken=bier&essen=schweinshaxe
 
-	//example params with spaces
-	http://www.jquery4u.com?city=Gold Coast
-	console.log($.urlParam('city'));  
-	//output: Gold%20Coast
-	
-	console.log(decodeURIComponent($.urlParam('city')));  
-	//output: Gold Coast
+	wasEssenWir = get_url_param('essen');
+	wasTrinkenWir = get_url_param('trinken');
+	titelDesEssens = get_url_param('titel');
  */
 
 (function() {
 	
 	$.urlParam = function(name){
-	    var results = new RegExp('[\\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
-	    return results[1] || 0;
+	    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+
+		var regexS = "[\\?&]"+name+"=([^&#]*)";
+		var regex = new RegExp( regexS );
+		var results = regex.exec( window.location.href );
+		
+		if ( results == null )
+			return "";
+		else
+			return results[1];
 	}
 	
 })();
