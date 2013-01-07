@@ -1,8 +1,11 @@
 
-var seapalTechnology = null;
+var seapalTechnologyURL = null;
 
 function getServiceURL(service) {
-	return "server/" + getTechnology() + "/" + service;
+	if (seapalTechnologyURL == null) {
+		seapalTechnologyURL = "server/" + getTechnology() + "/" + service;
+	}
+	return seapalTechnologyURL;
 }
 
 function setTechnology(technology) {
@@ -10,11 +13,9 @@ function setTechnology(technology) {
 }
 
 function getTechnology() {
-	if (seapalTechnology == null) {
-		seapalTechnology = $.cookie('seapal_technology');	
-		if (seapalTechnology == null) {
-			alert("No technology choosen! (technology cookie)");
-		}
+	var tTechnology = $.cookie('seapal_technology');
+	if (tTechnology == null) {
+		alert("No technology choosen! (technology cookie)");
 	}
-	return seapalTechnology;
+	return tTechnology;
 }
