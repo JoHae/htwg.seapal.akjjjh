@@ -1,0 +1,12 @@
+package controllers;
+
+import play.mvc.Controller;
+
+public class Logbooks extends Controller {
+	
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result get() {
+		
+	}
+
+}
