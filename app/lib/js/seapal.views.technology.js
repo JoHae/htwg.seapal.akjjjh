@@ -55,6 +55,11 @@ function prepareServiceURL(serviceName, technology, parameterName, parameterValu
 		seapalServiceURLsDataCache = getServiceURLsData();
 	}
 	
+	// compatibility with old urls
+	if (seapalServiceURLsDataCache[serviceName] == null) {
+		return "server/php/" + serviceName;
+	}
+	
 	// get the service url part
 	var tServURL = seapalServiceURLsDataCache[serviceName][technology];
 	
