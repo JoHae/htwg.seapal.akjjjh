@@ -1,0 +1,54 @@
+package controllers;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import play.*;
+import play.db.DB;
+import play.mvc.*;
+
+import views.html.*;
+
+public class Application extends Controller {
+
+	public static Result index() {
+
+
+		return ok(index.render("Your new application is ready."));
+	}
+
+	public static Result test() {
+
+		String Query = this.Query;
+
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(Query);
+
+			// get count so I can set my array to the right length
+			int rsSize = getResultSetSize(result);
+			this.StartBook = new String[rsSize];
+
+			int i = 0;
+			while (result.next()) {
+
+				this.StartBook[i] = result.getString(1);
+
+				// this is a great way to see what is going on in the Eclipse
+				// Console or using a JVM
+				System.out.println("Shipname: " + result.getString(1));
+				System.out.println("Type: " + result.getString(2));
+
+				i++;
+			}
+			connection.close();
+			return ok("Hello World!");
+		}
+		finally {
+			
+		}
+	}
+
+	}

@@ -1,1 +1,16 @@
+/.project
 website/count.txt
+app/server/play/seapal/logs
+app/server/play/seapal/project/project
+app/server/play/seapal/project/target
+app/server/play/seapal/target
+app/server/play/seapal/tmp
+app/server/play/seapal/.history
+app/server/play/seapal/dist
+app/server/play/seapal/.idea
+app/server/play/seapal/*.iml
+app/server/play/seapal/out
+app/server/play/seapal/.idea_modules
+app/server/play/seapal/.classpath
+app/server/play/seapal/.project
+app/server/play/seapal/RUNNING_PID

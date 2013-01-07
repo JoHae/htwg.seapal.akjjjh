@@ -81,12 +81,7 @@ tripID  int,
 FOREIGN KEY (tripID) REFERENCES trip(tripID),
 
 waypoint_name varchar(15),
-degree_north  int,
-minutes_north int,
-seconds_north int,
-degree_east   int,
-minutes_east  int,
-seconds_east  int,
+position  varchar(50),
 
 btm varchar(15),
 dtm varchar(15),
@@ -101,10 +96,23 @@ FOREIGN KEY (headsailID) REFERENCES headsailtype(headsailID),
 FOREIGN KEY (mainsailID) REFERENCES mainsailtype(mainsailID)
 )";
 
+# Table for planed_route
+$create_routepoint_table = "CREATE TABLE routepoint
+(
+routepointID int NOT NULL AUTO_INCREMENT,
+PRIMARY KEY (routepointID),
+tripID  int,
+FOREIGN KEY (tripID) REFERENCES trip(tripID),
+
+name varchar(15),
+notes blob,
+position  varchar(50)
+)";
+
 # Table for maneuver
 $create_maneuver_table = "CREATE TABLE maneuvertype
 (
-maneuverID int NOT NULL AUTO_INCREMENT,
+maneuverID int AUTO_INCREMENT,
 PRIMARY KEY (maneuverID),
 name varchar(20)
 )";
@@ -112,7 +120,7 @@ name varchar(20)
 # Table for headsail
 $create_headsail_table = "CREATE TABLE headsailtype
 (
-headsailID int NOT NULL AUTO_INCREMENT,
+headsailID int AUTO_INCREMENT,
 PRIMARY KEY (headsailID),
 name varchar(20)
 )";
@@ -120,27 +128,27 @@ name varchar(20)
 # Table for mainsail
 $create_mainsail_table = "CREATE TABLE mainsailtype
 (
-mainsailID int NOT NULL AUTO_INCREMENT,
+mainsailID int AUTO_INCREMENT,
 PRIMARY KEY (mainsailID),
 name varchar(20)
 )";
 
 # GENERAL DATA
-$insert_mainsail="INSERT INTO `seapal`.`maneuvertype`
+$insert_maneuver="INSERT INTO `seapal`.`maneuvertype`
 (
 `maneuverID`, `name`
 )
 VALUES
-(NULL, 'Tack'), (NULL, 'Jibe'), (NULL, 'Lay to'), (NULL, 'Set Sails'), (NULL, 'Change Sails'), (NULL, 'Sails Down'), (NULL, 'Ref'), (NULL, 'Anker Up'), (NULL, 'Anker Down')";
+(NULL, '-'), (NULL, 'Tack'), (NULL, 'Jibe'), (NULL, 'Lay to'), (NULL, 'Set Sails'), (NULL, 'Change Sails'), (NULL, 'Sails Down'), (NULL, 'Ref'), (NULL, 'Anker Up'), (NULL, 'Anker Down')";
 
 $insert_headsail="INSERT INTO `seapal`.`headsailtype`
 (
 `headsailID`, `name`
 )
 VALUES
-(NULL, 'Genua1'), (NULL, 'Genua2'), (NULL, 'Genua3'), (NULL, 'Fock'), (NULL, 'Storm Fock'), (NULL, 'Blister'), (NULL, 'Spinaker')";
+(NULL, '-'), (NULL, 'Genua1'), (NULL, 'Genua2'), (NULL, 'Genua3'), (NULL, 'Fock'), (NULL, 'Storm Fock'), (NULL, 'Blister'), (NULL, 'Spinaker')";
 
-$insert_maneuver="INSERT INTO `seapal`.`mainsailtype` (`mainsailID`, `name`) VALUES (NULL, 'Full'), (NULL, 'Ref1'), (NULL, 'Ref2')";
+$insert_mainsail="INSERT INTO `seapal`.`mainsailtype` (`mainsailID`, `name`) VALUES (NULL, '-'), (NULL, 'Full'), (NULL, 'Ref1'), (NULL, 'Ref2')";
 
 # Execute query
 mysql_select_db("seapal", $con);
@@ -177,6 +185,12 @@ if (!mysql_query($create_trip_table,$con))
 
 echo "Creating Table for waypoints...</br>";
 if (!mysql_query($create_waypoint_table,$con))
+{
+	die('Error: ' . mysql_error());
+}
+
+echo "Creating Table for routepoint...</br>";
+if (!mysql_query($create_routepoint_table,$con))
 {
 	die('Error: ' . mysql_error());
 }

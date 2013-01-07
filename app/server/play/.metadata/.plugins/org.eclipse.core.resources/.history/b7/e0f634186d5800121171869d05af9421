@@ -1,0 +1,47 @@
+package controllers;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import play.*;
+import play.db.DB;
+import play.mvc.*;
+
+import views.html.*;
+
+public class Application extends Controller {
+
+	public static Result index() {
+
+
+		return ok(index.render("Your new application is ready."));
+	}
+
+	public static Result test() {
+		String Query = "SELECT * FROM logbook";
+		String tTest = "";
+		
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(Query);
+
+			while (result.next()) {
+
+				tTest += "Shipname: " + result.getString(1);
+				
+				System.out.println("Shipname: " + result.getString(1));
+				System.out.println("Type: " + result.getString(2));
+
+			}
+			connection.close();
+			return ok("Hello World!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return ok("Error");
+		}
+	}
+
+}
