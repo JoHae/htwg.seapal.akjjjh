@@ -5,6 +5,6 @@
  */
 
 $(function() {
-	seapalListInit('server/php/logbooks_get.php', 'server/php/logbook_delete.php', 'server/php/logbook_edit.php');
+	seapalListInit(getServiceURL('logbooks_get.php'), getServiceURL('logbook_delete.php'), getServiceURL('logbook_edit.php'));
 });
 
