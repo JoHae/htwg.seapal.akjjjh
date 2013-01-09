@@ -1,59 +1,62 @@
 package de.hwtg.seapal.logbook.client;
 
-import com.smartgwt.client.data.DSRequest;  
-import com.smartgwt.client.data.DataSource;  
-import com.smartgwt.client.data.fields.*;  
-import com.smartgwt.client.widgets.form.validator.FloatPrecisionValidator;  
-import com.smartgwt.client.widgets.form.validator.FloatRangeValidator;  
-  
-public class ItemSupplyLocalDS extends DataSource {  
-  
-    private static ItemSupplyLocalDS instance = null;  
-    private LogbookEntry data;
-  
-    public static ItemSupplyLocalDS getInstance() {  
-        if (instance == null) {  
+import com.smartgwt.client.data.DataSource;
+import com.smartgwt.client.data.fields.*;
+
+public class ItemSupplyLocalDS extends DataSource {
+
+    private static ItemSupplyLocalDS instance = null;
+
+    public static ItemSupplyLocalDS getInstance() {
+        if (instance == null) {
             instance = new ItemSupplyLocalDS("supplyItemLocalDS");
-        }  
-        return instance;  
-    }  
-  
-    public ItemSupplyLocalDS(String id) {  
-  
-        setID(id);  
-        DataSourceIntegerField pkField = new DataSourceIntegerField("itemID");  
-        pkField.setHidden(true);  
-        pkField.setPrimaryKey(true);  
-  
-        DataSourceTextField itemNameField = new DataSourceTextField("itemName", "Item Name", 128, true);  
-        DataSourceTextField skuField = new DataSourceTextField("SKU", "SKU", 10, true);  
-  
-        DataSourceTextField descriptionField = new DataSourceTextField("description", "Description", 2000);  
-        DataSourceTextField categoryField = new DataSourceTextField("category", "Category", 128, true);  
-        categoryField.setForeignKey("supplyCategory.categoryName");  
-  
-        DataSourceEnumField unitsField = new DataSourceEnumField("units", "Units", 5);  
-        unitsField.setValueMap("Roll", "Ea", "Pkt", "Set", "Tube", "Pad", "Ream", "Tin", "Bag", "Ctn", "Box");  
-  
-        DataSourceFloatField unitCostField = new DataSourceFloatField("unitCost", "Unit Cost", 5);  
-        FloatRangeValidator rangeValidator = new FloatRangeValidator();  
-        rangeValidator.setMin(0);  
-        rangeValidator.setErrorMessage("Please enter a valid (positive) cost");  
-  
-        FloatPrecisionValidator precisionValidator = new FloatPrecisionValidator();  
-        precisionValidator.setPrecision(2);  
-        precisionValidator.setErrorMessage("The maximum allowed precision is 2");  
-  
-        unitCostField.setValidators(rangeValidator, precisionValidator);  
-  
-        DataSourceBooleanField inStockField = new DataSourceBooleanField("inStock", "In Stock");  
-  
-        DataSourceDateField nextShipmentField = new DataSourceDateField("nextShipment", "Next Shipment");  
-  
-        setFields(pkField, itemNameField, skuField, descriptionField, categoryField, unitsField,  
-                  unitCostField, inStockField, nextShipmentField);  
-  
-        setClientOnly(true);  
-//        setTestData(LogbookEntry.getData());  
-    }  
-}  
+        }
+        return instance;
+    }
+
+    public ItemSupplyLocalDS(String id) {
+
+        setID(id);
+        DataSourceIntegerField idField = new DataSourceIntegerField("Id");
+        idField.setHidden(true);
+        idField.setPrimaryKey(true);
+
+        // Fields shown in the grid
+        DataSourceTextField nameField = new DataSourceTextField("Name", "Name", 25, true);
+        DataSourceTextField typeField = new DataSourceTextField("Type", "Typ", 20, true);
+        DataSourceTextField ownerField = new DataSourceTextField("Owner", "Eigent&uuml;mer", 20, true);
+        DataSourceTextField regnumField = new DataSourceTextField("RegisterNumber", "Registernummer", 20, true);
+        
+        DataSourceTextField sailsignField = new DataSourceTextField("Sailsign", "Segelzeichen", 20, false);
+        DataSourceTextField homeportField = new DataSourceTextField("Homeport", "Heimathafen", 20, false);
+        DataSourceTextField yachtclubField = new DataSourceTextField("Yachtclub", "Yachtclub", 20, false);
+        DataSourceTextField insuranceField = new DataSourceTextField("Insurance", "Versicherung", 20, false);
+        DataSourceTextField callsignField = new DataSourceTextField("Callsign", "Rufzeichen", 20, false);
+        DataSourceTextField constructerField = new DataSourceTextField("Constructer", "Kunstrukteur", 20, false);
+        
+        DataSourceFloatField lengthField = new DataSourceFloatField("Length", "L&auml;nge", 20, false);
+        DataSourceFloatField widthField = new DataSourceFloatField("Width", "Breite", 20, false);
+        DataSourceFloatField gaugeField = new DataSourceFloatField("Gauge", "Tiefgang", 20, false);
+        DataSourceFloatField mastheightField = new DataSourceFloatField("Mastheight", "Masth&ouml;he", 20, false);
+        DataSourceFloatField expulsionField = new DataSourceFloatField("Expulsion", "Verdr&auml;ngung", 20, false);
+        
+        DataSourceTextField rigtypeField = new DataSourceTextField("Rigtype", "Rigart", 20, false);
+        DataSourceIntegerField constructionyear = new DataSourceIntegerField("Constructionyear", "Konstruktionsjahr", 20, false);
+        DataSourceTextField engineField = new DataSourceTextField("Engine", "Motor", 20, false);
+        
+        DataSourceIntegerField sizeFueltankField = new DataSourceIntegerField("SizeFueltank", "Tankgr&ouml;&szlig;e", 20, false);
+        DataSourceIntegerField sizeWatertankField = new DataSourceIntegerField("SizeWatertank", "Wassertankgr&ouml;&szlig;e", 20, false);
+        DataSourceIntegerField sizeSewagetankField = new DataSourceIntegerField("SizeSewagetank", "Abwassertankgr&ouml;&szlig;e", 20, false);
+        DataSourceIntegerField sizeMainsailField = new DataSourceIntegerField("SizeMainsail", "Gro&szlig;segelgr&ouml;&szlig;e", 20, false);
+        DataSourceIntegerField sizeGenuaField = new DataSourceIntegerField("SizeGenua", "Genuagr&ouml;&szlig;e", 20, false);
+        DataSourceIntegerField sizeSpiField = new DataSourceIntegerField("SizeSpi", "Spigr&ouml;&szlig;e", 20, false);
+        
+
+        setFields(idField, nameField, typeField, ownerField, regnumField, sailsignField, homeportField, yachtclubField,
+        		insuranceField, callsignField, constructerField, lengthField, widthField, gaugeField, mastheightField,
+        		expulsionField, rigtypeField, constructionyear, engineField, sizeFueltankField, sizeWatertankField,
+        		sizeSewagetankField, sizeMainsailField, sizeGenuaField, sizeSpiField);
+        setClientOnly(true);
+        setTestData(LogbookData.getRecords());
+    }
+}

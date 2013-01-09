@@ -1,6 +1,8 @@
 package de.hwtg.seapal.logbook.server;
 
-import de.hwtg.seapal.logbook.client.LogbookEntry;
+import de.hwtg.seapal.logbook.client.LogbookRecord;
+
+import de.hwtg.seapal.logbook.client.LogbookListRecord;
 
 public class SqlTestClass {
 
@@ -14,7 +16,7 @@ public class SqlTestClass {
          */
         public static void main(String[] args) {
 
-                LogbookEntry insert_data = new LogbookEntry();
+                LogbookRecord insert_data = new LogbookRecord();
                 insert_data.setName("JDBCSchiff");
                 insert_data.setRegisterNumber("154");
                 insert_data.setOwner("ICH MAN");

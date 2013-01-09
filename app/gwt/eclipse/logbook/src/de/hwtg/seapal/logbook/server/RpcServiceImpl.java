@@ -3,7 +3,8 @@ package de.hwtg.seapal.logbook.server;
 import de.hwtg.seapal.logbook.client.RpcService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import de.hwtg.seapal.logbook.client.LogbookEntry;
+import de.hwtg.seapal.logbook.client.LogbookRecord;
+
 
 /**
  * The server side implementation of the RPC service.
@@ -16,12 +17,12 @@ public class RpcServiceImpl extends RemoteServiceServlet implements
 		return "Hello, " + input + "! I am running !";
 	}
 	
-	public boolean insertLogbook(LogbookEntry data) {
+	public boolean insertLogbook(LogbookRecord data) {
 		DB_Logbook db = new DB_Logbook();
 		return db.insertLogbookEntry(data);
 	}
 
-	public LogbookEntry[] getLogbooks() {
+	public LogbookRecord[] getLogbooks() {
 		DB_Logbook db = new DB_Logbook();
 		return db.getLogbookEntries();
 	}
