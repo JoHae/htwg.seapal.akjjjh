@@ -1,15 +1,11 @@
 package de.hwtg.seapal.logbook.client;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.google.gwt.view.client.ProvidesKey;
-
-import com.smartgwt.client.core.DataClass;
-
 
 /**
  * Information about a logbook entry.
  */
-public class LogbookEntry implements IsSerializable {
+public class LogbookRecord implements IsSerializable {
 	
 	private int id;
 	private String name = "";
@@ -37,28 +33,24 @@ public class LogbookEntry implements IsSerializable {
 	private int sizeGenua;
 	private int sizeSpi;
 	
-	public LogbookEntry() {
+	public LogbookRecord() {
 	}
 	
-	public String getTableData() {
-		return new String(name + type + owner + registerNumber);
-		
-	}
-	
-	public DataClass[] getData(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public LogbookRecord(int id, String name, String type) {
+		setId(id);
+		setName(name);
+		setType(type);
 	}
 	
 	 /**
      * @return the unique ID of the contact
      */
     public int getId() {
-      return this.id;
+    	return this.id;
     }
     
     public void setId(int id) {
-        this.id = id;
+    	this.id = id;
       }
 	
 	public String getName() {
