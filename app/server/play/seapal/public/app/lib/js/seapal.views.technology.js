@@ -71,6 +71,56 @@ function getServiceURLsData() {
 				"php" : "server/php/trips_navigationinfo_get.php",
 				"play" : "trips/getNavInfo",
 				"jsp" : ""
+			},
+		
+			
+		"logbooks_get" : 
+			{ 
+				"php" : "server/php/logbooks_get.php",
+				"play" : "logbooks/get",
+				"jsp" : ""
+			},
+		"logbook_edit" : 
+			{ 
+				"php" : "server/php/logbook_edit.php",
+				"play" : "logbooks/edit",
+				"jsp" : ""
+			},
+		"logbook_delete" : 
+			{ 
+				"php" : "server/php/logbook_delete.php",
+				"play" : "logbooks/delete",
+				"jsp" : ""
+			},
+		"trips_get" : 
+			{ 
+				"php" : "server/php/trips_get.php",
+				"play" : "trips/get",
+				"jsp" : ""
+			},
+		"trip_edit" : 
+			{ 
+				"php" : "server/php/trip_edit.php",
+				"play" : "trips/edit",
+				"jsp" : ""
+			},
+		"trip_delete" : 
+			{ 
+				"php" : "server/php/trip_delete.php",
+				"play" : "trips/delete",
+				"jsp" : ""
+			},
+		"trips_navigationinfo_get" : 
+			{ 
+				"php" : "server/php/trips_navigationinfo_get.php",
+				"play" : "trips/getNavInfo",
+				"jsp" : ""
+			},
+		"trips_navigationinfo_get" : 
+			{ 
+				"php" : "server/php/trips_navigationinfo_get.php",
+				"play" : "trips/getNavInfo",
+				"jsp" : ""
 			}
 	};
 }

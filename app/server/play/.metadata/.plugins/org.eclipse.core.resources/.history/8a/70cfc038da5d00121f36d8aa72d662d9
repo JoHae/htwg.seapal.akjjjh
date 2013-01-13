@@ -1,0 +1,34 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET		/                           					controllers.Application.index()
+GET		/test                       					controllers.Application.test()
+
+# logbooks crud
+GET		/logbooks/get               					controllers.Logbooks.get()
+POST	/logbooks/edit              					controllers.Logbooks.updateCreate()
+POST	/logbooks/delete            					controllers.Logbooks.delete()
+
+# trips crud
+GET		/trips/get/logbookId/:logbookId               	controllers.Trips.get(logbookId: String)
+POST	/trips/edit/logbookId/:logbookId             	controllers.Trips.updateCreate(logbookId: String)
+POST	/trips/delete/logbookId/:logbookId          	controllers.Trips.delete(logbookId: String)
+
+# trips navigation info
+GET		/trips/getNavInfo/logbookId/:logbookId          controllers.Trips.getNavigationInfo(logbookId: String)
+
+# trip navigation info
+GET		/trip/getNavInfo/tripId/:tripId          		controllers.Trip.getNavigationInfo(tripId: String)
+
+# waypoint services
+GET		/waypoints/get/tripId/:tripId             		controllers.Waypoints.get(tripId: String)
+POST	/waypoints/edit            						controllers.Waypoints.edit()
+POST	/waypoints/getDetails/waypointId/:waypointId    controllers.Waypoints.getDetails(waypointId: String)
+
+# routepoints services
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               					controllers.Assets.at(path="/public", file)
