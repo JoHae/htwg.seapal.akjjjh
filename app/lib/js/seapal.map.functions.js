@@ -305,6 +305,7 @@ function addNewRouteMarker(dataObject) {
 	});
 
 	google.maps.event.addListener(marker, 'drag', function() {
+		selectedRoutepointData = dataObject;
 		marker.set("labelClass", "markerLabel");
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		jQuery("#routeContext").hide();
@@ -323,11 +324,11 @@ function addNewRouteMarker(dataObject) {
 		jQuery("#routeContext").hide();
 		
 		// Set new position to database
-		// TODO: label wirdgespeichert...
+		jQuery("#save_label").show();
 		dataObject.position = marker.getPosition().toString();
-		ajaxUpdateCreate(getServiceURL('routepoint_edit.php'), dataObject, function() {
-				// label speichern fertig...
-		});
+		ajaxUpdateCreate(getServiceURL('routepoint_edit.php?routepointId=' + selectedRoutepointData.routepointId), dataObject, function() {
+				jQuery("#save_label").hide();
+		});		
 		updateRoutePolylines();
 	});
 
@@ -580,6 +581,12 @@ function addNewShipPositionMarker(dataObject) {
 	}
 	var shipMarker = new MarkerWithLabel(markerOptions);
 	realRouteMarkerArray[realRouteMarkerArray.length] = shipMarker;
+	
+	// Set visibility of marker befor to false
+	if(realRouteMarkerArray[realRouteMarkerArray.length] > 1) {
+		realRouteMarkerArray[realRouteMarkerArray.length-1].setVisible(false);	
+	}
+	
 
 	google.maps.event.addListener(shipMarker, "mouseover", function(e) {
 		shipMarker.set("labelClass", "markerLabel");
@@ -618,6 +625,7 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		message : null
 	});
 
+	jQuery("#save_label").show();
 	ajaxGet(getServiceURL('waypoint_details_get.php?waypointId=' + waypointID), function(data) {
 		// Set Details of specified waypoint
 		selectedWaypointData = data;
@@ -626,6 +634,7 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		jQuery("#seapal-realroutemenu-details").show();
 		jQuery("#editDetails").unblock();
 		$.link.waypointDetailsTemplate("#seapal-realroutemenu-details", selectedWaypointDataBinded);
+		jQuery("#save_label").hide();
 	});
 	var point = getMenuPoint(map, marker);
 
@@ -689,9 +698,9 @@ function showEditDialog() {
 			OK : function() {
 				getDataFromBindedData(selectedWaypointDataBinded, selectedWaypointData);
 				$(this).dialog('close');
-				// TODO: label wirdgespeichert...
+				jQuery("#save_label").show();
 				ajaxUpdateCreate(getServiceURL('waypoint_edit.php'), selectedWaypointData, function() {
-					// label speichern fertig...
+					jQuery("#save_label").hide();
 				});
 			},
 			Abbrechen : function() {

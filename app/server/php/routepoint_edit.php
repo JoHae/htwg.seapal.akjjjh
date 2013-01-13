@@ -15,6 +15,7 @@ if ($_POST['routepointId']!='NULL') {
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());
 	}
+	echo "";
 } else {
 	$sql = "INSERT INTO `seapal`.`routepoint`
 	(
@@ -23,14 +24,16 @@ if ($_POST['routepointId']!='NULL') {
 	VALUES
 	(
 	NULL, '$_POST[tripId]', '$_POST[name]','$_POST[notes]','$_POST[position]')";
-	
 	if (!mysql_query($sql, $con)) {
 		die('Error: ' . mysql_error());
 	}
-	
+
+	$result = mysql_query("SELECT MAX(routepointID) FROM `seapal`.`routepoint`");
+	$row = mysql_fetch_array($result);
+	$returnData = array('routepointId' => $row['MAX(routepointID)']);
+
+	echo json_encode($returnData);
 }
 mysql_close($con);
-
-echo "";
 
 ?>
