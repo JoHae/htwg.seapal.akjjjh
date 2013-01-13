@@ -1,9 +1,6 @@
 package de.hwtg.seapal.logbook.client;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.google.gwt.view.client.ProvidesKey;
-
-import com.smartgwt.client.core.DataClass;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 

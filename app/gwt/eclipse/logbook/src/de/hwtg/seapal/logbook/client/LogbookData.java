@@ -1,7 +1,5 @@
 package de.hwtg.seapal.logbook.client;
 
-
-
 public class LogbookData {
     private static LogbookListRecord[] records;
 
@@ -18,6 +16,11 @@ public class LogbookData {
     	entry1.setId(0);
 		entry1.setName("Test1");
 		entry1.setType("Segelboot");
+		entry1.setRegisterNumber("");
+		entry1.setOwner("");
+		entry1.setSailSign("");
+		entry1.setHomeport("");
+		
 		LogbookListRecord entry2 = new LogbookListRecord();
 		entry2.setId(1);
 		entry2.setName("Test2");

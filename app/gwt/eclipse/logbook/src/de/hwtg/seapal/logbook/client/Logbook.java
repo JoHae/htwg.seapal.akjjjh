@@ -17,16 +17,18 @@ package de.hwtg.seapal.logbook.client;
  */
 
 import com.smartgwt.client.data.DataSource;
-import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.types.Autofit;
 import com.smartgwt.client.widgets.IButton;
-import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.grid.events.DataArrivedEvent;
+import com.smartgwt.client.widgets.grid.events.DataArrivedHandler;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
 import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -35,6 +37,7 @@ import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 public class Logbook implements EntryPoint {
 
@@ -60,7 +63,7 @@ public class Logbook implements EntryPoint {
 
 			private void loadPage() {
 				final DataSource dataSource = ItemSupplyLocalDS.getInstance();
-				VLayout layout = new VLayout();
+				VLayout layout = new VLayout(15);
 				layout.setWidth("940px");
 
 				final DynamicForm form = new DynamicForm();
@@ -81,38 +84,72 @@ public class Logbook implements EntryPoint {
 						form.editSelectedData(listGrid);
 					}
 				});
+			
+				listGrid.addDataArrivedHandler(new DataArrivedHandler() {
+					@Override
+					public void onDataArrived(DataArrivedEvent event) {
+						listGrid.hideField("Sailsign");
+						listGrid.hideField("Homeport");
+						listGrid.hideField("Yachtclub");
+						listGrid.hideField("Insurance");
+						listGrid.hideField("Callsign");
+						listGrid.hideField("Constructer");
+						listGrid.hideField("Length");
+						listGrid.hideField("Width");
+						listGrid.hideField("Gauge");
+						listGrid.hideField("Mastheight");
+						listGrid.hideField("Expulsion");
+						listGrid.hideField("Rigtype");
+						listGrid.hideField("Constructionyear");
+						listGrid.hideField("SizeSpi");
+						listGrid.hideField("Engine");
+						listGrid.hideField("SizeFueltank");
+						listGrid.hideField("SizeWatertank");
+						listGrid.hideField("SizeSewagetank");
+						listGrid.hideField("SizeMainsail");
+						listGrid.hideField("SizeGenua");
+					}
+				});
 
 				layout.addMember(form);
 				layout.addMember(listGrid);
 
-				IButton saveButton = new IButton("Edit Logbook");
+				HLayout buttonLayout = new HLayout(15);
+				buttonLayout.setWidth("940px");
+				
+				IButton saveButton = new IButton("Save Logbook");
 				saveButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						form.saveData();
+						if(listGrid.getSelectedRecord() != null) {
+							form.saveData();
+						}
 					}
 				});
-				layout.addMember(saveButton);
+				buttonLayout.addMember(saveButton);
 
 				IButton createButton = new IButton("Create Logbook");
 				createButton.addClickHandler(new ClickHandler() {
 					public void onClick(ClickEvent event) {
-						
-						
-						ListGridRecord record = new ListGridRecord();
-			            listGrid.addData(record);
-					}
-				});
-				layout.addMember(createButton);
-				
-				IButton clearButton = new IButton("Clear Selection");
-				clearButton.addClickHandler(new ClickHandler() {
-					public void onClick(ClickEvent event) {
 						listGrid.deselectAllRecords();
-						form.clearValues();
+						ListGridRecord new_log = new LogbookListRecord();
+						new_log.setAttribute("Id", listGrid.getRecords().length+1);
+						new_log.setAttribute("Name", "Neues Logbuch");
+						
+						dataSource.addData(new_log);
+
+//						listGrid.addData(new_log);
+//						listGrid.selectRecord(new_log);
+						listGrid.selectSingleRecord(new_log);
+			            form.setValues(new_log.toMap());
+			            
+						form.selectRecord(new_log);
+//						form.editSelectedData(listGrid);
+						form.saveData();
 					}
 				});
-				layout.addMember(clearButton);
-				
+				buttonLayout.addMember(createButton);
+				layout.addMember(buttonLayout);
+							
 				RootPanel.get("seapal-content").add(layout);
 				DOM.getElementById("loadingWrapper").getStyle()
 						.setDisplay(Display.NONE);

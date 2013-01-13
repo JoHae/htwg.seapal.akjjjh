@@ -5,11 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import de.hwtg.seapal.logbook.client.LogbookRecord;
-
-
 import de.hwtg.seapal.logbook.client.LogbookListRecord;
-
-
 
 public class DB_Logbook extends DB_Conn {
 
@@ -100,7 +96,6 @@ public class DB_Logbook extends DB_Conn {
 	 */
 	public boolean deleteLogbookEntry(LogbookListRecord data) {
 		int id = data.getId();
-		String name = data.getName();
 
 		// prepare for mysql
 		String sId = escapeForSql(new Integer(id).toString());

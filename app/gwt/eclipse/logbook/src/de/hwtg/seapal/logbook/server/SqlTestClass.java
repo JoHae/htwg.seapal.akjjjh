@@ -2,8 +2,6 @@ package de.hwtg.seapal.logbook.server;
 
 import de.hwtg.seapal.logbook.client.LogbookRecord;
 
-import de.hwtg.seapal.logbook.client.LogbookListRecord;
-
 public class SqlTestClass {
 
         /**
