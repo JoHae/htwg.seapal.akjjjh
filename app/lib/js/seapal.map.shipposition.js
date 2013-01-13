@@ -25,7 +25,8 @@ function updatePosition(dataObject) {
 	// position is "(lat, lng)"
 	
 	var new_position = convertPositionToObject(dataObject.position);
-	dataObject.position = new_position;
+	dataObject.position = new_position;
+	dataObject.has_data = 0;
 	addNewShipPositionMarker(dataObject);
 	map.setCenter(new_position);
 }
