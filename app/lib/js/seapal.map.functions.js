@@ -192,6 +192,7 @@ function addNewStandardMarker() {
 
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		mouseOver = true;
 	});
@@ -204,6 +205,7 @@ function addNewStandardMarker() {
 
 	google.maps.event.addListener(marker, 'drag', function() {
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		jQuery("#standardContext").hide();
 		updateDistancePolylines();
@@ -213,6 +215,7 @@ function addNewStandardMarker() {
 		jQuery("#standardContext").hide();
 		if (mouseOver) {
 			marker.set("labelClass", "markerLabel");
+			$('.markerLabel').css('zIndex', 9999);
 			marker.set("labelContent", getPostionString(marker.getPosition()));
 		} else {
 			marker.set("labelClass", "");
@@ -294,6 +297,7 @@ function addNewRouteMarker(dataObject) {
 
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		mouseOver = true;
 	});
@@ -316,6 +320,7 @@ function addNewRouteMarker(dataObject) {
 	google.maps.event.addListener(marker, 'dragend', function() {
 		if (mouseOver) {
 			marker.set("labelClass", "markerLabel");
+			$('.markerLabel').css('zIndex', 9999);
 			marker.set("labelContent", getPostionString(marker.getPosition()));
 		} else {
 			marker.set("labelClass", "");
@@ -422,6 +427,7 @@ function addNewDistanceMarker() {
 
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		mouseOver = true;
 	});
@@ -435,6 +441,7 @@ function addNewDistanceMarker() {
 	google.maps.event.addListener(marker, 'drag', function() {
 		jQuery("#distanceContext").hide();
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		updateDistancePolylines();
 	});
@@ -442,6 +449,7 @@ function addNewDistanceMarker() {
 	google.maps.event.addListener(marker, 'dragend', function() {
 		if (mouseOver) {
 			marker.set("labelClass", "markerLabel");
+			$('.markerLabel').css('zIndex', 9999);
 			marker.set("labelContent", getPostionString(marker.getPosition()));
 		} else {
 			marker.set("labelClass", "");
@@ -583,19 +591,22 @@ function addNewShipPositionMarker(dataObject) {
 	realRouteMarkerArray[realRouteMarkerArray.length] = shipMarker;
 	
 	// Set visibility of marker befor to false
-	if(realRouteMarkerArray[realRouteMarkerArray.length] > 1) {
-		realRouteMarkerArray[realRouteMarkerArray.length-1].setVisible(false);	
+	if(realRouteMarkerArray.length > 1) {
+		realRouteMarkerArray[realRouteMarkerArray.length-2].setIcon("./lib/img/green_dot.png");
 	}
 	
 
 	google.maps.event.addListener(shipMarker, "mouseover", function(e) {
 		shipMarker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		shipMarker.set("labelContent", getPostionString(shipMarker.getPosition()));
+		shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
 	});
 
 	google.maps.event.addListener(shipMarker, "mouseout", function(e) {
 		shipMarker.set("labelClass", "");
 		shipMarker.set("labelContent", "");
+		shipMarker.setIcon("./lib/img/green_dot.png");
 	});
 
 	google.maps.event.addListener(shipMarker, 'click', function(event) {
@@ -603,6 +614,7 @@ function addNewShipPositionMarker(dataObject) {
 		jQuery("#standardContext").hide();
 		jQuery("#routeContext").hide();
 		selectedMarker = shipMarker;
+
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = shipMarker;
 			updateDistancePolylines();

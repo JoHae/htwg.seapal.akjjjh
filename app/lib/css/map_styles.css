@@ -65,7 +65,7 @@ nav a:hover {
 .markerLabel {
 	width: 110px;
 	left: 0;
-	z-index: 0;    
+	z-index: 9999;
 	background: #444;	
 	background: linear-gradient(#444, #111);
 	box-shadow: 0 -1px 0 rgba(255,255,255,.3);	
