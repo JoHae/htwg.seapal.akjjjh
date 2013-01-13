@@ -327,13 +327,13 @@ function addNewRouteMarker(dataObject) {
 			marker.set("labelContent", "");
 		}
 		jQuery("#routeContext").hide();
-		
+
 		// Set new position to database
 		jQuery("#save_label").show();
 		dataObject.position = marker.getPosition().toString();
 		ajaxUpdateCreate(getServiceURL('routepoint_edit.php?routepointId=' + selectedRoutepointData.routepointId), dataObject, function() {
-				jQuery("#save_label").hide();
-		});		
+			jQuery("#save_label").hide();
+		});
 		updateRoutePolylines();
 	});
 
@@ -343,7 +343,7 @@ function addNewRouteMarker(dataObject) {
 		jQuery("#realRouteContext").hide();
 		selectedMarker = marker;
 		selectedRoutepointData = dataObject;
-		
+
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = marker;
 			updateDistancePolylines();
@@ -575,11 +575,16 @@ function addNewShipPositionMarker(dataObject) {
 		alert("No position while trying to add new Ship Marker.");
 	}
 
+	var icon_url = "./lib/img/Sailing_Ship_48.png"
+	if (!dataObject.has_data) {
+		var icon_url = "./lib/img/green_dot.png"
+	}
+
 	var markerOptions = {
 		position : position,
 		map : map,
 		draggable : false,
-		icon : "./lib/img/Sailing_Ship_48.png",
+		icon : icon_url,
 		labelContent : "",
 		labelAnchor : new google.maps.Point(0, -10),
 		labelClass : "", // the CSS class for the label
@@ -589,24 +594,30 @@ function addNewShipPositionMarker(dataObject) {
 	}
 	var shipMarker = new MarkerWithLabel(markerOptions);
 	realRouteMarkerArray[realRouteMarkerArray.length] = shipMarker;
-	
-	// Set visibility of marker befor to false
-	if(realRouteMarkerArray.length > 1) {
-		realRouteMarkerArray[realRouteMarkerArray.length-2].setIcon("./lib/img/green_dot.png");
-	}
-	
+	waypointDataArray[realRouteMarkerArray.length] = dataObject;
 
+	// Set visibility of marker befor to false
+	// if(realRouteMarkerArray.length > 1) {
+	// realRouteMarkerArray[realRouteMarkerArray.length-2].setIcon("./lib/img/green_dot.png");
+	// }
 	google.maps.event.addListener(shipMarker, "mouseover", function(e) {
 		shipMarker.set("labelClass", "markerLabel");
 		$('.markerLabel').css('zIndex', 9999);
 		shipMarker.set("labelContent", getPostionString(shipMarker.getPosition()));
-		shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+		if (!dataObject.has_data) {
+			shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+		}
 	});
 
 	google.maps.event.addListener(shipMarker, "mouseout", function(e) {
 		shipMarker.set("labelClass", "");
 		shipMarker.set("labelContent", "");
-		shipMarker.setIcon("./lib/img/green_dot.png");
+		var index = realRouteMarkerArray.indexOf(shipMarker);
+		if (waypointDataArray[index].has_data) {
+			 selectedMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+		} else {
+			selectedMarker.setIcon("./lib/img/green_dot.png");
+		}
 	});
 
 	google.maps.event.addListener(shipMarker, 'click', function(event) {
@@ -637,7 +648,6 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		message : null
 	});
 
-	jQuery("#save_label").show();
 	ajaxGet(getServiceURL('waypoint_details_get.php?waypointId=' + waypointID), function(data) {
 		// Set Details of specified waypoint
 		selectedWaypointData = data;
@@ -646,7 +656,6 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		jQuery("#seapal-realroutemenu-details").show();
 		jQuery("#editDetails").unblock();
 		$.link.waypointDetailsTemplate("#seapal-realroutemenu-details", selectedWaypointDataBinded);
-		jQuery("#save_label").hide();
 	});
 	var point = getMenuPoint(map, marker);
 
@@ -711,9 +720,18 @@ function showEditDialog() {
 				getDataFromBindedData(selectedWaypointDataBinded, selectedWaypointData);
 				$(this).dialog('close');
 				jQuery("#save_label").show();
-				ajaxUpdateCreate(getServiceURL('waypoint_edit.php'), selectedWaypointData, function() {
+				ajaxUpdateCreate(getServiceURL('waypoint_edit.php'), selectedWaypointData, function(returned_data) {
+					var index = realRouteMarkerArray.indexOf(selectedMarker);
+					if (returned_data.has_data) {
+						waypointDataArray[index].has_data = 1;
+						selectedMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+					} else {
+						waypointDataArray[index].has_data = 0;
+						selectedMarker.setIcon("./lib/img/green_dot.png");
+					}
 					jQuery("#save_label").hide();
 				});
+
 			},
 			Abbrechen : function() {
 				$(this).dialog('close');

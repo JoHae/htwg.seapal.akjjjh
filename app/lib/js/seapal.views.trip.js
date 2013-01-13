@@ -18,6 +18,7 @@ var actualCrosshairMarker;
 var selectedMarker;
 var selectedWaypointData;
 var selectedWaypointDataBinded;
+var waypointDataArray = new Array();
 
 var realRouteMarkerArray = new Array();
 var realRoute;
