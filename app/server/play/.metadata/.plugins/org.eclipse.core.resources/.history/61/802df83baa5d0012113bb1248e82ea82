@@ -1,0 +1,105 @@
+package controllers;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
+
+import play.db.DB;
+
+
+import play.mvc.BodyParser;
+import play.mvc.BodyParser.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+public class Logbooks extends Controller {
+	
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result get() {
+		return getLogbooks();
+	}
+	
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result updateCreate() {
+		return getLogbooks();
+	}
+	
+	@BodyParser.Of(Json.class)
+	public static Result delete() {
+		JsonNode json = request().body().asJson();
+		String removeId = json.findPath("removeId").getTextValue();
+		if (removeId == null) {
+			return badRequest("Missing parameter [removeId]");
+		}
+		String Query = "" + 
+				"DELETE FROM `seapal`.`logbook` " +
+				"WHERE logbookID=" + removeId;
+		
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(Query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return badRequest(e.getMessage());
+		}
+		return getLogbooks();
+	}
+	
+	
+	
+	private static Result getLogbooks() {
+		ArrayNode tJsonResult = JsonNodeFactory.instance.arrayNode();
+		
+		String Query = "SELECT * FROM logbook";
+		
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(Query);
+
+			while (result.next()) {
+				ObjectNode tJsonLogBook = play.libs.Json.newObject();
+				tJsonLogBook.put("shipname", result.getString("shipname"));
+				tJsonLogBook.put("shiptype", result.getString("type"));
+				tJsonLogBook.put("shipowner", result.getString("owner"));
+				tJsonLogBook.put("shipregisternumber", result.getString("registnumber"));
+				tJsonLogBook.put("sailsign", result.getString("sailsign"));
+				tJsonLogBook.put("homeport", result.getString("homeport"));
+				tJsonLogBook.put("yachtclub", result.getString("yachtclub"));
+				tJsonLogBook.put("insurance", result.getString("insurance"));
+				tJsonLogBook.put("callsign", result.getString("callsign"));
+				tJsonLogBook.put("constructer", result.getString("constructer"));
+				tJsonLogBook.put("shiplength", result.getString("length"));
+				tJsonLogBook.put("engine", result.getString("engine"));
+				tJsonLogBook.put("shipwidth", result.getString("width"));
+				tJsonLogBook.put("gauge", result.getString("gauge"));
+				tJsonLogBook.put("mastheight", result.getString("mastheight"));
+				tJsonLogBook.put("expulsion", result.getString("expulsion"));
+				tJsonLogBook.put("rigtype", result.getString("rigtype"));
+				tJsonLogBook.put("constructionyear", result.getString("constructionyear"));
+				tJsonLogBook.put("size_fueltank", result.getString("size_fueltank"));
+				tJsonLogBook.put("size_watertank", result.getString("size_watertank"));
+				tJsonLogBook.put("size_sewagetank", result.getString("size_sewagetank"));
+				tJsonLogBook.put("size_mainsail", result.getString("size_mainsail"));
+				tJsonLogBook.put("size_genua", result.getString("size_genua"));
+				tJsonLogBook.put("size_spi", result.getString("size_spi"));
+				tJsonLogBook.put("dataId", result.getString("logbookID"));
+				
+				tJsonResult.add(tJsonLogBook);
+			}
+			connection.close();
+			return ok(tJsonResult);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return badRequest(e.getMessage());
+		}
+	}
+
+}

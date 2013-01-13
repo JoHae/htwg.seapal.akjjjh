@@ -12,4 +12,8 @@
 <fullyQualifiedTypeName name="org.codehaus.jackson.node.ContainerNode"/>
 <fullyQualifiedTypeName name="org.codehaus.jackson.node.JsonNodeFactory"/>
 <fullyQualifiedTypeName name="play.mvc.Result"/>
+<fullyQualifiedTypeName name="org.codehaus.jackson.JsonNode"/>
+<fullyQualifiedTypeName name="play.mvc.Http.RequestBody"/>
+<fullyQualifiedTypeName name="play.mvc.Http.Request"/>
+<fullyQualifiedTypeName name="play.data.DynamicForm"/>
 </qualifiedTypeNameHistroy>
