@@ -300,7 +300,7 @@ $(function() {
 	$("#deleteRoute").click(function() {
 		// delete Route from Database
 		jQuery("#save_label").show();
-		ajaxDelete('server/php/routepoint_delete.php', "NULL", function() {
+		ajaxDelete('server/php/routepoint_delete_all.php', tripID, function() {
 			jQuery("#save_label").hide();
 		});
 

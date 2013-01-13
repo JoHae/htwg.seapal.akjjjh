@@ -8,7 +8,7 @@ if ($_POST['removeId'] != 'NULL') {
 	$sql = "
 	DELETE FROM `seapal`.`routepoint`
 	WHERE
-	routepointID='$_POST[removeId]'
+	tripID='$_POST[removeId]'
 	";
 }
 
