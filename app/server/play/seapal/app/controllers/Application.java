@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import play.*;
 import play.db.DB;
 import play.mvc.*;
 

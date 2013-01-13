@@ -9,17 +9,125 @@ import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
 import org.codehaus.jackson.node.ObjectNode;
 
+import play.data.DynamicForm;
 import play.db.DB;
 
-import play.libs.Json;
-import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 public class Logbooks extends Controller {
 	
-	@BodyParser.Of(BodyParser.Json.class)
 	public static Result get() {
+		return getLogbooks();
+	}
+	
+	public static Result updateCreate() {
+		final DynamicForm form = form().bindFromRequest();
+		final String dataId = form.get("dataId");
+		
+		String query = "";
+		if (dataId == null) {
+			return badRequest("Missing parameter [dataId]");
+		} else if (dataId.equals("NULL") == false) {
+			query = "UPDATE `seapal`.`logbook` " +
+					"SET " +
+					"shipname='" + form.get("shipname") + "', " +
+					"registnumber='" + form.get("shipregisternumber") + "', " +
+					"sailsign='" + form.get("sailsign") + "', " +
+					"homeport='" + form.get("homeport") + "', " +
+					"yachtclub='" + form.get("yachtclub") + "', " +
+					"owner='" + form.get("shipowner") + "', " +
+					"insurance='" + form.get("insurance") + "', " +
+					"callsign='" + form.get("callsign") + "', " +
+					"type='" + form.get("shiptype") + "', " +
+					"constructer='" + form.get("constructer") + "', " +
+					"length=" + (form.get("shiplength").equals("") ? "NULL" : ("'" + form.get("shiplength") + "'")) + ", " +
+					"width=" + (form.get("shipwidth").equals("") ? "NULL" : ("'" + form.get("shipwidth") + "' ")) + ", " +
+					"gauge=" + (form.get("gauge").equals("") ? "NULL" : ("'" + form.get("gauge") + "' ")) + ", " +     
+					"mastheight=" + (form.get("mastheight").equals("") ? "NULL" : ("'" + form.get("mastheight") + "'")) + ", " +      
+					"expulsion=" + (form.get("expulsion").equals("") ? "NULL" : ("'" + form.get("expulsion") + "'")) + ", " +     
+					"rigtype='" + form.get("rigtype") + "', " +
+					"constructionyear=" + (form.get("constructionyear").equals("") ? "NULL" : ("'" + form.get("constructionyear") + "'")) + ", " +        
+					"engine='" + form.get("engine") + "', " +
+					"size_fueltank=" + (form.get("size_fueltank").equals("") ? "NULL" : ("'" + form.get("size_fueltank") + "'")) + ", " +         
+					"size_watertank=" + (form.get("size_watertank").equals("") ? "NULL" : ("'" + form.get("size_watertank") + "'")) + ", " +         
+					"size_sewagetank=" + (form.get("size_sewagetank").equals("") ? "NULL" : ("'" + form.get("size_sewagetank") + "'")) + ", " +         
+					"size_mainsail=" + (form.get("size_mainsail").equals("") ? "NULL" : ("'" + form.get("size_mainsail") + "'")) + ", " +       
+					"size_genua=" + (form.get("size_genua").equals("") ? "NULL" : ("'" + form.get("size_genua") + "'")) + ", " +         
+					"size_spi=" + (form.get("size_spi").equals("") ? "NULL" : ("'" + form.get("size_spi") + "'")) + " " +        
+					"WHERE " +
+					"logbookID='" + dataId + "'";
+		} else {
+			query = "INSERT INTO `seapal`.`logbook` \n ( \n" +
+							"`logbookID`, `shipname`, `registnumber`, `sailsign`, `homeport`, `yachtclub`, `owner`, `insurance`, `callsign`, `type`, \n" +
+							"`constructer`, `length`, `width`, `gauge`, `mastheight`, `expulsion`, `rigtype`, `constructionyear`, `engine`, `size_fueltank`, \n" +
+							"`size_watertank`, `size_sewagetank`, `size_mainsail`, `size_genua`, `size_spi` \n" +
+							") VALUES ( \n" +
+							"NULL, " +
+							"'" + form.get("shipname") + "', " +
+							"'" + form.get("shipregisternumber") + "', " +
+							"'" + form.get("sailsign") + "', " +
+							"'" + form.get("homeport") + "', " +
+							"'" + form.get("yachtclub") + "', " +
+							"'" + form.get("shipowner") + "', " +
+							"'" + form.get("insurance") + "', " +
+							"'" + form.get("callsign") + "', " +
+							"'" + form.get("shiptype") + "', " +
+							"'" + form.get("constructer") + "', " +
+							(form.get("shiplength").equals("") ? "NULL, " : ("'" + form.get("shiplength") + "', ")) +         
+							(form.get("shipwidth").equals("") ? "NULL, " : ("'" + form.get("shipwidth") + "', ")) +            
+							(form.get("gauge").equals("") ? "NULL, " : ("'" + form.get("gauge") + "', ")) +         
+							(form.get("mastheight").equals("") ? "NULL, " : ("'" + form.get("mastheight") + "', ")) +        
+							(form.get("expulsion").equals("") ? "NULL, " : ("'" + form.get("expulsion") + "', ")) +          
+							"'" + form.get("rigtype") + "', " +
+							(form.get("constructionyear").equals("") ? "NULL, " : ("'" + form.get("constructionyear") + "', ")) +          
+							"'" + form.get("engine") + "', " +
+							(form.get("size_fueltank").equals("") ? "NULL, " : ("'" + form.get("size_fueltank") + "', ")) +
+							(form.get("size_watertank").equals("") ? "NULL, " : ("'" + form.get("size_watertank") + "', ")) +          
+							(form.get("size_sewagetank").equals("") ? "NULL, " : ("'" + form.get("size_sewagetank") + "', ")) +         
+							(form.get("size_mainsail").equals("") ? "NULL, " : ("'" + form.get("size_mainsail") + "', ")) +      
+							(form.get("size_genua").equals("") ? "NULL, " : ("'" + form.get("size_genua") + "', ")) +        
+							(form.get("size_spi").equals("") ? "NULL " : ("'" + form.get("size_spi"))) +         
+							")";
+		}
+		
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			select.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return badRequest(e.getMessage());
+		}
+		
+		return getLogbooks();
+	}
+	
+	public static Result delete() {
+		final DynamicForm form = form().bindFromRequest();
+		final String removeId = form.get("removeId");
+		
+		if (removeId == null) {
+			return badRequest("Missing parameter [removeId]");
+		}
+		String query = "" + 
+				"DELETE FROM `seapal`.`logbook` " +
+				"WHERE logbookID=" + removeId;
+		
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			select.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return badRequest(e.getMessage());
+		}
+		return getLogbooks();
+	}
+	
+	
+	
+	private static Result getLogbooks() {
 		ArrayNode tJsonResult = JsonNodeFactory.instance.arrayNode();
 		
 		String Query = "SELECT * FROM logbook";
@@ -30,7 +138,7 @@ public class Logbooks extends Controller {
 			ResultSet result = select.executeQuery(Query);
 
 			while (result.next()) {
-				ObjectNode tJsonLogBook = Json.newObject();
+				ObjectNode tJsonLogBook = play.libs.Json.newObject();
 				tJsonLogBook.put("shipname", result.getString("shipname"));
 				tJsonLogBook.put("shiptype", result.getString("type"));
 				tJsonLogBook.put("shipowner", result.getString("owner"));
@@ -65,7 +173,6 @@ public class Logbooks extends Controller {
 			e.printStackTrace();
 			return badRequest(e.getMessage());
 		}
-		
 	}
 
 }

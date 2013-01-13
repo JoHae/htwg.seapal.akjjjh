@@ -1,0 +1,2 @@
+serviceClass: de.hwtg.seapal.logbook.client.RpcService
+path: A20F2233CCC4969CFDFC5D5FF2B53343.gwt.rpc

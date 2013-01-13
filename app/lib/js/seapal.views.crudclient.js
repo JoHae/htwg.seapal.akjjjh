@@ -11,7 +11,7 @@ function ajaxGet(serviceUrl, successFunction) {
 			successFunction(data);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("fail :-(\n" + textStatus + " " + errorThrown);
+			alert("fail :-(\n" + textStatus + " " + errorThrown + "\n\n" + jqXHR.responseText);
 		}
 	});
 }
@@ -29,7 +29,7 @@ function ajaxUpdateCreate(serviceUrl, newData, successFunction) {
 			successFunction(data);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("fail :-(\n" + textStatus + " " + errorThrown);
+			alert("fail :-(\n" + textStatus + " " + errorThrown + "\n\n" + jqXHR.responseText);
 		}
 	});
 }
@@ -51,7 +51,7 @@ function ajaxDelete(serviceUrl, removeId, successFunction) {
 			successFunction(data);
 		},
 		error : function(jqXHR, textStatus, errorThrown) {
-			alert("fail :-(\n" + textStatus + " " + errorThrown);
+			alert("fail :-(\n" + textStatus + " " + errorThrown + "\n\n" + jqXHR.responseText);
 		}
 	});
 }

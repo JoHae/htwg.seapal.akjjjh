@@ -2,15 +2,16 @@
 var seapalTechnologyCache = null;
 var seapalServiceURLsDataCache = null;
 
- // var seapalPlayServer = "localhost:9000/";
+//var seapalPlayServer = "localhost:9000/";
+var seapalPlayServer = "../../";
 
 function getServiceURL(service, parameterName, parameterValue) {
 	return prepareServiceURL(service, getTechnology(), parameterName, parameterValue);
 }
 
-function getServiceURL(service) {
+/*function getServiceURL(service) {
 	return prepareServiceURL(service, getTechnology(), null, null);
-}
+}*/
 
 
 function setTechnology(technology) {
@@ -32,19 +33,43 @@ function getServiceURLsData() {
 		"logbooks_get" : 
 			{ 
 				"php" : "server/php/logbooks_get.php",
-				"play" : "../../logbooks/get",
+				"play" : "logbooks/get",
 				"jsp" : ""
 			},
 		"logbook_edit" : 
 			{ 
 				"php" : "server/php/logbook_edit.php",
-				"play" : "../../logbooks/edit",
+				"play" : "logbooks/edit",
 				"jsp" : ""
 			},
 		"logbook_delete" : 
 			{ 
 				"php" : "server/php/logbook_delete.php",
-				"play" : "../../logbooks/delete",
+				"play" : "logbooks/delete",
+				"jsp" : ""
+			},
+		"trips_get" : 
+			{ 
+				"php" : "server/php/trips_get.php",
+				"play" : "trips/get",
+				"jsp" : ""
+			},
+		"trip_edit" : 
+			{ 
+				"php" : "server/php/trip_edit.php",
+				"play" : "trips/edit",
+				"jsp" : ""
+			},
+		"trip_delete" : 
+			{ 
+				"php" : "server/php/trip_delete.php",
+				"play" : "trips/delete",
+				"jsp" : ""
+			},
+		"trips_navigationinfo_get" : 
+			{ 
+				"php" : "server/php/trips_navigationinfo_get.php",
+				"play" : "trips/getNavInfo",
 				"jsp" : ""
 			}
 	};
@@ -53,6 +78,11 @@ function getServiceURLsData() {
 function prepareServiceURL(serviceName, technology, parameterName, parameterValue) {
 	if (seapalServiceURLsDataCache == null) {
 		seapalServiceURLsDataCache = getServiceURLsData();
+	}
+	
+	// compatibility with old urls
+	if (seapalServiceURLsDataCache[serviceName] == null) {
+		return "server/php/" + serviceName;
 	}
 	
 	// get the service url part
@@ -64,7 +94,7 @@ function prepareServiceURL(serviceName, technology, parameterName, parameterValu
 			tServURL += "?" + parameterName + "=" + parameterValue;
 		}
 	} else if (technology === "play") {
-		// tServURL = seapalPlayServer + tServURL;
+		tServURL = seapalPlayServer + tServURL;
 		if (parameterName != null) {
 			tServURL += "/" + parameterName + "/" + parameterValue;
 		}

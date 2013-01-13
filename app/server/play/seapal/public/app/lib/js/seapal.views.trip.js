@@ -109,11 +109,11 @@ $(function() {
 		jQuery("#routeContext").hide();
 		jQuery("#realRouteContext").hide();
 		updateCoords();
-		zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
-			//here I have the correct zoom level
-			setNewCrosshairMarkerMenu();
-			google.maps.event.removeListener(zoomChangeBoundsListener);
-		});
+		// zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
+			// //here I have the correct zoom level
+			// setNewCrosshairMarkerMenu();
+			// google.maps.event.removeListener(zoomChangeBoundsListener);
+		// });
 
 	});
 	google.maps.event.addListener(map, 'center_changed', function() {
@@ -251,6 +251,12 @@ $(function() {
 
 	// delete Route completly
 	$("#deleteRoute").click(function() {
+		// delete Route from Database
+		// TODO: label wirdgespeichert...
+		ajaxDelete('server/php/routepoint_delete.php', "NULL", function() {
+			// label speichern fertig...
+		});
+		
 		var length = routeMarkerArray.length;
 		for (var i = 0; i < length; i++) {
 			if (distanceMarkerArray.indexOf(routeMarkerArray[i]) != -1) {

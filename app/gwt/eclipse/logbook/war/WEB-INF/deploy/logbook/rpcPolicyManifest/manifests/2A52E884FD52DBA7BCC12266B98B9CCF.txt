@@ -1,0 +1,2 @@
+serviceClass: de.hwtg.seapal.logbook.client.RpcService
+path: 9A946D89DD6AAA81D3288942B3445C2F.gwt.rpc
