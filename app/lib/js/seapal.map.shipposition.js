@@ -1,5 +1,5 @@
 $(function() {
-	Server = new FancyWebSocket('ws://127.0.0.1:9300');
+	Server = new FancyWebSocket('ws://' + getSocketServer() + ':9300');
 
 	//Let the user know we're connected
 	Server.bind('open', function() {
