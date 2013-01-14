@@ -9,7 +9,7 @@
 
 
 var seapalListItemEditing = false;
-var seapalListItemEditingRequestId = -1;
+var seapalListItemEditingRequestId = null;
 var seapalListData = null;
 var seapalListDataBinded = null;
 var seapalAjaxGetUrl = null;
@@ -53,7 +53,7 @@ function seapalDataLoaded(listData) {
 
 	// reset variables
 	seapalListItemEditing = false;
-	seapalListItemEditingRequestId = -1;
+	seapalListItemEditingRequestId = null;
 
 	// clear list
 	$("#seapal-list").html("");
@@ -114,31 +114,30 @@ function seapalDataLoaded(listData) {
 }
 
 function onBeforePanelActivate(event, ui) {
-	var closing = $(this).find('.ui-state-active').length;
-	var elementNr = $(this).find(".seapal-header").index(ui.newHeader[0]);
-
-	if (seapalListItemEditing && closing) {
+	var oneTabIsOpen = $(this).find('.ui-state-active').length;
+	var otherTabWillBeOpened = ui.newHeader.length;
+	
+	if (seapalListItemEditing) {
 		return false;
 	}
-	if (elementNr === 0) {
-		itemEdit("new");
-	}
-	if (seapalListItemEditingRequestId != -1) {
-		itemEdit(seapalListItemEditingRequestId);
-		seapalListItemEditingRequestId = -1;
-	}
-	return true;
-}
-
-function blockAllOtherListItems(itemId) {
-	for (var i = 0; i < seapalListData.length; i++) {
-		var tCurrdataId = seapalListData[i].dataId;
-		if (tCurrdataId === itemId) {
-
-		} else {
-			$("#seapal-list .seapal-header .seapal-nr-" + tCurrdataId + " .seapal-readonly").block();
+	if (otherTabWillBeOpened) {
+		var newTabElementNr = $(this).find(".seapal-header").index(ui.newHeader[0]);
+		if (newTabElementNr === 0) {
+			seapalListItemEditingRequestId = "new";
 		}
 	}
+	
+	if (seapalListItemEditingRequestId == null) {
+		return true;
+	}
+	itemEdit(seapalListItemEditingRequestId);
+	seapalListItemEditingRequestId = null;
+	
+	// if the requested edit panel is already open, do not close it
+	if (otherTabWillBeOpened == false) {
+		return false;
+	}
+	return true;
 }
 
 function itemEdit(itemId) {
@@ -224,10 +223,9 @@ function addFunctionsToListItemAdd() {
 
 	$("#seapal-list-item-new-cancel").click(function(e) {
 		itemEditCancel("new");
-		$("#seapal-list").accordion("activate", -1)
+		//$("#seapal-list").accordion("activate", -1)
 		setBindingData(seapalListDataBinded, getEmpyData(), "new");
-		return false;
-		// prevent toggling collapsion
+		return true;
 	});
 }
 
