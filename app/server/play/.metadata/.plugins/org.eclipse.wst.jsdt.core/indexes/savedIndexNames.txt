@@ -1,5 +1,1 @@
 INDEX VERSION 1.122+C:\Studium\Webtech\htwg.seapal.akjjjh\app\server\play\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2738358726.index
-783737344.index
-1228924886.index
-4242456805.index
