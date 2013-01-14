@@ -14,7 +14,8 @@ function getWaypointMinimalData() {
 	return {
 		"tripId" : "0",
 		"waypointId" : "NULL",
-		"position" : "(47.66, 9.00)"
+		"position" : "(47.66, 9.00)",
+		"has_data": 1
 	};
 }
 
@@ -22,7 +23,8 @@ function getWaypointNewData(tripID, position) {
 	return {
 		"tripId" : tripID,
 		"waypointId" : "NULL",
-		"position" : position
+		"position" : position,
+		"has_data": 1
 	};
 }
 
@@ -134,6 +136,7 @@ function getWaypointFullTestData() {
 		"tripId" : "HTWG Konstanz",
 		"waypointtitle" : "Vergin",
 		"position" : "(47.66, 9.00)",
+		"has_data": 1,
 		"btm" : "asd",
 		"dtm" : "asd",
 		"cog" : "asd",

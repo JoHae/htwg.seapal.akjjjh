@@ -192,6 +192,7 @@ function addNewStandardMarker() {
 
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		mouseOver = true;
 	});
@@ -204,6 +205,7 @@ function addNewStandardMarker() {
 
 	google.maps.event.addListener(marker, 'drag', function() {
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		jQuery("#standardContext").hide();
 		updateDistancePolylines();
@@ -213,6 +215,7 @@ function addNewStandardMarker() {
 		jQuery("#standardContext").hide();
 		if (mouseOver) {
 			marker.set("labelClass", "markerLabel");
+			$('.markerLabel').css('zIndex', 9999);
 			marker.set("labelContent", getPostionString(marker.getPosition()));
 		} else {
 			marker.set("labelClass", "");
@@ -294,6 +297,7 @@ function addNewRouteMarker(dataObject) {
 
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		mouseOver = true;
 	});
@@ -305,6 +309,7 @@ function addNewRouteMarker(dataObject) {
 	});
 
 	google.maps.event.addListener(marker, 'drag', function() {
+		selectedRoutepointData = dataObject;
 		marker.set("labelClass", "markerLabel");
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		jQuery("#routeContext").hide();
@@ -315,19 +320,20 @@ function addNewRouteMarker(dataObject) {
 	google.maps.event.addListener(marker, 'dragend', function() {
 		if (mouseOver) {
 			marker.set("labelClass", "markerLabel");
+			$('.markerLabel').css('zIndex', 9999);
 			marker.set("labelContent", getPostionString(marker.getPosition()));
 		} else {
 			marker.set("labelClass", "");
 			marker.set("labelContent", "");
 		}
 		jQuery("#routeContext").hide();
-		
+
 		// Set new position to database
-		// TODO: label wirdgespeichert...
+		jQuery("#save_label").show();
 		dataObject.position = marker.getPosition().toString();
-		ajaxUpdateCreate(getServiceURL('routepoint_edit.php'), dataObject, function() {
-				// label speichern fertig...
-		});
+		ajaxUpdateCreate(getServiceURL('routepoint_edit'), dataObject, function() {
+			jQuery("#save_label").hide();
+		});
 		updateRoutePolylines();
 	});
 
@@ -337,7 +343,7 @@ function addNewRouteMarker(dataObject) {
 		jQuery("#realRouteContext").hide();
 		selectedMarker = marker;
 		selectedRoutepointData = dataObject;
-		
+
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = marker;
 			updateDistancePolylines();
@@ -421,6 +427,7 @@ function addNewDistanceMarker() {
 
 	google.maps.event.addListener(marker, "mouseover", function(e) {
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		mouseOver = true;
 	});
@@ -434,6 +441,7 @@ function addNewDistanceMarker() {
 	google.maps.event.addListener(marker, 'drag', function() {
 		jQuery("#distanceContext").hide();
 		marker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		marker.set("labelContent", getPostionString(marker.getPosition()));
 		updateDistancePolylines();
 	});
@@ -441,6 +449,7 @@ function addNewDistanceMarker() {
 	google.maps.event.addListener(marker, 'dragend', function() {
 		if (mouseOver) {
 			marker.set("labelClass", "markerLabel");
+			$('.markerLabel').css('zIndex', 9999);
 			marker.set("labelContent", getPostionString(marker.getPosition()));
 		} else {
 			marker.set("labelClass", "");
@@ -578,17 +587,37 @@ function addNewShipPositionMarker(dataObject) {
 			opacity : 0.9
 		}
 	}
+
 	var shipMarker = new MarkerWithLabel(markerOptions);
 	realRouteMarkerArray[realRouteMarkerArray.length] = shipMarker;
+	waypointDataArray[realRouteMarkerArray.length-1] = dataObject;
 
-	google.maps.event.addListener(shipMarker, "mouseover", function(e) {
+	// Set visibility of marker befor to false
+	if (realRouteMarkerArray.length >= 2) {
+		if(!waypointDataArray[realRouteMarkerArray.length-2].has_data) {
+			realRouteMarkerArray[realRouteMarkerArray.length - 2].setIcon("./lib/img/green_dot.png");
+		}
+	}
+	google.maps.event.addListener(shipMarker, "mouseover", function(e) {
 		shipMarker.set("labelClass", "markerLabel");
+		$('.markerLabel').css('zIndex', 9999);
 		shipMarker.set("labelContent", getPostionString(shipMarker.getPosition()));
+		var index = realRouteMarkerArray.indexOf(shipMarker);
+		if (!waypointDataArray[index].has_data) {
+			// TODO: edit path to NEW FLAG ICON
+			shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+		}
 	});
 
 	google.maps.event.addListener(shipMarker, "mouseout", function(e) {
 		shipMarker.set("labelClass", "");
 		shipMarker.set("labelContent", "");
+		var index = realRouteMarkerArray.indexOf(shipMarker);
+		if (waypointDataArray[index].has_data || index == realRouteMarkerArray.length-1) {
+			shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+		} else {
+			shipMarker.setIcon("./lib/img/green_dot.png");
+		}
 	});
 
 	google.maps.event.addListener(shipMarker, 'click', function(event) {
@@ -596,6 +625,7 @@ function addNewShipPositionMarker(dataObject) {
 		jQuery("#standardContext").hide();
 		jQuery("#routeContext").hide();
 		selectedMarker = shipMarker;
+
 		if (distanceMarkerArray.length == 1) {
 			distanceMarkerArray[1] = shipMarker;
 			updateDistancePolylines();
@@ -618,7 +648,7 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		message : null
 	});
 
-	ajaxGet(getServiceURL('waypoint_details_get.php?waypointId=' + waypointID), function(data) {
+	ajaxGet(getServiceURL('waypoint_details_get', 'waypointId', waypointID), function(data) {
 		// Set Details of specified waypoint
 		selectedWaypointData = data;
 		selectedWaypointDataBinded = createBindingData(data, getWaypointFullInfoData());
@@ -689,10 +719,20 @@ function showEditDialog() {
 			OK : function() {
 				getDataFromBindedData(selectedWaypointDataBinded, selectedWaypointData);
 				$(this).dialog('close');
-				// TODO: label wirdgespeichert...
-				ajaxUpdateCreate(getServiceURL('waypoint_edit.php'), selectedWaypointData, function() {
-					// label speichern fertig...
+				jQuery("#save_label").show();
+				ajaxUpdateCreate(getServiceURL('waypoint_edit'), selectedWaypointData, function(returned_data) {
+					var index = realRouteMarkerArray.indexOf(selectedMarker);
+					if (returned_data.has_data) {
+						waypointDataArray[index].has_data = 1;
+						// TODO: edit path to NEW FLAG ICON
+						selectedMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+					} else {
+						waypointDataArray[index].has_data = 0;
+						selectedMarker.setIcon("./lib/img/green_dot.png");
+					}
+					jQuery("#save_label").hide();
 				});
+
 			},
 			Abbrechen : function() {
 				$(this).dialog('close');

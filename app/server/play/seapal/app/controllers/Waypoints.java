@@ -62,7 +62,7 @@ public class Waypoints extends Controller {
 			result.next();
 			
 			boolean tHasData = false;
-			tHasData |= result.getString("waypoint_name").equals("") == false;
+			tHasData |= result.getString("waypoint_name") != null;
 			tHasData |= result.getString("maneuverID").equals("1") == false;
 			tHasData |= result.getString("headsailID").equals("1") == false;
 			tHasData |= result.getString("mainsailID").equals("1") == false;
@@ -125,7 +125,7 @@ public class Waypoints extends Controller {
 				ObjectNode tItem = play.libs.Json.newObject();
 				
 				boolean tHasData = false;
-				tHasData |= result.getString("waypoint_name").equals("") == false;
+				tHasData |= result.getString("waypoint_name") != null;
 				tHasData |= result.getString("maneuverID").equals("1") == false;
 				tHasData |= result.getString("headsailID").equals("1") == false;
 				tHasData |= result.getString("mainsailID").equals("1") == false;

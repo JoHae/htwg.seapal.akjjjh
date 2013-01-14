@@ -331,7 +331,7 @@ function addNewRouteMarker(dataObject) {
 		// Set new position to database
 		jQuery("#save_label").show();
 		dataObject.position = marker.getPosition().toString();
-		ajaxUpdateCreate(getServiceURL('routepoint_edit.php?routepointId=' + selectedRoutepointData.routepointId), dataObject, function() {
+		ajaxUpdateCreate(getServiceURL('routepoint_edit'), dataObject, function() {
 			jQuery("#save_label").hide();
 		});
 		updateRoutePolylines();
@@ -648,7 +648,7 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		message : null
 	});
 
-	ajaxGet(getServiceURL('waypoint_details_get.php?waypointId=' + waypointID), function(data) {
+	ajaxGet(getServiceURL('waypoint_details_get', 'waypointId', waypointID), function(data) {
 		// Set Details of specified waypoint
 		selectedWaypointData = data;
 		selectedWaypointDataBinded = createBindingData(data, getWaypointFullInfoData());
@@ -720,7 +720,7 @@ function showEditDialog() {
 				getDataFromBindedData(selectedWaypointDataBinded, selectedWaypointData);
 				$(this).dialog('close');
 				jQuery("#save_label").show();
-				ajaxUpdateCreate(getServiceURL('waypoint_edit.php'), selectedWaypointData, function(returned_data) {
+				ajaxUpdateCreate(getServiceURL('waypoint_edit'), selectedWaypointData, function(returned_data) {
 					var index = realRouteMarkerArray.indexOf(selectedMarker);
 					if (returned_data.has_data) {
 						waypointDataArray[index].has_data = 1;

@@ -29,7 +29,7 @@ $(function() {
 	tripID = $.urlParam('tripId');
 
 	// insert the navigation information
-	ajaxGet(getServiceURL('trip_navigationinfo_get.php?tripId=' + tripID), function(data) {
+	ajaxGet(getServiceURL('trip_navigationinfo_get', 'tripId', tripID), function(data) {
 		$(".seapal-logbookname").html(data.shipname);
 		$(".seapal-triptitle").html(data.triptitle);
 		$(".seapal-trips-link").attr("href", $(".seapal-trips-link").attr("href") + "?logbookId=" + data.logbookId);
@@ -55,7 +55,7 @@ $(function() {
 	map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
 
 	// Load and Draw Routepoints
-	ajaxGet(getServiceURL('routepoints_get.php?tripId=' + tripID), function(data) {
+	ajaxGet(getServiceURL('routepoints_get', 'tripId', tripID), function(data) {
 		var length = data.length;
 		for (var i = 0; i < length; i++) {
 			var new_position = convertPositionToObject(data[i].position);
@@ -66,7 +66,7 @@ $(function() {
 	});
 
 	// Load and Draw Waypoints
-	ajaxGet(getServiceURL('waypoints_get.php?tripId=' + tripID), function(data) {
+	ajaxGet(getServiceURL('waypoints_get', 'tripId', tripID), function(data) {
 		var length = data.length;
 		for (var i = 0; i < length; i++) {
 			var new_position = convertPositionToObject(data[i].position);
@@ -152,7 +152,7 @@ $(function() {
 		data.position = data.position.toString();
 
 		jQuery("#save_label").show();
-		ajaxUpdateCreate(getServiceURL('routepoint_edit.php'), data, function(returned_data) {
+		ajaxUpdateCreate(getServiceURL('routepoint_edit'), data, function(returned_data) {
 			data.routepointId = returned_data.routepointId
 			jQuery("#save_label").hide();
 		});
@@ -286,7 +286,7 @@ $(function() {
 		}
 
 		jQuery("#save_label").show();
-		ajaxDelete(getServiceURL('routepoint_delete.php'), selectedRoutepointData.routepointId, function() {
+		ajaxDelete(getServiceURL('routepoint_delete'), selectedRoutepointData.routepointId, function() {
 			jQuery("#save_label").hide();
 		});
 
@@ -300,7 +300,7 @@ $(function() {
 	$("#deleteRoute").click(function() {
 		// delete Route from Database
 		jQuery("#save_label").show();
-		ajaxDelete('server/php/routepoint_delete_all.php', tripID, function() {
+		ajaxDelete(getServiceURL('routepoint_delete_all'), tripID, function() {
 			jQuery("#save_label").hide();
 		});
 

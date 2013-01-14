@@ -49,7 +49,7 @@ public class RoutePoints extends Controller {
 			
 			return ok("");
 		} else {
-			query = "INSERT INTO `seapal`.`trip` ( " +
+			query = "INSERT INTO `seapal`.`routepoint` ( " +
 							"`routepointID`, `tripID`, `name`, `notes`, `position` " +
 							") VALUES ( " +
 							"NULL, " +
@@ -75,7 +75,7 @@ public class RoutePoints extends Controller {
 		}
 	}
 	
-	public static Result deleteForTrip(String tripId) {
+	public static Result deleteForTrip() {
 		final DynamicForm form = form().bindFromRequest();
 		final String removeId = form.get("removeId");
 		
