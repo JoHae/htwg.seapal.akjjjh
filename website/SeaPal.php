@@ -181,7 +181,6 @@
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));
 	</script>
-	<p>Hit Counter: <?php include("hit_counter.php") ?></p>
 	<?php include("footer.html"); ?>
 </body>
 </html>
