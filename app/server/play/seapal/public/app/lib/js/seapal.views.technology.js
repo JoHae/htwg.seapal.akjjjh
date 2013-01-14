@@ -48,6 +48,8 @@ function getServiceURLsData() {
 				"play" : "logbooks/delete",
 				"jsp" : ""
 			},
+			
+			
 		"trips_get" : 
 			{ 
 				"php" : "server/php/trips_get.php",
@@ -71,6 +73,60 @@ function getServiceURLsData() {
 				"php" : "server/php/trips_navigationinfo_get.php",
 				"play" : "trips/getNavInfo",
 				"jsp" : ""
+			},
+		
+			
+		"routepoints_get" : 
+			{ 
+				"php" : "server/php/routepoints_get.php",
+				"play" : "routepoints/get",
+				"jsp" : ""
+			},
+		"routepoint_edit" : 
+			{ 
+				"php" : "server/php/routepoint_edit.php",
+				"play" : "routepoints/edit",
+				"jsp" : ""
+			},
+		"routepoint_delete" : 
+			{ 
+				"php" : "server/php/routepoint_delete.php",
+				"play" : "routepoints/delete",
+				"jsp" : ""
+			},
+		"routepoint_delete_all" : 
+			{ 
+				"php" : "server/php/routepoint_delete_all.php",
+				"play" : "routepoints/deleteForTrip",
+				"jsp" : ""
+			},
+			
+			
+		"waypoints_get" : 
+			{ 
+				"php" : "server/php/waypoints_get.php",
+				"play" : "waypoints/get",
+				"jsp" : ""
+			},
+		"waypoint_edit" : 
+			{ 
+				"php" : "server/php/waypoint_edit.php",
+				"play" : "waypoints/edit",
+				"jsp" : ""
+			},
+		"waypoint_details_get" : 
+			{ 
+				"php" : "server/php/waypoint_details_get.php",
+				"play" : "waypoints/getDetails",
+				"jsp" : ""
+			},
+			
+			
+		"trip_navigationinfo_get" : 
+			{ 
+				"php" : "server/php/trip_navigationinfo_get.php",
+				"play" : "trip/getNavInfo",
+				"jsp" : ""
 			}
 	};
 }
@@ -82,7 +138,8 @@ function prepareServiceURL(serviceName, technology, parameterName, parameterValu
 	
 	// compatibility with old urls
 	if (seapalServiceURLsDataCache[serviceName] == null) {
-		return "server/php/" + serviceName;
+		alert("Aufruf nicht mehr unterstützt!!!")
+		return "";
 	}
 	
 	// get the service url part

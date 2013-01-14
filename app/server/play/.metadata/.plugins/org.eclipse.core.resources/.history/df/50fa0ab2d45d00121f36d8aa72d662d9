@@ -1,0 +1,99 @@
+package controllers;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
+
+import play.data.DynamicForm;
+import play.db.DB;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+public class RoutePoints extends Controller {
+
+	public static Result get(String tripId) {
+		return getRoutePoints(tripId);
+	}
+	
+	public static Result updateCreate() {
+		final DynamicForm form = form().bindFromRequest();
+		final String dataId = form.get("dataId");
+		
+		String query = "";
+		if (dataId == null) {
+			return badRequest("Missing parameter [dataId]");
+		} else if (dataId.equals("NULL") == false) {
+			query = "UPDATE `seapal`.`trip` " +
+					"SET " +
+					"triptitle='" + form.get("triptitle") + "', " +
+					"destination='" + form.get("destination") + "', " +
+					"startpoint='" + form.get("startpoint") + "', " +
+					"skipper='" + form.get("skipper") + "', " +
+					"crew='" + form.get("crew") + "', " +
+					"notes='" + form.get("notes") + "', " +
+					"motor='" + form.get("motorminutes") + "', " +
+					"tank_filled='" + form.get("fueltankfilled") + "' " +
+					"WHERE " +
+					"tripID='" + dataId + "'";
+		} else {
+			query = "INSERT INTO `seapal`.`trip` ( " +
+							"`tripID`, `logbookID`, `triptitle`, `destination`, `startpoint`, `skipper`, `crew`, `notes`, `motor`, `tank_filled` " +
+							") VALUES ( " +
+							"NULL, " +
+							"'" + logbookId + "', " +
+							"'" + form.get("triptitle") + "', " +
+							"'" + form.get("destination") + "', " +
+							"'" + form.get("startpoint") + "', " +
+							"'" + form.get("skipper") + "', " +
+							"'" + form.get("crew") + "', " +
+							"'" + form.get("notes") + "', " +
+							"'" + form.get("motorminutes") + "', " +
+							(form.get("fueltankfilled").equals("") ? "NULL " : ("'" + form.get("fueltankfilled") + "' ")) +  
+							")";
+		}
+		
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			select.executeUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return badRequest(e.getMessage());
+		}
+		
+		return getTrips(logbookId);
+	}
+	
+	private static Result getRoutePoints(String tripId) {
+		ArrayNode tJsonResult = JsonNodeFactory.instance.arrayNode();
+		
+		String Query = "SELECT * FROM routepoint WHERE tripID=" + tripId + " ORDER BY routepointID";
+		
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(Query);
+
+			while (result.next()) {
+				ObjectNode tJsonLogBook = play.libs.Json.newObject();
+				tJsonLogBook.put("routepointId", result.getString("routepointID"));
+				tJsonLogBook.put("name", result.getString("name"));
+				tJsonLogBook.put("notes", result.getString("notes"));
+				tJsonLogBook.put("tripId", result.getString("tripID"));
+				tJsonLogBook.put("position", result.getString("position"));
+				
+				tJsonResult.add(tJsonLogBook);
+			}
+			connection.close();
+			return ok(tJsonResult);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return badRequest(e.getMessage());
+		}
+	}
+}

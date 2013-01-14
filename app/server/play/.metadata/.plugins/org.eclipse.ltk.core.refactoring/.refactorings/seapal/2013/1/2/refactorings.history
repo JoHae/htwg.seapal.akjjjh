@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;tJsonNavInfo&apos; in &apos;controllers.Waypoints.getDetails(...)&apos; to &apos;tJsonResult&apos;&#x0D;&#x0A;- Original project: &apos;seapal&apos;&#x0D;&#x0A;- Original element: &apos;controllers.Waypoints.getDetails(String).tJsonNavInfo&apos;&#x0D;&#x0A;- Renamed element: &apos;tJsonNavInfo&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;tJsonNavInfo&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/app&lt;controllers{Waypoints.java[Waypoints~getDetails~QString;@tJsonNavInfo!2388!2440!2399!2410!QObjectNode;!0!false" name="tJsonResult" references="true" stamp="1358117365035" version="1.0"/>
+</session>

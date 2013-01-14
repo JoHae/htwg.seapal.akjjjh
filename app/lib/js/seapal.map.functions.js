@@ -331,7 +331,7 @@ function addNewRouteMarker(dataObject) {
 		// Set new position to database
 		jQuery("#save_label").show();
 		dataObject.position = marker.getPosition().toString();
-		ajaxUpdateCreate(getServiceURL('routepoint_edit.php?routepointId=' + selectedRoutepointData.routepointId), dataObject, function() {
+		ajaxUpdateCreate(getServiceURL('routepoint_edit'), dataObject, function() {
 			jQuery("#save_label").hide();
 		});
 		updateRoutePolylines();
@@ -575,16 +575,11 @@ function addNewShipPositionMarker(dataObject) {
 		alert("No position while trying to add new Ship Marker.");
 	}
 
-	var icon_url = "./lib/img/Sailing_Ship_48.png"
-	if (!dataObject.has_data) {
-		var icon_url = "./lib/img/green_dot.png"
-	}
-
 	var markerOptions = {
 		position : position,
 		map : map,
 		draggable : false,
-		icon : icon_url,
+		icon : "./lib/img/Sailing_Ship_48.png",
 		labelContent : "",
 		labelAnchor : new google.maps.Point(0, -10),
 		labelClass : "", // the CSS class for the label
@@ -592,19 +587,24 @@ function addNewShipPositionMarker(dataObject) {
 			opacity : 0.9
 		}
 	}
+
 	var shipMarker = new MarkerWithLabel(markerOptions);
 	realRouteMarkerArray[realRouteMarkerArray.length] = shipMarker;
-	waypointDataArray[realRouteMarkerArray.length] = dataObject;
+	waypointDataArray[realRouteMarkerArray.length-1] = dataObject;
 
 	// Set visibility of marker befor to false
-	// if(realRouteMarkerArray.length > 1) {
-	// realRouteMarkerArray[realRouteMarkerArray.length-2].setIcon("./lib/img/green_dot.png");
-	// }
-	google.maps.event.addListener(shipMarker, "mouseover", function(e) {
+	if (realRouteMarkerArray.length >= 2) {
+		if(!waypointDataArray[realRouteMarkerArray.length-2].has_data) {
+			realRouteMarkerArray[realRouteMarkerArray.length - 2].setIcon("./lib/img/green_dot.png");
+		}
+	}
+	google.maps.event.addListener(shipMarker, "mouseover", function(e) {
 		shipMarker.set("labelClass", "markerLabel");
 		$('.markerLabel').css('zIndex', 9999);
 		shipMarker.set("labelContent", getPostionString(shipMarker.getPosition()));
-		if (!dataObject.has_data) {
+		var index = realRouteMarkerArray.indexOf(shipMarker);
+		if (!waypointDataArray[index].has_data) {
+			// TODO: edit path to NEW FLAG ICON
 			shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
 		}
 	});
@@ -613,10 +613,10 @@ function addNewShipPositionMarker(dataObject) {
 		shipMarker.set("labelClass", "");
 		shipMarker.set("labelContent", "");
 		var index = realRouteMarkerArray.indexOf(shipMarker);
-		if (waypointDataArray[index].has_data) {
-			 selectedMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+		if (waypointDataArray[index].has_data || index == realRouteMarkerArray.length-1) {
+			shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
 		} else {
-			selectedMarker.setIcon("./lib/img/green_dot.png");
+			shipMarker.setIcon("./lib/img/green_dot.png");
 		}
 	});
 
@@ -648,7 +648,7 @@ function setNewRealRouteMarkerMenu(marker, waypointID) {
 		message : null
 	});
 
-	ajaxGet(getServiceURL('waypoint_details_get.php?waypointId=' + waypointID), function(data) {
+	ajaxGet(getServiceURL('waypoint_details_get', 'waypointId', waypointID), function(data) {
 		// Set Details of specified waypoint
 		selectedWaypointData = data;
 		selectedWaypointDataBinded = createBindingData(data, getWaypointFullInfoData());
@@ -705,6 +705,7 @@ function setPositionTestMenu() {
 
 function showEditDialog() {
 	jQuery("#realRouteContext").hide();
+	selectedWaypointDataBinded.positionString = getPostionString(selectedMarker.getPosition());
 	$.link.waypointDetailsEditTemplate("#seapal-waypoint-details-dialog", selectedWaypointDataBinded);
 	$("#seapal-waypoint-details-dialog").dialog({
 		bgiframe : true,
@@ -720,10 +721,11 @@ function showEditDialog() {
 				getDataFromBindedData(selectedWaypointDataBinded, selectedWaypointData);
 				$(this).dialog('close');
 				jQuery("#save_label").show();
-				ajaxUpdateCreate(getServiceURL('waypoint_edit.php'), selectedWaypointData, function(returned_data) {
+				ajaxUpdateCreate(getServiceURL('waypoint_edit'), selectedWaypointData, function(returned_data) {
 					var index = realRouteMarkerArray.indexOf(selectedMarker);
 					if (returned_data.has_data) {
 						waypointDataArray[index].has_data = 1;
+						// TODO: edit path to NEW FLAG ICON
 						selectedMarker.setIcon("./lib/img/Sailing_Ship_48.png");
 					} else {
 						waypointDataArray[index].has_data = 0;

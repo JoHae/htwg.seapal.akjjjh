@@ -37,14 +37,14 @@ return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 				echo "<li><a href=\"contact.php\">Contact</a></li>";
 				}
 				if(curPageName()=="logbook_table.php") {
-				echo "<li class=\"current_page_item\"><a href=\"../app/logbook_table.php\">Logbuch</a></li>";
+				echo "<li class=\"current_page_item\"><a href=\"../app/\">Logbuch</a></li>";
 				} else {
-				echo "<li><a href=\"../app/logbook_table.php\">Logbuch</a></li>";
+				echo "<li><a href=\"../app/\">Logbuch</a></li>";
 				}
 				if(curPageName()=="map.html") {
-				echo "<li class=\"current_page_item\"><a href=\"map.html\">TestMap</a></li>";
+				echo "<li class=\"current_page_item\"><a href=\"map.html\">Map Demo</a></li>";
 				} else {
-				echo "<li><a href=\"map.html\">TestMap</a></li>";
+				echo "<li><a href=\"map.html\">Map Demo</a></li>";
 				}
 				?>
 			</ul>

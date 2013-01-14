@@ -10,9 +10,6 @@ if ($_POST['removeId'] != 'NULL') {
 	WHERE
 	routepointID='$_POST[removeId]'
 	";
-} else {
-	# remove all records
-	$sql = "TRUNCATE TABLE routepoint";
 }
 
 if (!mysql_query($sql, $con)) {

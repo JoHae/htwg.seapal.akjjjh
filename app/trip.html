@@ -21,7 +21,7 @@
 
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
 		<script type="text/javascript" src="./lib/js/jquery.json-2.4.js"></script>
- 
+
  		<script type="text/javascript" src="./lib/js/seapal.views.technology.js"></script>
 		<script type="text/javascript" src="./lib/js/seapal.views.dataoperations.js"></script>
 		<script type="text/javascript" src="./lib/js/markerwithlabel.js"></script>
@@ -224,7 +224,7 @@
 			</fieldset>
 			<fieldset>
 			<span class="seapal-label">{{>info.position.labeltext}}</span>
-			<span class="seapal-field" data-link="{:position:}"></span>
+			<span class="seapal-field" data-link="{:positionString:}"></span>
 			<br />
 			<span class="seapal-label">{{>info.btm.labeltext}}</span>
 			<span class="seapal-field" data-link="{:btm:}"></span>
@@ -268,14 +268,4 @@
 		</script>
 
 	</body>
-	<!-- 	TODO:
-	1. distance: on Distance Mode click on Standard and Route Marker: DONE
-	2. distance: show label with distance: DONE
-	3. Waypoint Entries: editable details
-	4. ajaxCreateUpdate on OK click
-	5. dynamicly add busy button when clicking on shipmarker
-	6. layout for details (within menu)
-	7. planed Route in Database (dynamic on creation and dragend)
-	8. Status label (wird gespeichert ...)
-	-->
 </html>

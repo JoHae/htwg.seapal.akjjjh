@@ -1,0 +1,51 @@
+package controllers;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.codehaus.jackson.node.ArrayNode;
+import org.codehaus.jackson.node.JsonNodeFactory;
+import org.codehaus.jackson.node.ObjectNode;
+
+import play.db.DB;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+public class Waypoints extends Controller {
+
+	private static Result getWaypoints(String tripId) {
+		ArrayNode tJsonResult = JsonNodeFactory.instance.arrayNode();
+		
+		String Query = "SELECT * FROM waypoint WHERE tripID=" + tripId + " ORDER BY waypointID";
+		
+		try {
+			Connection connection = DB.getConnection();
+			Statement select = connection.createStatement();
+			ResultSet result = select.executeQuery(Query);
+
+			while (result.next()) {
+				ObjectNode tJsonLogBook = play.libs.Json.newObject();
+				
+				boolean tHasData = false;
+				tHasData |= result.getString("waypoint_name").equals("") == false;
+				tHasData |= result.getString("maneuverID").equals("1") == false;
+				tHasData |= result.getString("headsailID").equals("1") == false;
+				tHasData |= result.getString("mainsailID").equals("1") == false;
+				
+				tJsonLogBook.put("waypointId", result.getString("waypointID"));
+				tJsonLogBook.put("tripId", result.getString("tripId"));
+				tJsonLogBook.put("position", result.getString("position"));
+				tJsonLogBook.put("has_data", tHasData ? 1 : 0);
+				
+				tJsonResult.add(tJsonLogBook);
+			}
+			connection.close();
+			return ok(tJsonResult);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return badRequest(e.getMessage());
+		}
+	}
+}

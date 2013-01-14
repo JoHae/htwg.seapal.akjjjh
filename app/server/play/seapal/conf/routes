@@ -19,6 +19,19 @@ POST	/trips/delete/logbookId/:logbookId          	controllers.Trips.delete(logbo
 # trips navigation info
 GET		/trips/getNavInfo/logbookId/:logbookId          controllers.Trips.getNavigationInfo(logbookId: String)
 
+# trip navigation info
+GET		/trip/getNavInfo/tripId/:tripId          		controllers.Trip.getNavigationInfo(tripId: String)
+
+# waypoints services
+GET		/waypoints/get/tripId/:tripId             		controllers.Waypoints.get(tripId: String)
+POST	/waypoints/edit            						controllers.Waypoints.edit()
+GET 	/waypoints/getDetails/waypointId/:waypointId    controllers.Waypoints.getDetails(waypointId: String)
+
+# routepoints services
+GET		/routepoints/get/tripId/:tripId             	controllers.RoutePoints.get(tripId: String)
+POST	/routepoints/edit            					controllers.RoutePoints.updateCreate()
+POST	/routepoints/delete    							controllers.RoutePoints.delete()
+POST	/routepoints/deleteForTrip 						controllers.RoutePoints.deleteForTrip()
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -18,6 +18,7 @@ var actualCrosshairMarker;
 var selectedMarker;
 var selectedWaypointData;
 var selectedWaypointDataBinded;
+var waypointDataArray = new Array();
 
 var realRouteMarkerArray = new Array();
 var realRoute;
@@ -26,9 +27,9 @@ var tripID;
 
 $(function() {
 	tripID = $.urlParam('tripId');
-	
+
 	// insert the navigation information
-	ajaxGet(getServiceURL('trip_navigationinfo_get.php?tripId=' + tripID), function(data) {
+	ajaxGet(getServiceURL('trip_navigationinfo_get', 'tripId', tripID), function(data) {
 		$(".seapal-logbookname").html(data.shipname);
 		$(".seapal-triptitle").html(data.triptitle);
 		$(".seapal-trips-link").attr("href", $(".seapal-trips-link").attr("href") + "?logbookId=" + data.logbookId);
@@ -54,7 +55,7 @@ $(function() {
 	map = new google.maps.Map(document.getElementById("mapCanvas"), mapOptions);
 
 	// Load and Draw Routepoints
-	ajaxGet(getServiceURL('routepoints_get.php?tripId=' + tripID), function(data) {
+	ajaxGet(getServiceURL('routepoints_get', 'tripId', tripID), function(data) {
 		var length = data.length;
 		for (var i = 0; i < length; i++) {
 			var new_position = convertPositionToObject(data[i].position);
@@ -65,7 +66,7 @@ $(function() {
 	});
 
 	// Load and Draw Waypoints
-	ajaxGet(getServiceURL('waypoints_get.php?tripId=' + tripID), function(data) {
+	ajaxGet(getServiceURL('waypoints_get', 'tripId', tripID), function(data) {
 		var length = data.length;
 		for (var i = 0; i < length; i++) {
 			var new_position = convertPositionToObject(data[i].position);
@@ -81,6 +82,11 @@ $(function() {
 	var myControl = document.getElementById('coordsDiv');
 	map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);
 	updateCoords();
+	$('#coordsDiv').show();
+
+	// -------- Center Coordinates shown on the Left Top Overlay --------
+	var mySaveControl = document.getElementById('save_label');
+	map.controls[google.maps.ControlPosition.TOP_CENTER].push(mySaveControl);
 
 	// -------- MAP EVENT HANDLING --------
 	google.maps.event.addListener(map, 'click', function(event) {
@@ -110,11 +116,10 @@ $(function() {
 		jQuery("#realRouteContext").hide();
 		updateCoords();
 		// zoomChangeBoundsListener = google.maps.event.addListener(map, 'bounds_changed', function(event) {
-			// //here I have the correct zoom level
-			// setNewCrosshairMarkerMenu();
-			// google.maps.event.removeListener(zoomChangeBoundsListener);
+		// //here I have the correct zoom level
+		// setNewCrosshairMarkerMenu();
+		// google.maps.event.removeListener(zoomChangeBoundsListener);
 		// });
-
 	});
 	google.maps.event.addListener(map, 'center_changed', function() {
 		jQuery("#standardContext").hide();
@@ -145,13 +150,15 @@ $(function() {
 		// Add all Markers to Database
 		var data = getRoutepointNewData(tripID, actualCrosshairPosition);
 		data.position = data.position.toString();
-		
-		// TODO: label wirdgespeichert...
-		ajaxUpdateCreate(getServiceURL('routepoint_edit.php'), data, function() {
-			// label speichern fertig...
+
+		jQuery("#save_label").show();
+		ajaxUpdateCreate(getServiceURL('routepoint_edit'), data, function(returned_data) {
+			data.routepointId = returned_data.routepointId
+			jQuery("#save_label").hide();
 		});
+
 		data.position = convertPositionToObject(data.position);
-		
+
 		// Update View
 		var length = routeMarkerArray.length;
 		routeMarkerArray[length] = addNewRouteMarker(data);
@@ -181,23 +188,63 @@ $(function() {
 		deleteCrosshairMarker();
 		var i = 0;
 		interval = window.setInterval((function() {
-			if (i == routeMarkerArray.length) {
+			if (i == routeMarkerArray.length - 1) {
 				return;
 			}
-			var position = routeMarkerArray[i].getPosition();
-			var lat = position.lat();
-			var lng = position.lng();
-			var randomnumber = Math.floor(Math.random() * 11);
-			if (randomnumber >= 5) {
-				lat += Math.random() * 0.005;
-				lng += Math.random() * 0.005;
-			} else {
-				lat -= Math.random() * 0.005;
-				lng -= Math.random() * 0.005;
+			var source_routemarker = routeMarkerArray[i];
+			var destination_routemarker = routeMarkerArray[i + 1];
+
+			var source_position = source_routemarker.getPosition();
+			var destination_position = destination_routemarker.getPosition();
+
+			var src_lat = source_position.lat();
+			var src_lng = source_position.lng();
+
+			var des_lat = destination_position.lat();
+			var des_lng = destination_position.lng();
+
+			var last_point = source_position;
+
+			var diff_lat = src_lat - des_lat;
+			if (src_lat < des_lat) {
+				diff_lat = des_lat - src_lat;
 			}
-			sendPosition(tripID, new google.maps.LatLng(lat, lng));
-			i++;
-		}), 1000);
+
+			var diff_lng = src_lng - des_lng;
+			if (src_lng < des_lng) {
+				diff_lng = des_lng - src_lng;
+			}
+
+			var factor_lat = diff_lat / 10;
+			var factor_lng = diff_lng / 10;
+
+			for (var j = 0; j < 11; j++) {
+
+				if (j != 0) {
+					var lat = last_point.lat() + factor_lat;
+					if (last_point.lat() > des_lat) {
+						lat = last_point.lat() - factor_lat;
+					}
+
+					var lng = last_point.lng() + factor_lng;
+					if (last_point.lng() > des_lng) {
+						lng = last_point.lng() - factor_lng;
+					}
+				} else {
+					var lat = last_point.lat();
+					var lng = last_point.lng();
+				}
+
+				var randomnumber = Math.floor(Math.random() * 11);
+				if (randomnumber >= 5) {
+					lat += Math.random() * 0.003;
+					lng += Math.random() * 0.003;
+				} else {
+					lat -= Math.random() * 0.003;
+					lng -= Math.random() * 0.003;
+				}				last_point = new google.maps.LatLng(lat, lng)				sendPosition(tripID, last_point);
+			}			i++;
+		}), 500);
 	});
 
 	$("#endPositionTest").click(function() {
@@ -237,12 +284,12 @@ $(function() {
 			updateDistancePolylines();
 			endDistanceMode();
 		}
-		
-		// TODO: label wirdgespeichert...
-		ajaxDelete(getServiceURL('routepoint_delete.php'), selectedRoutepointData.routepointId, function() {
-			// label speichern fertig...
+
+		jQuery("#save_label").show();
+		ajaxDelete(getServiceURL('routepoint_delete'), selectedRoutepointData.routepointId, function() {
+			jQuery("#save_label").hide();
 		});
-		
+
 		updateRoutePolylines();
 		jQuery("#routeContext").hide();
 		selectedMarker.setMap(null);
@@ -252,11 +299,11 @@ $(function() {
 	// delete Route completly
 	$("#deleteRoute").click(function() {
 		// delete Route from Database
-		// TODO: label wirdgespeichert...
-		ajaxDelete('server/php/routepoint_delete.php', "NULL", function() {
-			// label speichern fertig...
+		jQuery("#save_label").show();
+		ajaxDelete(getServiceURL('routepoint_delete_all'), tripID, function() {
+			jQuery("#save_label").hide();
 		});
-		
+
 		var length = routeMarkerArray.length;
 		for (var i = 0; i < length; i++) {
 			if (distanceMarkerArray.indexOf(routeMarkerArray[i]) != -1) {
