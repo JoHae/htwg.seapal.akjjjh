@@ -40,12 +40,8 @@
 				});
 				
 				
-				$('#seapal-link-localhost').click(function(){
-					setSocketServer("127.0.0.1");
-				});
-				
-				$('#seapal-link-seapalsocket').click(function(){
-					setSocketServer("seapalsocket");
+				$('#seapal-link-websockserver').click(function(){
+					setSocketServer($('#seapal-websockserver-input').val());
 				});
 				
 			});
@@ -71,12 +67,12 @@
 			<a id="seapal-link-jsp" href="logbooks.html">jsp</a>
 			<br />
 			<br />
-			<p>For the websocket tests you have to click on the server dns name which to choose (take localhost as an default).
+			<p>For the websocket tests you have to enter an server ip (take 127.0.0.1 as an default).
 				No new site will be loaded, just choose a technology after clicking.</p>
 			<br />
-			<a href="" id="seapal-link-localhost">localhost</a>
+			<a href="" id="seapal-link-websockserver">set server</a>
 			<br />
-			<a href="" id="seapal-link-seapalsocket">seapalsocket</a>
+			<input id="seapal-websockserver-input" type="text" value="127.0.0.1" />
 			</div>
 
 			<footer>
