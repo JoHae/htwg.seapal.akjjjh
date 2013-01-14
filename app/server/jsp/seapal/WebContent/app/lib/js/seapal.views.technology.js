@@ -9,6 +9,10 @@ function getServiceURL(service, parameterName, parameterValue) {
 	return prepareServiceURL(service, getTechnology(), parameterName, parameterValue);
 }
 
+/*function getServiceURL(service) {
+	return prepareServiceURL(service, getTechnology(), null, null);
+}*/
+
 
 function setTechnology(technology) {
 	$.cookie('seapal_technology', technology, { path: '/' });
