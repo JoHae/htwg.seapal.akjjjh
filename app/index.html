@@ -39,6 +39,15 @@
 					setTechnology("jsp");
 				});
 				
+				
+				$('#seapal-link-localhost').click(function(){
+					setSocketServer("127.0.0.1");
+				});
+				
+				$('#seapal-link-seapalsocket').click(function(){
+					setSocketServer("seapalsocket");
+				});
+				
 			});
 		</script>
 		
@@ -51,12 +60,23 @@
 			</header>
 
 			<div>
-			<p>Start here to the different implementations. For PHP you have to start Apache and mySQL. For Play you have to start the play server in the server/play/seapal directory and the mySQL Server.</p>
+			<p>Start here to the different implementations. For PHP you have to start Apache and mySQL. 
+				For Play you have to start the play server in the server/play/seapal directory and the mySQL Server.
+				For jsp you must start an tomcat server and the mysql server.
+			</p>
 			<a id="seapal-link-php"  href="logbooks.html">php</a>
 			<br />
 			<a id="seapal-link-play" href="logbooks.html">play</a>
 			<br />
 			<a id="seapal-link-jsp" href="logbooks.html">jsp</a>
+			<br />
+			<br />
+			<p>For the websocket tests you have to click on the server dns name which to choose (take localhost as an default).
+				No new site will be loaded, just choose a technology after clicking.</p>
+			<br />
+			<a href="" id="seapal-link-localhost">localhost</a>
+			<br />
+			<a href="" id="seapal-link-seapalsocket">seapalsocket</a>
 			</div>
 
 			<footer>
