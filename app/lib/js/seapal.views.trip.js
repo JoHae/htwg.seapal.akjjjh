@@ -79,10 +79,10 @@ $(function() {
 	addSeamap();
 
 	// -------- Center Coordinates shown on the Left Top Overlay --------
-	/*var myControl = document.getElementById('coordsDiv');
-	map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);
+	var myControl = document.getElementById('coordsDiv');
+	/*map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);*/
 	updateCoords();
-	$('#coordsDiv').show();*/
+	$('#coordsDiv').show();
 
 	// -------- Center Coordinates shown on the Left Top Overlay --------
 	var mySaveControl = document.getElementById('save_label');

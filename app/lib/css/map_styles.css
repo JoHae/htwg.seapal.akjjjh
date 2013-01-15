@@ -13,6 +13,7 @@ body {
 	background: #1F5689;
 	height: 50px;
 	color: white;
+	padding: 5px;
 }
 
 .seapalmap-header .seapal-logo {
@@ -36,6 +37,7 @@ body {
 nav {
 	float: left;
 	height: 100%;
+	padding-top: 5px;
 }
 
 nav a:link, nav a:visited, nav a:active, nav a:hover {
@@ -46,16 +48,19 @@ nav a:link, nav a:visited, nav a:active, nav a:hover {
 	margin: 12.5px;
 }
 
+table {
+	height: 100%;
+	width: 100%;
+	min-height: 100%;
+	min-width: 100%;
+}
+
 #coordsDiv {
-	color: black;
-	position: absolute;
+	color: white;
 	text-align: right;
 	float: right;
 	font-size: 1.4em;
-	font-weight: bold;
-	margin-right: 25px;
-	display: none;
-	z-index: 10000;
+	display: inline;
 }
 
 #save_label {
@@ -64,6 +69,9 @@ nav a:link, nav a:visited, nav a:active, nav a:hover {
 	font-size: 1.4em;
 	font-weight: bold;
 	display: none;
+	border: 1px black solid;
+	background: lightgray;
+	padding: 10px;
 }
 
 .markerLabel {

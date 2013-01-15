@@ -22,7 +22,7 @@
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCi3bjBYQwpwC0v2cjxR4Me5AKu4l_p-98&sensor=false"></script>
 		<script type="text/javascript" src="./lib/js/jquery.json-2.4.js"></script>
 
- 		<script type="text/javascript" src="./lib/js/seapal.views.technology.js"></script>
+		<script type="text/javascript" src="./lib/js/seapal.views.technology.js"></script>
 		<script type="text/javascript" src="./lib/js/seapal.views.dataoperations.js"></script>
 		<script type="text/javascript" src="./lib/js/markerwithlabel.js"></script>
 		<script type="text/javascript" src="./lib/js/seapal.views.trip_data.js"></script>
@@ -31,21 +31,16 @@
 		<script type="text/javascript" src="./lib/js/seapal.map.functions.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./lib/js/seapal.map.shipposition.js"></script>
 		<script type="text/javascript" src="./lib/js/seapal.views.trip.js"></script>
-		
+
 		<link href="./lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css" />
 		<link href="./lib/css/styles.css" rel="stylesheet" type="text/css" />
 		<link href="./lib/css/map_styles.css" rel="stylesheet" type="text/css" />
 
 	</head>
 	<body>
-		<div id="coordsDiv">
-			<span id="coordinations">0&deg;00.00'N 0&deg;00.00'E</span>
-			<br />
-			Lat <span id="lat">42</span> Long <span id="long">9</span>
-			<br />
-		</div>
 		<div id="save_label">
-			<div><img src="lib/img/pleaseWait.gif" /> wird gespeichert...</div>
+			<div><img src="lib/img/pleaseWait.gif" /> wird gespeichert...
+			</div>
 		</div>
 
 		<!-- 	MENU FOR CROSSHAIR MARKER	 -->
@@ -141,7 +136,8 @@
 					<div>
 						Distanz vom Start: <span id="realRouteDistance">Error</span>
 					</div>
-					<div id ="seapal-load-details"><img src="lib/img/pleaseWait.gif" /></div>
+					<div id ="seapal-load-details"><img src="lib/img/pleaseWait.gif" />
+					</div>
 					<div id ="seapal-realroutemenu-details"></div>
 					<script id="seapal-waypoint-details-template" type="text/x-jsrender">
 						{{>info.waypointtitle.labeltext}}: <span data-link="waypointtitle"></span><br />
@@ -188,11 +184,10 @@
 			</ul>
 		</div>
 
-		<table style="height: 100%; width: 100%; min-height: 100%; min-width: 100%">
+		<table>
 			<tbody>
 				<tr >
-					<td class="seapalmap-header">
-					<span class="seapal-logo"> </span><span class="seapal-name">Seapal</span>
+					<td class="seapalmap-header"><span class="seapal-logo"> </span><span class="seapal-name">Seapal</span>
 					<nav>
 						<div class="seapal-location">
 							<span>> </span>
@@ -202,7 +197,13 @@
 							<span> > </span>
 							<span>Trip : <span class="seapal-triptitle"> </span></span>
 						</div>
-					</nav></td>
+					</nav>
+					<div id="coordsDiv">
+						<span id="coordinations">0&deg;00.00'N 0&deg;00.00'E</span>
+						<br />
+						Lat <span id="lat">42</span> Long <span id="long">9</span>
+						<br />
+					</div></td>
 				</tr>
 				<tr>
 					<td style="height: 100%; width: 100%; min-height: 100%; min-width: 100%"><div id="mapCanvas" style="width:100%; height: 100%"></div></td>
