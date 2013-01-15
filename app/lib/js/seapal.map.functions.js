@@ -574,12 +574,19 @@ function addNewShipPositionMarker(dataObject) {
 	if (position == null) {
 		alert("No position while trying to add new Ship Marker.");
 	}
+	
+	var icon;
+	if(dataObject.has_data) {
+		icon = green_flag_image;
+	} else {
+		icon = "./lib/img/Sailing_Ship_48.png";
+	}
 
 	var markerOptions = {
 		position : position,
 		map : map,
 		draggable : false,
-		icon : "./lib/img/Sailing_Ship_48.png",
+		icon : icon,
 		labelContent : "",
 		labelAnchor : new google.maps.Point(0, -10),
 		labelClass : "", // the CSS class for the label
@@ -604,8 +611,7 @@ function addNewShipPositionMarker(dataObject) {
 		shipMarker.set("labelContent", getPostionString(shipMarker.getPosition()));
 		var index = realRouteMarkerArray.indexOf(shipMarker);
 		if (!waypointDataArray[index].has_data) {
-			// TODO: edit path to NEW FLAG ICON
-			shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+			shipMarker.setIcon(green_flag_image);
 		}
 	});
 
@@ -613,7 +619,9 @@ function addNewShipPositionMarker(dataObject) {
 		shipMarker.set("labelClass", "");
 		shipMarker.set("labelContent", "");
 		var index = realRouteMarkerArray.indexOf(shipMarker);
-		if (waypointDataArray[index].has_data || index == realRouteMarkerArray.length-1) {
+		if (waypointDataArray[index].has_data) {
+			shipMarker.setIcon(green_flag_image);
+		} else if(index == realRouteMarkerArray.length-1) {
 			shipMarker.setIcon("./lib/img/Sailing_Ship_48.png");
 		} else {
 			shipMarker.setIcon("./lib/img/green_dot.png");
@@ -725,8 +733,7 @@ function showEditDialog() {
 					var index = realRouteMarkerArray.indexOf(selectedMarker);
 					if (returned_data.has_data) {
 						waypointDataArray[index].has_data = 1;
-						// TODO: edit path to NEW FLAG ICON
-						selectedMarker.setIcon("./lib/img/Sailing_Ship_48.png");
+						selectedMarker.setIcon(green_flag_image);
 					} else {
 						waypointDataArray[index].has_data = 0;
 						selectedMarker.setIcon("./lib/img/green_dot.png");

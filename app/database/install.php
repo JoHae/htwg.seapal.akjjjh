@@ -23,25 +23,25 @@ $create_logbook_table = "CREATE TABLE logbook
 logbookID    int NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (logbookID),
 shipname     varchar(30),
-registnumber varchar(20),
-sailsign     varchar(20),
-homeport     varchar(15),
+registnumber varchar(30),
+sailsign     varchar(30),
+homeport     varchar(30),
 yachtclub    varchar(30),
 owner        varchar(30),
-insurance    varchar(15),
-callsign     varchar(20),
+insurance    varchar(30),
+callsign     varchar(30),
 
-type        varchar(15),
+type        varchar(30),
 constructer varchar(30),
-length      varchar(15),
+length      varchar(30),
 width       double,
 gauge       double,
 mastheight  double,
 expulsion   double,
-rigtype     varchar(15),
+rigtype     varchar(30),
 
 constructionyear int,
-engine           varchar(15),
+engine           varchar(30),
 size_fueltank    int,
 size_watertank   int,
 size_sewagetank  int,
@@ -56,18 +56,18 @@ $create_trip_table = "CREATE TABLE trip
 tripID    int NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (tripID),
 logbookID int,
-FOREIGN KEY (logbookID) REFERENCES logbook(logbookID),
+FOREIGN KEY (logbookID) REFERENCES logbook(logbookID) ON DELETE CASCADE,
 
 triptitle   varchar(30),
-destination varchar(20),
-startpoint  varchar(20),
-skipper     varchar(15),
+destination varchar(30),
+startpoint  varchar(30),
+skipper     varchar(30),
 
 crew     blob,
 start    datetime,
 end      datetime,
 
-motor       varchar(15),
+motor       varchar(30),
 tank_filled bool,
 notes       text
 )";
@@ -78,16 +78,16 @@ $create_waypoint_table = "CREATE TABLE waypoint
 waypointID int NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (waypointID),
 tripID  int,
-FOREIGN KEY (tripID) REFERENCES trip(tripID),
+FOREIGN KEY (tripID) REFERENCES trip(tripID) ON DELETE CASCADE,
 
-waypoint_name varchar(15),
+waypoint_name varchar(30),
 position  varchar(50),
 
-btm varchar(15),
-dtm varchar(15),
+btm varchar(30),
+dtm varchar(30),
 
-cog varchar(15),
-sog varchar(15),
+cog varchar(30),
+sog varchar(30),
 maneuverID int,
 headsailID int,
 mainsailID int,
@@ -102,9 +102,9 @@ $create_routepoint_table = "CREATE TABLE routepoint
 routepointID int NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (routepointID),
 tripID  int,
-FOREIGN KEY (tripID) REFERENCES trip(tripID),
+FOREIGN KEY (tripID) REFERENCES trip(tripID) ON DELETE CASCADE,
 
-name varchar(15),
+name varchar(30),
 notes blob,
 position  varchar(50)
 )";
@@ -114,7 +114,7 @@ $create_maneuver_table = "CREATE TABLE maneuvertype
 (
 maneuverID int AUTO_INCREMENT,
 PRIMARY KEY (maneuverID),
-name varchar(20)
+name varchar(30)
 )";
 
 # Table for headsail
@@ -122,7 +122,7 @@ $create_headsail_table = "CREATE TABLE headsailtype
 (
 headsailID int AUTO_INCREMENT,
 PRIMARY KEY (headsailID),
-name varchar(20)
+name varchar(30)
 )";
 
 # Table for mainsail
@@ -130,7 +130,7 @@ $create_mainsail_table = "CREATE TABLE mainsailtype
 (
 mainsailID int AUTO_INCREMENT,
 PRIMARY KEY (mainsailID),
-name varchar(20)
+name varchar(30)
 )";
 
 # GENERAL DATA

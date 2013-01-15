@@ -141,8 +141,6 @@
 					<div id ="seapal-realroutemenu-details"></div>
 					<script id="seapal-waypoint-details-template" type="text/x-jsrender">
 						{{>info.waypointtitle.labeltext}}: <span data-link="waypointtitle"></span><br />
-						{{>info.btm.labeltext}}: <span data-link="{:btm:}"></span><br />
-						{{>info.dtm.labeltext}}: <span data-link="{:dtm:}"></span><br />
 						{{>info.maneuver.labeltext}}: <span data-link="">{{>info.maneuvertypes[maneuverId-1].typename}}</span><br />
 						{{>info.headsail.labeltext}}: <span data-link="">{{>info.headsailtypes[headsailId-1].typename}}</span><br />
 						{{>info.mainsail.labeltext}}: <span data-link="">{{>info.mainsailtypes[mainsailId-1].typename}}</span>
@@ -229,19 +227,23 @@
 			<br />
 			<span class="seapal-label">{{>info.btm.labeltext}}</span>
 			<span class="seapal-field" data-link="{:btm:}"></span>
-			°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			52&nbsp;&nbsp;&nbsp;&nbsp;°
+			<br />
 			<span class="seapal-label">{{>info.dtm.labeltext}}</span>
 			<span class="seapal-field" data-link="{:dtm:}"></span>
-			nm
+			3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nm
+			<br />
 			</fieldset>
 			<fieldset>
-			<span class="seapal-label">{{>info.dtm.labeltext}}</span>
-			<span class="seapal-field" data-link="{:dtm:}"></span>
-			°&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<span class="seapal-label">{{>info.dtm.labeltext}}</span>
-			<span class="seapal-field" data-link="{:dtm:}"></span>
-			kn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;um&nbsp;&nbsp;&nbsp;
-			<span id="seapal-input-timestamp"> </span>
+			<span class="seapal-label">{{>info.cog.labeltext}}</span>
+			<span class="seapal-field" data-link="{:cog:}"></span>
+			128&nbsp;&nbsp;°
+			<br />
+			<span class="seapal-label">{{>info.sog.labeltext}}</span>
+			<span class="seapal-field" data-link="{:sog:}"></span>
+			5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kn
+			<br />
+			<span id="seapal-input-timestamp"></span>
 			</fieldset>
 			<fieldset>
 			<label for="seapal-input-maneuver">{{>info.maneuver.labeltext}}</label>
@@ -250,14 +252,13 @@
 			<option value="{{>typeId}}">{{>typename}}</option>
 			{{/for}}
 			</select>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<label for="seapal-input-headsail">{{>info.headsail.labeltext}}</label>
 			<select name="seapal-input-headsail" data-link="headsailId">
 			{{for info.headsailtypes}}
 			<option value="{{>typeId}}">{{>typename}}</option>
 			{{/for}}
 			</select>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 			<label for="seapal-input-mainsail">{{>info.mainsail.labeltext}}</label>
 			<select name="seapal-input-mainsail" data-link="mainsailId">
 			{{for info.mainsailtypes}}

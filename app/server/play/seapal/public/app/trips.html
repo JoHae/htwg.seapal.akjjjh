@@ -98,7 +98,7 @@
 								Neuer Trip
 							</div>
 							{{else}}
-							<div class="seapal-triptitle" data-link="{:triptitle:}"></div>
+							<div class="seapal-triptitle seapal-navigation"><a href="trip.html?tripId={{>dataId}}" data-link="{:triptitle:}"></a></div>
 							<div class="seapal-startpoint" data-link="{:startpoint:}"></div>
 							<div class="seapal-destination" data-link="{:destination:}"></div>
 							<div class="seapal-skipper" data-link="{:skipper:}"></div>
@@ -147,7 +147,6 @@
 						<div class="seapal-readonly"></div>
 						{{else}}
 						<div class="seapal-readonly">
-							<a href="trip.html?tripId={{>dataId}}" data-link="{:triptitle:}"></a>
 							<div class="seapal-general">
 								<span class="seapal-label">{{>info.starttime.labeltext}}</span>
 								<span class="seapal-field" data-link="{:starttime:}"></span>
@@ -176,15 +175,6 @@
 
 						<div class="seapal-edit validationEngineContainer">
 							<div class="seapal-general">
-								<span class="seapal-label">{{>info.starttime.labeltext}}</span>
-								<span class="seapal-field" data-link="{:starttime:}"></span>
-								<br>
-								<span class="seapal-label">{{>info.endtime.labeltext}}</span>
-								<span class="seapal-field" data-link="{:endtime:}"></span>
-								<br>
-								<span class="seapal-label">{{>info.duration.labeltext}}</span>
-								<span class="seapal-field" data-link="{:duration:}"></span>
-								<br>
 								<label for="seapal-list-item-{{>dataId}}-input-motorminutes">{{>info.motorminutes.labeltext}}</label>
 								<input type="text" name="seapal-list-item-{{>dataId}}-input-motorminutes" data-link="{:motorminutes:}" class="validate[custom[integer],min[0]]"/>
 								<br>
