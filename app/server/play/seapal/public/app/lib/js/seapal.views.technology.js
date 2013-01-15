@@ -1,6 +1,7 @@
 
 var seapalTechnologyCache = null;
 var seapalServiceURLsDataCache = null;
+var seapalSocketServerURLCache = null;
 
 //var seapalPlayServer = "localhost:9000/";
 var seapalPlayServer = "../../";
@@ -9,13 +10,10 @@ function getServiceURL(service, parameterName, parameterValue) {
 	return prepareServiceURL(service, getTechnology(), parameterName, parameterValue);
 }
 
-/*function getServiceURL(service) {
-	return prepareServiceURL(service, getTechnology(), null, null);
-}*/
-
 
 function setTechnology(technology) {
 	$.cookie('seapal_technology', technology, { path: '/' });
+	seapalTechnologyCache = null;
 }
 
 function getTechnology() {
@@ -28,25 +26,40 @@ function getTechnology() {
 	return seapalTechnologyCache;
 }
 
+function setSocketServer(socketServer) {
+	$.cookie('seapal_socketserver', socketServer, { path: '/' });
+	seapalSocketServerURLCache = null;
+}
+
+function getSocketServer() {
+	if (seapalSocketServerURLCache == null) {
+		seapalSocketServerURLCache = $.cookie('seapal_socketserver');
+		if (seapalSocketServerURLCache == null) {
+			alert("No socket server choosen! (seapal_socketserver cookie)");
+		}
+	}
+	return seapalSocketServerURLCache;
+}
+
 function getServiceURLsData() {
 	return {
 		"logbooks_get" : 
 			{ 
 				"php" : "server/php/logbooks_get.php",
 				"play" : "logbooks/get",
-				"jsp" : ""
+				"jsp" : "../LogbooksGet.jsp"
 			},
 		"logbook_edit" : 
 			{ 
 				"php" : "server/php/logbook_edit.php",
 				"play" : "logbooks/edit",
-				"jsp" : ""
+				"jsp" : "../LogbooksEdit.jsp"
 			},
 		"logbook_delete" : 
 			{ 
 				"php" : "server/php/logbook_delete.php",
 				"play" : "logbooks/delete",
-				"jsp" : ""
+				"jsp" : "../LogbooksDelete.jsp"
 			},
 			
 			

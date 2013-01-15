@@ -9,7 +9,7 @@
 
 
 var seapalListItemEditing = false;
-var seapalListItemEditingRequestId = -1;
+var seapalListItemEditingRequestId = null;
 var seapalListData = null;
 var seapalListDataBinded = null;
 var seapalAjaxGetUrl = null;
@@ -53,7 +53,7 @@ function seapalDataLoaded(listData) {
 
 	// reset variables
 	seapalListItemEditing = false;
-	seapalListItemEditingRequestId = -1;
+	seapalListItemEditingRequestId = null;
 
 	// clear list
 	$("#seapal-list").html("");
@@ -86,6 +86,19 @@ function seapalDataLoaded(listData) {
 	}, function() {
 		$(this).removeClass("ui-state-hover");
 	});
+	
+	// Hover states on the navigation (first header item)
+	$("#seapal-list .seapal-header .seapal-navigation a").hover(function() {
+		$(this).addClass("seapal-navigation-hover");
+	}, function() {
+		$(this).removeClass("seapal-navigation-hover");
+	});
+	
+	// allow following link instead of toggeling
+	$("#seapal-list .seapal-header .seapal-navigation a").click(function(event) {
+		event.stopPropagation();
+		// prevent toggling collapsion
+	});
 
 	// hides each edit element in the list (the header and content)
 	$("#seapal-list .seapal-edit").each(function() {
@@ -114,31 +127,30 @@ function seapalDataLoaded(listData) {
 }
 
 function onBeforePanelActivate(event, ui) {
-	var closing = $(this).find('.ui-state-active').length;
-	var elementNr = $(this).find(".seapal-header").index(ui.newHeader[0]);
-
-	if (seapalListItemEditing && closing) {
+	var oneTabIsOpen = $(this).find('.ui-state-active').length;
+	var otherTabWillBeOpened = ui.newHeader.length;
+	
+	if (seapalListItemEditing) {
 		return false;
 	}
-	if (elementNr === 0) {
-		itemEdit("new");
-	}
-	if (seapalListItemEditingRequestId != -1) {
-		itemEdit(seapalListItemEditingRequestId);
-		seapalListItemEditingRequestId = -1;
-	}
-	return true;
-}
-
-function blockAllOtherListItems(itemId) {
-	for (var i = 0; i < seapalListData.length; i++) {
-		var tCurrdataId = seapalListData[i].dataId;
-		if (tCurrdataId === itemId) {
-
-		} else {
-			$("#seapal-list .seapal-header .seapal-nr-" + tCurrdataId + " .seapal-readonly").block();
+	if (otherTabWillBeOpened) {
+		var newTabElementNr = $(this).find(".seapal-header").index(ui.newHeader[0]);
+		if (newTabElementNr === 0) {
+			seapalListItemEditingRequestId = "new";
 		}
 	}
+	
+	if (seapalListItemEditingRequestId == null) {
+		return true;
+	}
+	itemEdit(seapalListItemEditingRequestId);
+	seapalListItemEditingRequestId = null;
+	
+	// if the requested edit panel is already open, do not close it
+	if (otherTabWillBeOpened == false) {
+		return false;
+	}
+	return true;
 }
 
 function itemEdit(itemId) {
@@ -224,10 +236,9 @@ function addFunctionsToListItemAdd() {
 
 	$("#seapal-list-item-new-cancel").click(function(e) {
 		itemEditCancel("new");
-		$("#seapal-list").accordion("activate", -1)
+		//$("#seapal-list").accordion("activate", -1)
 		setBindingData(seapalListDataBinded, getEmpyData(), "new");
-		return false;
-		// prevent toggling collapsion
+		return true;
 	});
 }
 
