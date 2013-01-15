@@ -705,6 +705,7 @@ function setPositionTestMenu() {
 
 function showEditDialog() {
 	jQuery("#realRouteContext").hide();
+	selectedWaypointDataBinded.positionString = getPostionString(selectedMarker.getPosition());
 	$.link.waypointDetailsEditTemplate("#seapal-waypoint-details-dialog", selectedWaypointDataBinded);
 	$("#seapal-waypoint-details-dialog").dialog({
 		bgiframe : true,
