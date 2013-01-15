@@ -33,7 +33,7 @@
 		<script type="text/javascript" src="./lib/js/seapal.views.trip.js"></script>
 
 		<link rel="icon" type="image/png" href="http://www.seapal.de/images/Icon-32.png" />
-		
+
 		<link href="./lib/css/start/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css" />
 		<link href="./lib/css/styles.css" rel="stylesheet" type="text/css" />
 		<link href="./lib/css/map_styles.css" rel="stylesheet" type="text/css" />
@@ -193,9 +193,9 @@
 							<span>> </span>
 							<span><a href="logbooks.html">Logbücher</a></span>
 							<span> > </span>
-							<span><a class="seapal-trips-link" href="trips.html">Logbuch : <span class="seapal-logbookname"> </span></a></span>
+							<span><a class="seapal-trips-link" href="trips.html">Logbuch: <span class="seapal-logbookname"> </span></a></span>
 							<span> > </span>
-							<span>Trip : <span class="seapal-triptitle"> </span></span>
+							<span>Trip: <span class="seapal-triptitle"> </span></span>
 						</div>
 					</nav>
 					<div id="coordsDiv">
@@ -219,55 +219,55 @@
 		<script id="seapal-waypoint-details-edit-template" type="text/x-jsrender">
 
 			<div class="seapal-waypoint-details">
-			<fieldset class="seapal-title">
-			<label for="seapal-input-waypointtitle">{{>info.waypointtitle.labeltext}}</label>
-			<input type="text" name="seapal-input-waypointtitle" size="50px" data-link="waypointtitle" />
-			</fieldset>
-			<fieldset>
-			<span class="seapal-label">{{>info.position.labeltext}}</span>
-			<span class="seapal-field" data-link="{:positionString:}"></span>
-			<br />
-			<span class="seapal-label">{{>info.btm.labeltext}}</span>
-			<span class="seapal-field" data-link="{:btm:}"></span>
-			52&nbsp;&nbsp;&nbsp;&nbsp;°
-			<br />
-			<span class="seapal-label">{{>info.dtm.labeltext}}</span>
-			<span class="seapal-field" data-link="{:dtm:}"></span>
-			3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nm
-			<br />
-			</fieldset>
-			<fieldset>
-			<span class="seapal-label">{{>info.cog.labeltext}}</span>
-			<span class="seapal-field" data-link="{:cog:}"></span>
-			128&nbsp;&nbsp;°
-			<br />
-			<span class="seapal-label">{{>info.sog.labeltext}}</span>
-			<span class="seapal-field" data-link="{:sog:}"></span>
-			5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kn
-			<br />
-			<span id="seapal-input-timestamp"></span>
-			</fieldset>
-			<fieldset>
-			<label for="seapal-input-maneuver">{{>info.maneuver.labeltext}}</label>
-			<select name="seapal-input-maneuver" data-link="maneuverId">
-			{{for info.maneuvertypes}}
-			<option value="{{>typeId}}">{{>typename}}</option>
-			{{/for}}
-			</select>
-			<label for="seapal-input-headsail">{{>info.headsail.labeltext}}</label>
-			<select name="seapal-input-headsail" data-link="headsailId">
-			{{for info.headsailtypes}}
-			<option value="{{>typeId}}">{{>typename}}</option>
-			{{/for}}
-			</select>
-
-			<label for="seapal-input-mainsail">{{>info.mainsail.labeltext}}</label>
-			<select name="seapal-input-mainsail" data-link="mainsailId">
-			{{for info.mainsailtypes}}
-			<option value="{{>typeId}}">{{>typename}}</option>
-			{{/for}}
-			</select>
-			</fieldset>
+				<fieldset class="seapal-title">
+					<label for="seapal-input-waypointtitle">{{>info.waypointtitle.labeltext}}</label>
+					<input type="text" name="seapal-input-waypointtitle" size="50px" data-link="waypointtitle" />
+				</fieldset>
+				<fieldset>
+					<span class="seapal-label">{{>info.position.labeltext}}</span>
+					<span class="seapal-field" data-link="{:positionString:}"></span>
+					<br />
+					<span class="seapal-label">{{>info.btm.labeltext}}</span>
+					<span class="seapal-field" data-link="{:btm:}"></span>
+					52&nbsp;&nbsp;&nbsp;&nbsp;°
+					<br />
+					<span class="seapal-label">{{>info.dtm.labeltext}}</span>
+					<span class="seapal-field" data-link="{:dtm:}"></span>
+					3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nm
+					<br />
+				</fieldset>
+				<fieldset>
+					<span class="seapal-label">{{>info.cog.labeltext}}</span>
+					<span class="seapal-field" data-link="{:cog:}"></span>
+					128&nbsp;&nbsp;°
+					<br />
+					<span class="seapal-label">{{>info.sog.labeltext}}</span>
+					<span class="seapal-field" data-link="{:sog:}"></span>
+					5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kn
+					<br />
+					<span id="seapal-input-timestamp"></span>
+				</fieldset>
+				<fieldset>
+					<label for="seapal-input-maneuver">{{>info.maneuver.labeltext}}</label>
+					<select name="seapal-input-maneuver" data-link="maneuverId">
+						{{for info.maneuvertypes}}
+						<option value="{{>typeId}}">{{>typename}}</option>
+						{{/for}}
+					</select>
+					<label for="seapal-input-headsail">{{>info.headsail.labeltext}}</label>
+					<select name="seapal-input-headsail" data-link="headsailId">
+						{{for info.headsailtypes}}
+						<option value="{{>typeId}}">{{>typename}}</option>
+						{{/for}}
+					</select>
+		
+					<label for="seapal-input-mainsail">{{>info.mainsail.labeltext}}</label>
+					<select name="seapal-input-mainsail" data-link="mainsailId">
+						{{for info.mainsailtypes}}
+						<option value="{{>typeId}}">{{>typename}}</option>
+						{{/for}}
+					</select>
+				</fieldset>
 			</div>
 		</script>
 
