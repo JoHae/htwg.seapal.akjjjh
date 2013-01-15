@@ -25,6 +25,14 @@ var realRoute;
 
 var tripID;
 
+var green_flag_image = new google.maps.MarkerImage('./lib/img/flag_green.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(45, 50),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0, 0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(1, 45));
+
 $(function() {
 	tripID = $.urlParam('tripId');
 
