@@ -56,7 +56,7 @@ $create_trip_table = "CREATE TABLE trip
 tripID    int NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (tripID),
 logbookID int,
-FOREIGN KEY (logbookID) REFERENCES logbook(logbookID),
+FOREIGN KEY (logbookID) REFERENCES logbook(logbookID) ON DELETE CASCADE,
 
 triptitle   varchar(30),
 destination varchar(20),
@@ -78,7 +78,7 @@ $create_waypoint_table = "CREATE TABLE waypoint
 waypointID int NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (waypointID),
 tripID  int,
-FOREIGN KEY (tripID) REFERENCES trip(tripID),
+FOREIGN KEY (tripID) REFERENCES trip(tripID) ON DELETE CASCADE,
 
 waypoint_name varchar(15),
 position  varchar(50),
@@ -102,7 +102,7 @@ $create_routepoint_table = "CREATE TABLE routepoint
 routepointID int NOT NULL AUTO_INCREMENT,
 PRIMARY KEY (routepointID),
 tripID  int,
-FOREIGN KEY (tripID) REFERENCES trip(tripID),
+FOREIGN KEY (tripID) REFERENCES trip(tripID) ON DELETE CASCADE,
 
 name varchar(15),
 notes blob,
