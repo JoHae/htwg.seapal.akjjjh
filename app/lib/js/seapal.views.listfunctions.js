@@ -86,6 +86,19 @@ function seapalDataLoaded(listData) {
 	}, function() {
 		$(this).removeClass("ui-state-hover");
 	});
+	
+	// Hover states on the navigation (first header item)
+	$("#seapal-list .seapal-header .seapal-navigation a").hover(function() {
+		$(this).addClass("seapal-navigation-hover");
+	}, function() {
+		$(this).removeClass("seapal-navigation-hover");
+	});
+	
+	// allow following link instead of toggeling
+	$("#seapal-list .seapal-header .seapal-navigation a").click(function(event) {
+		event.stopPropagation();
+		// prevent toggling collapsion
+	});
 
 	// hides each edit element in the list (the header and content)
 	$("#seapal-list .seapal-edit").each(function() {
