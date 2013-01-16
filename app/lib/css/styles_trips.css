@@ -1,0 +1,4 @@
+.ui-accordion-content, .ui-accordion-content-active {
+	height: 220px;
+	overflow: scroll;
+}

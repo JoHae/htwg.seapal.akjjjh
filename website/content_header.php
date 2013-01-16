@@ -34,7 +34,7 @@ return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 				if(curPageName()=="contact.php") {
 				echo "<li class=\"current_page_item\"><a href=\"contact.php\">Contact</a></li>";
 				} else {
-				echo "<li><a href=\"contact.php\">Contact</a></li>";
+				echo "<li><a href=\"contact.php\">Contact</a></li><br/>";
 				}
 				if(curPageName()=="logbook_table.php") {
 				echo "<li class=\"current_page_item\"><a href=\"../app/\">Logbuch</a></li>";
