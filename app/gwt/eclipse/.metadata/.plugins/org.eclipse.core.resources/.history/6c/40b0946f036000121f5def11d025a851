@@ -1,0 +1,97 @@
+/** Add css rules here for your application. */
+body {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    padding-bottom: 100px;
+    background: #DEDEDE;
+    font-size: 20.0em !important;
+}
+
+#seapal-root {
+    width: 1000px;
+    margin: auto;
+    background: #eee;
+    font-size: 4em;
+}
+
+header {
+    background: #1F5689;
+    padding: 30px 70px;
+    color: white;
+    width: 860px;
+}
+
+.seapal-logo {
+    border: 1px solid white;
+    background: url(/images/Icon-Small-50.png) no-repeat;
+    background-size: cover;
+    width: 110px;
+    height: 110px;
+    float: right;
+}
+
+#seapal-content {
+    padding: 30px;
+}
+
+footer {
+    height: 40px;
+    text-align: center;
+}
+
+.seapal-header {
+    height: 40px;
+}
+
+#loading-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#loading {
+    border: 1px solid #ccc;
+    position: absolute;
+    left: 45%;
+    top: 40%;
+    padding: 2px;
+    z-index: 20001;
+    height: auto;
+}
+
+#loading a {
+    color: #225588;
+}
+
+#loading .loadingIndicator {
+    background: white;
+    font: bold 13px tahoma, arial, helvetica;
+    padding: 10px;
+    margin: 0;
+    height: auto;
+    color: #444;
+}
+
+#loadingMsg {
+    font: normal 10px arial, tahoma, sans-serif;
+}
+
+.ui-state-default .ui-corner-all,.ui-icon .ui-icon-plus {
+    width: 17.5px;
+    height: 17.5px;
+    padding: 5px;
+    display: inline-block;
+    margin: 5px;
+    background: #1F5689;
+    border: 1px solid #222222;
+}
+
+.ui-state-default a,.ui-state-default a:link,.ui-state-default a:visited
+    {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.title {
+    font-size: 4em;
+    font-weight: bold;
+    color: #777777;
+}

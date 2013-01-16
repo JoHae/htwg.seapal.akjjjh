@@ -1,0 +1,102 @@
+!SESSION 2013-01-16 18:33:02.591 -----------------------------------------------
+eclipse.buildId=M20120914-1800
+java.version=1.7.0_10
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=de_DE
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product org.eclipse.epp.package.jee.product
+
+!ENTRY com.google.gdt.eclipse.core 4 0 2013-01-16 18:34:23.379
+!MESSAGE Error while tracking project-level changes from a change in R/
+!STACK 1
+Java Model Exception: Java Model Status [Unbound classpath container: 'GWT SDK [missing]' in project 'logbook']
+	at org.eclipse.jdt.internal.core.JavaProject.getResolvedClasspath(JavaProject.java:2007)
+	at com.google.gdt.eclipse.core.projects.ProjectChangeTimestampTracker.isResourceInAnOutputPath(ProjectChangeTimestampTracker.java:121)
+	at com.google.gdt.eclipse.core.projects.ProjectChangeTimestampTracker.visitDelta(ProjectChangeTimestampTracker.java:162)
+	at com.google.gdt.eclipse.core.projects.ProjectChangeTimestampTracker.visitDelta(ProjectChangeTimestampTracker.java:169)
+	at com.google.gdt.eclipse.core.projects.ProjectChangeTimestampTracker.resourceChanged(ProjectChangeTimestampTracker.java:181)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2353)
+	at org.eclipse.ui.actions.WorkspaceModifyOperation.run(WorkspaceModifyOperation.java:118)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:121)
+!SUBENTRY 1 org.eclipse.jdt.core 4 963 2013-01-16 18:34:23.411
+!MESSAGE Unbound classpath container: 'GWT SDK [missing]' in project 'logbook'
+
+!ENTRY com.google.gdt.eclipse.core 4 0 2013-01-16 18:34:25.051
+!MESSAGE Error while tracking project-level changes from a change in R/
+!STACK 1
+Java Model Exception: Java Model Status [Unbound classpath container: 'GWT SDK [missing]' in project 'logbook']
+	at org.eclipse.jdt.internal.core.JavaProject.getResolvedClasspath(JavaProject.java:2007)
+	at com.google.gdt.eclipse.core.projects.ProjectChangeTimestampTracker.isResourceInAnOutputPath(ProjectChangeTimestampTracker.java:121)
+	at com.google.gdt.eclipse.core.projects.ProjectChangeTimestampTracker.visitDelta(ProjectChangeTimestampTracker.java:162)
+	at com.google.gdt.eclipse.core.projects.ProjectChangeTimestampTracker.visitDelta(ProjectChangeTimestampTracker.java:169)
+	at com.google.gdt.eclipse.core.projects.ProjectChangeTimestampTracker.resourceChanged(ProjectChangeTimestampTracker.java:181)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.endOperation(Workspace.java:1530)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:45)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+!SUBENTRY 1 org.eclipse.jdt.core 4 963 2013-01-16 18:34:25.051
+!MESSAGE Unbound classpath container: 'GWT SDK [missing]' in project 'logbook'
+
+!ENTRY com.google.gdt.eclipse.suite 1 0 2013-01-16 18:34:39.629
+!MESSAGE Registering: com.google.appengine.eclipse.sdkbundle_1.7.4
+
+!ENTRY com.google.gdt.eclipse.suite 1 0 2013-01-16 18:34:40.786
+!MESSAGE Registering: com.google.gwt.eclipse.sdkbundle_2.5.0.v201212122042-rel-r42
+
+!ENTRY com.google.gdt.eclipse.core 1 0 2013-01-16 18:34:42.723
+!MESSAGE Scheduled rebuild of project logbook because of plugin update (current version: 3.1.3.v201212122042-rel-r42)
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:38:58.257
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.next: {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectNextXMLHandler} vs {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectNextHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:38:58.289
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.enclosing: {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectEnclosingXMLHandler} vs {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectEnclosingHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:38:58.289
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.previous: {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectPreviousHandler} vs {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectPreviousXMLHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:38:58.289
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.last: {org.eclipse.wst.sse.ui.internal.handlers.StructuredSelectHistoryHandler} vs {org.eclipse.wst.sse.ui.internal.handlers.StructuredSelectHistoryHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:38:58.304
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.cleanup.document: {org.eclipse.wst.html.ui.internal.edit.ui.CleanupDocumentHandler} vs {org.eclipse.wst.css.ui.internal.handlers.CleanupDocumentHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:40:40.383
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.next: {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectNextXMLHandler} vs {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectNextHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:40:40.399
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.enclosing: {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectEnclosingXMLHandler} vs {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectEnclosingHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:40:40.399
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.previous: {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectPreviousHandler} vs {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectPreviousXMLHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:40:40.399
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.last: {org.eclipse.wst.sse.ui.internal.handlers.StructuredSelectHistoryHandler} vs {org.eclipse.wst.sse.ui.internal.handlers.StructuredSelectHistoryHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:40:40.415
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.cleanup.document: {org.eclipse.wst.html.ui.internal.edit.ui.CleanupDocumentHandler} vs {org.eclipse.wst.css.ui.internal.handlers.CleanupDocumentHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:43:54.795
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.next: {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectNextXMLHandler} vs {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectNextHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:43:54.811
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.enclosing: {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectEnclosingXMLHandler} vs {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectEnclosingHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:43:54.811
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.previous: {org.eclipse.wst.css.ui.internal.handlers.StructuredSelectPreviousHandler} vs {org.eclipse.wst.xml.ui.internal.handlers.StructuredSelectPreviousXMLHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:43:54.811
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.structure.select.last: {org.eclipse.wst.sse.ui.internal.handlers.StructuredSelectHistoryHandler} vs {org.eclipse.wst.sse.ui.internal.handlers.StructuredSelectHistoryHandler}
+
+!ENTRY org.eclipse.ui 4 4 2013-01-16 18:43:54.811
+!MESSAGE Conflicting handlers for org.eclipse.wst.sse.ui.cleanup.document: {org.eclipse.wst.html.ui.internal.edit.ui.CleanupDocumentHandler} vs {org.eclipse.wst.css.ui.internal.handlers.CleanupDocumentHandler}

@@ -3,14 +3,13 @@ body {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     padding-bottom: 100px;
     background: #DEDEDE;
-    font-size: 20.0em !important;
 }
 
 #seapal-root {
     width: 1000px;
     margin: auto;
     background: #eee;
-    font-size: 4em;
+    font-size: 1.5em;
 }
 
 header {

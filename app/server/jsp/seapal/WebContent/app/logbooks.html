@@ -10,6 +10,8 @@
 		<title>logbooks</title>
 		<meta name="description" content="" />
 
+		<link rel="icon" type="image/png" href="http://www.seapal.de/images/Icon-32.png" />
+
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -93,7 +95,7 @@
 								Neues Logbuch
 							</div>
 							{{else}}
-							<div class="seapal-shipname"><a href="trips.html?logbookID={{>dataId}}" data-link="{:shipname:}"></a></div>
+							<div class="seapal-shipname seapal-navigation"><a href="trips.html?logbookId={{>dataId}}" data-link="{:shipname:}"></a></div>
 							<div class="seapal-shiptype" data-link="{:shiptype:}"></div>
 							<div class="seapal-shipowner" data-link="{:shipowner:}"></div>
 							<div class="seapal-shipregisternumber" data-link="{:shipregisternumber:}"></div>
@@ -142,7 +144,6 @@
 						<div class="seapal-readonly"></div>
 						{{else}}
 						<div class="seapal-readonly">
-							<a href="trips.html?logbookId={{>dataId}}" data-link="{:shipname:}"></a>
 							<div class="seapal-general">
 								<span class="seapal-label">{{>info.sailsign.labeltext}}</span>
 								<span class="seapal-field" data-link="{:sailsign:}"></span>

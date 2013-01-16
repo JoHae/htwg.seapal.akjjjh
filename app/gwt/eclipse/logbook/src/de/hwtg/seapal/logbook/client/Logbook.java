@@ -74,7 +74,7 @@ public class Logbook implements EntryPoint {
 
 				final ListGrid listGrid = new ListGrid();
 				listGrid.setWidth100();
-				listGrid.setHeight(500);
+				listGrid.setHeight(200);
 				listGrid.setDataSource(dataSource);
 				listGrid.setAutoFetchData(true);
 				listGrid.setCanRemoveRecords(true);

@@ -15,4 +15,3 @@ $(function() {
 		$(".seapal-logbookname").html(data.shipname);
 	});
 });
-

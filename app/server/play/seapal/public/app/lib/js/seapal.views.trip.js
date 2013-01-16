@@ -25,6 +25,14 @@ var realRoute;
 
 var tripID;
 
+var green_flag_image = new google.maps.MarkerImage('./lib/img/flag_green.png',
+	// This marker is 20 pixels wide by 32 pixels tall.
+	new google.maps.Size(45, 50),
+	// The origin for this image is 0,0.
+	new google.maps.Point(0, 0),
+	// The anchor for this image is the base of the flagpole at 0,32.
+	new google.maps.Point(1, 45));
+
 $(function() {
 	tripID = $.urlParam('tripId');
 
@@ -79,10 +87,10 @@ $(function() {
 	addSeamap();
 
 	// -------- Center Coordinates shown on the Left Top Overlay --------
-	/*var myControl = document.getElementById('coordsDiv');
-	map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);
+	var myControl = document.getElementById('coordsDiv');
+	/*map.controls[google.maps.ControlPosition.TOP_RIGHT].push(myControl);*/
 	updateCoords();
-	$('#coordsDiv').show();*/
+	$('#coordsDiv').show();
 
 	// -------- Center Coordinates shown on the Left Top Overlay --------
 	var mySaveControl = document.getElementById('save_label');
@@ -186,11 +194,9 @@ $(function() {
 	var interval;
 	$("#startPositionTest").click(function() {
 		deleteCrosshairMarker();
-		var i = 0;
-		interval = window.setInterval((function() {
-			if (i == routeMarkerArray.length - 1) {
-				return;
-			}
+		var positionArray = new Array();
+
+		for (var i = 0; i < routeMarkerArray.length-1; i++) {
 			var source_routemarker = routeMarkerArray[i];
 			var destination_routemarker = routeMarkerArray[i + 1];
 
@@ -219,7 +225,6 @@ $(function() {
 			var factor_lng = diff_lng / 10;
 
 			for (var j = 0; j < 11; j++) {
-
 				if (j != 0) {
 					var lat = last_point.lat() + factor_lat;
 					if (last_point.lat() > des_lat) {
@@ -242,8 +247,17 @@ $(function() {
 				} else {
 					lat -= Math.random() * 0.003;
 					lng -= Math.random() * 0.003;
-				}				last_point = new google.maps.LatLng(lat, lng)				sendPosition(tripID, last_point);
-			}			i++;
+				}				last_point = new google.maps.LatLng(lat, lng)				positionArray[positionArray.length] = last_point
+			}
+		}
+
+		var i = 0;
+		interval = window.setInterval((function() {
+			if (i == positionArray.length) {
+				return;
+			}
+			sendPosition(tripID, positionArray[i]);
+			i++;
 		}), 500);
 	});
 

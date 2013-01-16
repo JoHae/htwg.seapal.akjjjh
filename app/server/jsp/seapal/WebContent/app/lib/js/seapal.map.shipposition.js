@@ -1,5 +1,5 @@
 $(function() {
-	Server = new FancyWebSocket('ws://127.0.0.1:9300');
+	Server = new FancyWebSocket('ws://' + getSocketServer() + ':9300');
 
 	//Let the user know we're connected
 	Server.bind('open', function() {
@@ -23,12 +23,11 @@ var Server;
 
 function updatePosition(dataObject) {
 	// position is "(lat, lng)"
-	
 	var new_position = convertPositionToObject(dataObject.position);
 	dataObject.position = new_position;
 	dataObject.has_data = 0;
 	addNewShipPositionMarker(dataObject);
-	map.setCenter(new_position);
+	//map.setCenter(new_position);
 }
 
 function sendPosition(tripID, position) {
